@@ -7,12 +7,10 @@
    ========================================================== */
 window.Playlist = (function () {
   const W = 1080, PAD = 56, MIN_H = 1920;
-  const COLS = 5, CARD_GAP = 12, CARD_H = 96;
+  const COLS = 4, CARD_GAP = 14, CARD_H = 104;
   const LABEL_H = 44, LABEL_GAP = 18, GROUP_GAP = 44;
   const F_SERIF = '"Noto Serif SC","Songti SC","STSong","SimSun",serif';
   const F_SANS = '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif';
-  /* 内联矢量面包：标题里的 🍞 字符在缺彩色 emoji 字体的系统上会变成色块，统一换掉 */
-  const BREAD_SVG = '<svg style="width:1.05em;height:.8em;vertical-align:-.06em;margin-left:.35em" viewBox="0 0 40 30" aria-hidden="true"><g fill="#E8A04C"><rect x="1" y="10" width="38" height="18" rx="6"/><circle cx="10" cy="10" r="7"/><circle cx="20" cy="10" r="7"/><circle cx="30" cy="10" r="7"/></g><g stroke="#FCF6E9" stroke-width="2.4" stroke-linecap="round"><path d="M8 6l3 3"/><path d="M18 6l3 3"/><path d="M28 6l3 3"/></g></svg>';
   const stripEmoji = s => String(s == null ? '' : s).replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim();
 
   const songT = o => (o && typeof o === 'object') ? o.t : o;
@@ -39,42 +37,13 @@ window.Playlist = (function () {
     while (t.length > 1 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1);
     return t + '…';
   }
-  /* 两行换行：第一行尽量填满，第二行放不下再截断（五列窄卡用） */
-  function wrap2(ctx, text, maxW) {
-    if (ctx.measureText(text).width <= maxW) return [text];
-    let cut = text.length - 1;
-    while (cut > 1 && ctx.measureText(text.slice(0, cut)).width > maxW) cut--;
-    return [text.slice(0, cut), trunc(ctx, text.slice(cut), maxW)];
-  }
-  /* 吐司猫 logo（透明 PNG）；加载失败时头部回退为手绘面包 */
+  /* 吐司猫 logo（透明 PNG）；加载失败时头部回退为 🍞 */
   let _logo = null;
   function loadLogo() {
     if (_logo) return Promise.resolve(_logo);
     _logo = new Image();
     _logo.src = 'assets/img/logo.png';
     return _logo.decode().then(() => _logo);
-  }
-  /* 矢量小面包：不依赖 emoji 字体，任何环境渲染一致 */
-  function drawBread(ctx, cx, cy, s) {
-    const w = s, h = s * 0.72, top = -h * 0.10;
-    ctx.save();
-    ctx.translate(cx, cy);
-    ctx.fillStyle = '#E8A04C';
-    rr(ctx, -w / 2, top, w, h * 0.66, w * 0.16); ctx.fill();
-    ctx.beginPath();
-    for (const dx of [-0.30, 0, 0.30]) {
-      ctx.moveTo(dx * w + w * 0.185, top);
-      ctx.arc(dx * w, top, w * 0.185, 0, 7);
-    }
-    ctx.fill();
-    ctx.strokeStyle = '#FCF6E9'; ctx.lineWidth = s * 0.075; ctx.lineCap = 'round';
-    for (const dx of [-0.30, 0, 0.30]) {
-      ctx.beginPath();
-      ctx.moveTo(dx * w - w * 0.07, top - w * 0.07);
-      ctx.lineTo(dx * w + w * 0.07, top + w * 0.04);
-      ctx.stroke();
-    }
-    ctx.restore();
   }
   /* 网页字体异步预加载（镜像源，不阻塞）；超时即用系统字体，保证出图 */
   function ensureFonts() {
@@ -118,8 +87,8 @@ window.Playlist = (function () {
     ctx.strokeStyle = 'rgba(217,142,74,.4)'; ctx.lineWidth = 2;
     rr(ctx, 26, 26, W - 52, H - 52, 26); ctx.stroke();
     ctx.font = '34px ' + F_SANS; ctx.textAlign = 'center';
-    drawBread(ctx, 62, 52, 40);
-    drawBread(ctx, W - 62, H - 48, 40);
+    ctx.fillText('🍞', 62, 52);
+    ctx.fillText('🍞', W - 62, H - 48);
 
     // 头部：吐司猫 logo + 棕色标题
     const logo = await loadLogo().catch(() => null);
@@ -127,21 +96,18 @@ window.Playlist = (function () {
     const logoW = logo ? Math.round(logoH * logo.naturalWidth / logo.naturalHeight) : logoH;
     let y = 76;
     ctx.font = '900 58px ' + F_SERIF;
-    const rawTitle = pl.title || '';
-    const hadEmoji = /\p{Extended_Pictographic}/u.test(rawTitle);
-    const title = rawTitle.replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim();
+    const title = stripEmoji(pl.title || '');
     const tw = ctx.measureText(title).width;
-    const breadW = hadEmoji ? 58 : 0;
-    const total = logoW + 22 + tw + breadW;
+    const total = logoW + 22 + tw;
     if (logo) {
       ctx.drawImage(logo, (W - total) / 2, y - 4, logoW, logoH);
     } else {
-      drawBread(ctx, (W - total) / 2 + logoW / 2, y + 52, 64);
+      ctx.font = '64px ' + F_SANS;
+      ctx.fillText('🍞', (W - total) / 2 + logoW / 2, y + 48);
+      ctx.font = '900 58px ' + F_SERIF;
     }
-    ctx.font = '900 58px ' + F_SERIF;
     ctx.fillStyle = '#7C4A21'; ctx.textAlign = 'left';
     ctx.fillText(title, (W - total) / 2 + logoW + 22, y + 50);
-    if (hadEmoji) drawBread(ctx, (W - total) / 2 + logoW + 22 + tw + 34, y + 50, 46);
     y += logoH + 14;
 
     // 副标题 + 徽章
@@ -171,32 +137,29 @@ window.Playlist = (function () {
         const cy = y0 + Math.floor(i / COLS) * (CARD_H + CARD_GAP);
         ctx.save();
         ctx.shadowColor = 'rgba(176,132,74,.18)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
-        rr(ctx, cx, cy, cw, CARD_H, 14);
+        rr(ctx, cx, cy, cw, CARD_H, 16);
         ctx.fillStyle = '#FFFCF5'; ctx.fill();
         ctx.restore();
-        rr(ctx, cx, cy, cw, CARD_H, 14);
+        rr(ctx, cx, cy, cw, CARD_H, 16);
         ctx.strokeStyle = '#EFDFC3'; ctx.lineWidth = 1.5; ctx.stroke();
-        ctx.beginPath(); ctx.arc(cx + 21, cy + 23, 13, 0, 7);
+        ctx.beginPath(); ctx.arc(cx + 28, cy + 32, 16, 0, 7);
         ctx.fillStyle = 'rgba(232,160,76,.16)'; ctx.fill();
         ctx.strokeStyle = 'rgba(217,142,74,.45)'; ctx.stroke();
-        ctx.fillStyle = '#D98E4A'; ctx.font = '600 15px ' + F_SANS;
-        ctx.fillText(String(i + 1), cx + 21, cy + 24);
+        ctx.fillStyle = '#D98E4A'; ctx.font = '600 17px ' + F_SANS;
+        ctx.fillText(String(i + 1), cx + 28, cy + 33);
         ctx.textAlign = 'left';
-        ctx.font = '600 21px ' + F_SANS; ctx.fillStyle = '#5C3A1E';
-        const lines = wrap2(ctx, songT(s), cw - 26);
-        lines.forEach((ln, li) => ctx.fillText(ln, cx + 13, cy + 56 + li * 26));
+        ctx.font = '600 25px ' + F_SANS; ctx.fillStyle = '#5C3A1E';
+        ctx.fillText(trunc(ctx, songT(s), cw - 62), cx + 52, cy + 38);
+        ctx.font = '400 19px ' + F_SANS; ctx.fillStyle = '#B49B7F';
+        ctx.fillText(trunc(ctx, songS(s, gr.singer), cw - 62), cx + 52, cy + 72);
         ctx.textAlign = 'center';
       });
       y += groupHeight(gr);
     });
 
-    // 页脚（文字居中，两侧矢量面包）
+    // 页脚
     ctx.font = '400 24px ' + F_SANS; ctx.fillStyle = '#B49B7F';
-    const ft = '·  ' + (pl.footer || '') + '  ·';
-    ctx.fillText(ft, W / 2, H - 66);
-    const fw = ctx.measureText(ft).width;
-    drawBread(ctx, W / 2 - fw / 2 - 26, H - 66, 26);
-    drawBread(ctx, W / 2 + fw / 2 + 26, H - 66, 26);
+    ctx.fillText('· 🍞  ' + (pl.footer || '') + '  🍞 ·', W / 2, H - 66);
 
     const dataUrl = cv.toDataURL('image/png');
     return { w: cv.width, h: cv.height, dataUrl };
@@ -205,11 +168,9 @@ window.Playlist = (function () {
   /* ---------- 页面预览 ---------- */
   function renderPreview(pl, el) {
     const g = pl.groups || [];
-    const rawT = pl.title || '';
-    const headT = esc(stripEmoji(rawT)) + (/\p{Extended_Pictographic}/u.test(rawT) ? BREAD_SVG : '');
     el.innerHTML =
       `<div class="pl-head">
-        <h3>${headT}</h3><p>${esc(pl.subtitle || '')}</p></div>` +
+        <h3>${esc(stripEmoji(pl.title || ''))}</h3><p>${esc(pl.subtitle || '')}</p></div>` +
       g.map((gr, i) =>
         `<div class="pl-group" style="--i:${i % 10}">
           <div class="pl-group-label"><span class="dot">♪</span><b>${esc(gr.singer)}</b><span>（${(gr.songs || []).length} 首）</span></div>
