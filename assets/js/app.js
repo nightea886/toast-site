@@ -288,13 +288,36 @@
   document.addEventListener('input', e => {
     if (e.target.id === 'songSearch') { songQuery = e.target.value; renderSongs(); }
   });
+  /* 探测站点是否支持 Range（拖动进度条的前提）：
+     支持（如 github.io）直接流式播放；不支持（如 Cloudflare Pages 只回 200）
+     则整首下载为 blob 再播，本地 blob 可任意 seek */
+  let rangeOK = null, blobCache = null;
+  async function resolveSrc(url) {
+    if (rangeOK === null) {
+      try {
+        const r = await fetch(url, { method: 'HEAD' });
+        rangeOK = r.ok ? (r.headers.get('accept-ranges') || '').includes('bytes') : true;
+      } catch (e) { rangeOK = true; }
+    }
+    if (rangeOK) return url;
+    if (blobCache && blobCache.src === url) return blobCache.url;
+    const r = await fetch(url);
+    if (!r.ok) throw new Error('fetch ' + r.status);
+    if (blobCache) URL.revokeObjectURL(blobCache.url);
+    blobCache = { src: url, url: URL.createObjectURL(await r.blob()) };
+    return blobCache.url;
+  }
   function playAt(i) {
     const songs = Store.get().songs;
     if (i < 0 || i >= songs.length) return;
     cur = i;
     const s = songs[i];
-    audio.src = Store.mediaUrl(s.file);
-    audio.play().catch(() => toast('播放失败，文件可能还在部署中', true));
+    const url = Store.mediaUrl(s.file);
+    resolveSrc(url).then(src => {
+      if (Store.get().songs[cur] !== s) return; /* 等待期间用户已切歌 */
+      audio.src = src;
+      audio.play().catch(() => toast('播放失败，文件可能还在部署中', true));
+    }).catch(() => toast('播放失败，文件可能还在部署中', true));
     $('#player').hidden = false;
     document.body.classList.add('has-player');
     $('#plTitle').textContent = s.title;
