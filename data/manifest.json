@@ -1,0 +1,1443 @@
+{
+  "version": 1,
+  "albums": [
+    {
+      "id": "muza026kgjk5s",
+      "title": "image_1791428959184",
+      "file": "media/albums/muza026jztx9c-image_1791428959184.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "daily"
+    },
+    {
+      "id": "muza027h1f80y",
+      "title": "image_1791428956000",
+      "file": "media/albums/muza027g444df-image_1791428956000.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "daily"
+    },
+    {
+      "id": "muza028cxsmtt",
+      "title": "image_1791428947601",
+      "file": "media/albums/muza028bvke8p-image_1791428947601.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "daily"
+    },
+    {
+      "id": "muza0kbh3nri0",
+      "title": "image_1791428943767",
+      "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "daily"
+    },
+    {
+      "id": "muzcg94wz2bmg",
+      "title": "bili_poster-1791452294516",
+      "file": "media/albums/muzcg94wpatpp-bili_poster-1791452294516.png",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "cosplay"
+    },
+    {
+      "id": "muzcg97azzinx",
+      "title": "bili_poster-1791452291124",
+      "file": "media/albums/muzcg9794s73z-bili_poster-1791452291124.png",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "cosplay"
+    }
+  ],
+  "stickers": [
+    {
+      "id": "muza1l2bfuzi3",
+      "title": "image_1791114691465",
+      "file": "media/stickers/muza1l2a78ab0-image_1791114691465.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox"
+    },
+    {
+      "id": "muza2ewlcw9v2",
+      "title": "image_1790869336372",
+      "file": "media/stickers/muza2ewk215cs-image_1790869336372.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox"
+    }
+  ],
+  "songs": [
+    {
+      "id": "bili-BV11k8y67E96_p1_虹之间-金贵晟",
+      "title": "虹之间",
+      "singer": "金贵晟",
+      "file": "media/songs/BV11k8y67E96_p1 虹之间-金贵晟.m4a",
+      "dur": 210,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV11k8y67E96_p2_唯一（绝版）-邓紫棋",
+      "title": "唯一（绝版）",
+      "singer": "邓紫棋",
+      "file": "media/songs/BV11k8y67E96_p2 唯一（绝版）-邓紫棋.m4a",
+      "dur": 234,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV11k8y67E96_p3_想念是会呼吸的痛-梁静茹",
+      "title": "想念是会呼吸的痛",
+      "singer": "梁静茹",
+      "file": "media/songs/BV11k8y67E96_p3 想念是会呼吸的痛-梁静茹.m4a",
+      "dur": 285,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QM8C6DE35_p1_走马-陈粒",
+      "title": "走马",
+      "singer": "陈粒",
+      "file": "media/songs/BV1QM8C6DE35_p1 走马-陈粒.m4a",
+      "dur": 236,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QM8C6DEF6_p1_最后一页-江语晨",
+      "title": "最后一页",
+      "singer": "江语晨",
+      "file": "media/songs/BV1QM8C6DEF6_p1 最后一页-江语晨.m4a",
+      "dur": 246,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QM8C6DEGA_p1_情歌-梁静茹",
+      "title": "情歌",
+      "singer": "梁静茹",
+      "file": "media/songs/BV1QM8C6DEGA_p1 情歌-梁静茹.m4a",
+      "dur": 259,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1WRtw6HEFC_p1_背对背拥抱-林俊杰",
+      "title": "背对背拥抱",
+      "singer": "林俊杰",
+      "file": "media/songs/BV1WRtw6HEFC_p1 背对背拥抱-林俊杰.m4a",
+      "dur": 223,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1WRtw6HEFC_p2_迷人的危险-Dance Flow",
+      "title": "迷人的危险",
+      "singer": "Dance Flow",
+      "file": "media/songs/BV1WRtw6HEFC_p2 迷人的危险-Dance Flow.m4a",
+      "dur": 201,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1WRtw6HEFC_p3_妥协-蔡依林",
+      "title": "妥协",
+      "singer": "蔡依林",
+      "file": "media/songs/BV1WRtw6HEFC_p3 妥协-蔡依林.m4a",
+      "dur": 249,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1WRtw6HEFC_p4_小幸运-田馥甄",
+      "title": "小幸运",
+      "singer": "田馥甄",
+      "file": "media/songs/BV1WRtw6HEFC_p4 小幸运-田馥甄.m4a",
+      "dur": 259,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1hM8C6QEfx_p1_下雨了-薛之谦",
+      "title": "下雨了",
+      "singer": "薛之谦",
+      "file": "media/songs/BV1hM8C6QEfx_p1 下雨了-薛之谦.m4a",
+      "dur": 293,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1qLa36CEEX_p1_阿拉斯加海湾-蓝心羽",
+      "title": "阿拉斯加海湾",
+      "singer": "蓝心羽",
+      "file": "media/songs/BV1qLa36CEEX_p1 阿拉斯加海湾-蓝心羽.m4a",
+      "dur": 233,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1qLa36CEEX_p2_多远都要在一起-邓紫棋",
+      "title": "多远都要在一起",
+      "singer": "邓紫棋",
+      "file": "media/songs/BV1qLa36CEEX_p2 多远都要在一起-邓紫棋.m4a",
+      "dur": 217,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV14Z8C67E13_p1_命运-家家",
+      "title": "命运",
+      "singer": "家家",
+      "file": "media/songs/BV14Z8C67E13_p1 命运-家家.m4a",
+      "dur": 238,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p1_死了都要爱-信乐团",
+      "title": "死了都要爱",
+      "singer": "信乐团",
+      "file": "media/songs/BV163YM6CEH5_p1 死了都要爱-信乐团.m4a",
+      "dur": 258,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p2_说了再见-周杰伦",
+      "title": "说了再见",
+      "singer": "周杰伦",
+      "file": "media/songs/BV163YM6CEH5_p2 说了再见-周杰伦.m4a",
+      "dur": 240,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p3_春泥-庾澄庆",
+      "title": "春泥",
+      "singer": "庾澄庆",
+      "file": "media/songs/BV163YM6CEH5_p3 春泥-庾澄庆.m4a",
+      "dur": 217,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p4_独家记忆-陈小春",
+      "title": "独家记忆",
+      "singer": "陈小春",
+      "file": "media/songs/BV163YM6CEH5_p4 独家记忆-陈小春.m4a",
+      "dur": 296,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p5_想自由-林宥嘉",
+      "title": "想自由",
+      "singer": "林宥嘉",
+      "file": "media/songs/BV163YM6CEH5_p5 想自由-林宥嘉.m4a",
+      "dur": 240,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p6_有你的快乐-彭佳慧",
+      "title": "有你的快乐",
+      "singer": "彭佳慧",
+      "file": "media/songs/BV163YM6CEH5_p6 有你的快乐-彭佳慧.m4a",
+      "dur": 178,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV163YM6CEH5_p7_我怀念的-孙燕姿",
+      "title": "我怀念的",
+      "singer": "孙燕姿",
+      "file": "media/songs/BV163YM6CEH5_p7 我怀念的-孙燕姿.m4a",
+      "dur": 272,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV196bW6PERq_p1_我落泪情绪零碎-周杰伦",
+      "title": "我落泪情绪零碎",
+      "singer": "周杰伦",
+      "file": "media/songs/BV196bW6PERq_p1 我落泪情绪零碎-周杰伦.m4a",
+      "dur": 233,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1GmhK6WEa8_p2_修炼爱情-林俊杰",
+      "title": "修炼爱情",
+      "singer": "林俊杰",
+      "file": "media/songs/BV1GmhK6WEa8_p2 修炼爱情-林俊杰.m4a",
+      "dur": 213,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1GmhK6WEa8_p3_于是-张震岳",
+      "title": "于是",
+      "singer": "张震岳",
+      "file": "media/songs/BV1GmhK6WEa8_p3 于是-张震岳.m4a",
+      "dur": 224,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1Ma8k6jE2M_p1_爱我还是他-陶喆",
+      "title": "爱我还是他",
+      "singer": "陶喆",
+      "file": "media/songs/BV1Ma8k6jE2M_p1 爱我还是他-陶喆.m4a",
+      "dur": 301,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1Ma8k6jEfV_p1_听海-张惠妹",
+      "title": "听海",
+      "singer": "张惠妹",
+      "file": "media/songs/BV1Ma8k6jEfV_p1 听海-张惠妹.m4a",
+      "dur": 273,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p1_呼吸决定-Fine乐团",
+      "title": "呼吸决定",
+      "singer": "Fine乐团",
+      "file": "media/songs/BV1PPYM6EEu2_p1 呼吸决定-Fine乐团.m4a",
+      "dur": 219,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p2_童话镇-暗杠",
+      "title": "童话镇",
+      "singer": "暗杠",
+      "file": "media/songs/BV1PPYM6EEu2_p2 童话镇-暗杠.m4a",
+      "dur": 224,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p3_彩色的黑-吉克隽逸",
+      "title": "彩色的黑",
+      "singer": "吉克隽逸",
+      "file": "media/songs/BV1PPYM6EEu2_p3 彩色的黑-吉克隽逸.m4a",
+      "dur": 248,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p4_孤独-邓紫棋",
+      "title": "孤独",
+      "singer": "邓紫棋",
+      "file": "media/songs/BV1PPYM6EEu2_p4 孤独-邓紫棋.m4a",
+      "dur": 203,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p5_倒数-邓紫棋",
+      "title": "倒数",
+      "singer": "邓紫棋",
+      "file": "media/songs/BV1PPYM6EEu2_p5 倒数-邓紫棋.m4a",
+      "dur": 220,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p6_泡沫-邓紫棋",
+      "title": "泡沫",
+      "singer": "邓紫棋",
+      "file": "media/songs/BV1PPYM6EEu2_p6 泡沫-邓紫棋.m4a",
+      "dur": 253,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1PPYM6EEu2_p7_普通朋友-陶喆",
+      "title": "普通朋友",
+      "singer": "陶喆",
+      "file": "media/songs/BV1PPYM6EEu2_p7 普通朋友-陶喆.m4a",
+      "dur": 247,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p1_爱错-王力宏",
+      "title": "爱错",
+      "singer": "王力宏",
+      "file": "media/songs/BV1QG816dEwz_p1 爱错-王力宏.m4a",
+      "dur": 215,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p2_爱的回归线-陈鼎",
+      "title": "爱的回归线",
+      "singer": "陈鼎",
+      "file": "media/songs/BV1QG816dEwz_p2 爱的回归线-陈鼎.m4a",
+      "dur": 232,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p3_爱你-王心凌",
+      "title": "爱你",
+      "singer": "王心凌",
+      "file": "media/songs/BV1QG816dEwz_p3 爱你-王心凌.m4a",
+      "dur": 203,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p4_安静-周杰伦",
+      "title": "安静",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1QG816dEwz_p4 安静-周杰伦.m4a",
+      "dur": 287,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p5_白色风车-周杰伦",
+      "title": "白色风车",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1QG816dEwz_p5 白色风车-周杰伦.m4a",
+      "dur": 267,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p6_被驯服的象-蔡依林",
+      "title": "被驯服的象",
+      "singer": "蔡依林",
+      "file": "media/songs/BV1QG816dEwz_p6 被驯服的象-蔡依林.m4a",
+      "dur": 202,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1QG816dEwz_p7_拆穿-杨乃文",
+      "title": "拆穿",
+      "singer": "杨乃文",
+      "file": "media/songs/BV1QG816dEwz_p7 拆穿-杨乃文.m4a",
+      "dur": 205,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SL8169EEL_p1_永不失联的爱-周兴哲",
+      "title": "永不失联的爱",
+      "singer": "周兴哲",
+      "file": "media/songs/BV1SL8169EEL_p1 永不失联的爱-周兴哲.m4a",
+      "dur": 216,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SL8169EEL_p2_雨爱-杨丞琳",
+      "title": "雨爱",
+      "singer": "杨丞琳",
+      "file": "media/songs/BV1SL8169EEL_p2 雨爱-杨丞琳.m4a",
+      "dur": 234,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SL8169EEL_p3_着魔-潘玮柏",
+      "title": "着魔",
+      "singer": "潘玮柏",
+      "file": "media/songs/BV1SL8169EEL_p3 着魔-潘玮柏.m4a",
+      "dur": 208,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SL8169EEL_p5_最爱-杨宗纬",
+      "title": "最爱",
+      "singer": "杨宗纬",
+      "file": "media/songs/BV1SL8169EEL_p5 最爱-杨宗纬.m4a",
+      "dur": 216,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SL8169EEL_p6_最长的电影-周杰伦",
+      "title": "最长的电影",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1SL8169EEL_p6 最长的电影-周杰伦.m4a",
+      "dur": 220,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SR8C6JEgk_p1_斑马，斑马-宋冬野",
+      "title": "斑马，斑马",
+      "singer": "宋冬野",
+      "file": "media/songs/BV1SR8C6JEgk_p1 斑马，斑马-宋冬野.m4a",
+      "dur": 281,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1SX8C6DEHJ_p1_归期-叶炫清",
+      "title": "归期",
+      "singer": "叶炫清",
+      "file": "media/songs/BV1SX8C6DEHJ_p1 归期-叶炫清.m4a",
+      "dur": 260,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1TZ8C6EEYw_p1_颜色-徐佳莹",
+      "title": "颜色",
+      "singer": "徐佳莹",
+      "file": "media/songs/BV1TZ8C6EEYw_p1 颜色-徐佳莹.m4a",
+      "dur": 270,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p1_天后-陈势安",
+      "title": "天后",
+      "singer": "陈势安",
+      "file": "media/songs/BV1UL8169ESj_p1 天后-陈势安.m4a",
+      "dur": 252,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p2_天下-张杰",
+      "title": "天下",
+      "singer": "张杰",
+      "file": "media/songs/BV1UL8169ESj_p2 天下-张杰.m4a",
+      "dur": 221,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p3_退后-周杰伦",
+      "title": "退后",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1UL8169ESj_p3 退后-周杰伦.m4a",
+      "dur": 123,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p4_唯一-邓紫棋",
+      "title": "唯一",
+      "singer": "邓紫棋",
+      "file": "media/songs/BV1UL8169ESj_p4 唯一-邓紫棋.m4a",
+      "dur": 216,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p5_我们的歌-王力宏",
+      "title": "我们的歌",
+      "singer": "王力宏",
+      "file": "media/songs/BV1UL8169ESj_p5 我们的歌-王力宏.m4a",
+      "dur": 246,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p6_心跳-王力宏",
+      "title": "心跳",
+      "singer": "王力宏",
+      "file": "media/songs/BV1UL8169ESj_p6 心跳-王力宏.m4a",
+      "dur": 247,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UL8169ESj_p7_烟火里的尘埃-华晨宇",
+      "title": "烟火里的尘埃",
+      "singer": "华晨宇",
+      "file": "media/songs/BV1UL8169ESj_p7 烟火里的尘埃-华晨宇.m4a",
+      "dur": 307,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1UR8C6JEDr_p1_匆匆那年-王菲",
+      "title": "匆匆那年",
+      "singer": "王菲",
+      "file": "media/songs/BV1UR8C6JEDr_p1 匆匆那年-王菲.m4a",
+      "dur": 203,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEDY_p1_明明就-周杰伦",
+      "title": "明明就",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1XmhK6pEDY_p1 明明就-周杰伦.m4a",
+      "dur": 232,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEDY_p2_你不是真正的快乐-五月天",
+      "title": "你不是真正的快乐",
+      "singer": "五月天",
+      "file": "media/songs/BV1XmhK6pEDY_p2 你不是真正的快乐-五月天.m4a",
+      "dur": 281,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEDY_p3_十七岁-刘德华",
+      "title": "十七岁",
+      "singer": "刘德华",
+      "file": "media/songs/BV1XmhK6pEDY_p3 十七岁-刘德华.m4a",
+      "dur": 218,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEDY_p4_听妈妈的话-周杰伦",
+      "title": "听妈妈的话",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1XmhK6pEDY_p4 听妈妈的话-周杰伦.m4a",
+      "dur": 193,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p1_Always Online-林俊杰",
+      "title": "Always Online",
+      "singer": "林俊杰",
+      "file": "media/songs/BV1XmhK6pEW6_p1 Always Online-林俊杰.m4a",
+      "dur": 216,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p2_Diamonds-Rihanna",
+      "title": "Diamonds",
+      "singer": "Rihanna",
+      "file": "media/songs/BV1XmhK6pEW6_p2 Diamonds-Rihanna.m4a",
+      "dur": 216,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p3_My Heart Will Go On-Celine Dion",
+      "title": "My Heart Will Go On",
+      "singer": "Celine Dion",
+      "file": "media/songs/BV1XmhK6pEW6_p3 My Heart Will Go On-Celine Dion.m4a",
+      "dur": 230,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p4_Someone Like You-Adele",
+      "title": "Someone Like You",
+      "singer": "Adele",
+      "file": "media/songs/BV1XmhK6pEW6_p4 Someone Like You-Adele.m4a",
+      "dur": 283,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p5_Whataya Want from Me-Adam Lambert",
+      "title": "Whataya Want from Me",
+      "singer": "Adam Lambert",
+      "file": "media/songs/BV1XmhK6pEW6_p5 Whataya Want from Me-Adam Lambert.m4a",
+      "dur": 230,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p6_不该-周杰伦_张惠妹",
+      "title": "不该",
+      "singer": "周杰伦/张惠妹",
+      "file": "media/songs/BV1XmhK6pEW6_p6 不该-周杰伦_张惠妹.m4a",
+      "dur": 250,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1XmhK6pEW6_p7_龙卷风-周杰伦",
+      "title": "龙卷风",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1XmhK6pEW6_p7 龙卷风-周杰伦.m4a",
+      "dur": 138,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1bR8C6JEwi_p1_爱的主打歌-萧亚轩",
+      "title": "爱的主打歌",
+      "singer": "萧亚轩",
+      "file": "media/songs/BV1bR8C6JEwi_p1 爱的主打歌-萧亚轩.m4a",
+      "dur": 306,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1c3YM6CEjg_p1_拯救-孙楠",
+      "title": "拯救",
+      "singer": "孙楠",
+      "file": "media/songs/BV1c3YM6CEjg_p1 拯救-孙楠.m4a",
+      "dur": 303,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1c3YM6CEjg_p2_给我一个理由忘记-A-Lin",
+      "title": "给我一个理由忘记",
+      "singer": "A-Lin",
+      "file": "media/songs/BV1c3YM6CEjg_p2 给我一个理由忘记-A-Lin.m4a",
+      "dur": 224,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1c3YM6CEjg_p3_123木头人-黑Girl",
+      "title": "123木头人",
+      "singer": "黑Girl",
+      "file": "media/songs/BV1c3YM6CEjg_p3 123木头人-黑Girl.m4a",
+      "dur": 212,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1g88k6mEMA_p1_嘉宾-张远",
+      "title": "嘉宾",
+      "singer": "张远",
+      "file": "media/songs/BV1g88k6mEMA_p1 嘉宾-张远.m4a",
+      "dur": 231,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1gb8k6EESZ_p1_Letting Go-蔡健雅",
+      "title": "Letting Go",
+      "singer": "蔡健雅",
+      "file": "media/songs/BV1gb8k6EESZ_p1 Letting Go-蔡健雅.m4a",
+      "dur": 274,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1hb8k6EEge_p1_Legends Never Die-Against the Current",
+      "title": "Legends Never Die",
+      "singer": "Against the Current",
+      "file": "media/songs/BV1hb8k6EEge_p1 Legends Never Die-Against the Current.m4a",
+      "dur": 380,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1mZ8C67Ebt_p1_演员-薛之谦",
+      "title": "演员",
+      "singer": "薛之谦",
+      "file": "media/songs/BV1mZ8C67Ebt_p1 演员-薛之谦.m4a",
+      "dur": 379,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p1_Melody-陶喆",
+      "title": "Melody",
+      "singer": "陶喆",
+      "file": "media/songs/BV1swYM6SEke_p1 Melody-陶喆.m4a",
+      "dur": 253,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p2_达尔文-蔡健雅",
+      "title": "达尔文",
+      "singer": "蔡健雅",
+      "file": "media/songs/BV1swYM6SEke_p2 达尔文-蔡健雅.m4a",
+      "dur": 265,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p3_我不难过-孙燕姿",
+      "title": "我不难过",
+      "singer": "孙燕姿",
+      "file": "media/songs/BV1swYM6SEke_p3 我不难过-孙燕姿.m4a",
+      "dur": 267,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p4_此生不换-青鸟飞鱼",
+      "title": "此生不换",
+      "singer": "青鸟飞鱼",
+      "file": "media/songs/BV1swYM6SEke_p4 此生不换-青鸟飞鱼.m4a",
+      "dur": 509,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p5_我不配-周杰伦",
+      "title": "我不配",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1swYM6SEke_p5 我不配-周杰伦.m4a",
+      "dur": 288,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p6_奇妙能力歌-陈粒",
+      "title": "奇妙能力歌",
+      "singer": "陈粒",
+      "file": "media/songs/BV1swYM6SEke_p6 奇妙能力歌-陈粒.m4a",
+      "dur": 260,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1swYM6SEke_p7_年少有为-李荣浩",
+      "title": "年少有为",
+      "singer": "李荣浩",
+      "file": "media/songs/BV1swYM6SEke_p7 年少有为-李荣浩.m4a",
+      "dur": 245,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u7816WEgW_p1_倒带-蔡依林",
+      "title": "倒带",
+      "singer": "蔡依林",
+      "file": "media/songs/BV1u7816WEgW_p1 倒带-蔡依林.m4a",
+      "dur": 233,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u7816WEgW_p2_第一次爱的人-王心凌",
+      "title": "第一次爱的人",
+      "singer": "王心凌",
+      "file": "media/songs/BV1u7816WEgW_p2 第一次爱的人-王心凌.m4a",
+      "dur": 223,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u7816WEgW_p3_枫-周杰伦",
+      "title": "枫",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1u7816WEgW_p3 枫-周杰伦.m4a",
+      "dur": 255,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u7816WEgW_p5_寂寞先生-曹格",
+      "title": "寂寞先生",
+      "singer": "曹格",
+      "file": "media/songs/BV1u7816WEgW_p5 寂寞先生-曹格.m4a",
+      "dur": 243,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u7816WEgW_p6_如果可以-韦礼安",
+      "title": "如果可以",
+      "singer": "韦礼安",
+      "file": "media/songs/BV1u7816WEgW_p6 如果可以-韦礼安.m4a",
+      "dur": 243,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u7816WEgW_p7_舍得-王唯旖",
+      "title": "舍得",
+      "singer": "王唯旖",
+      "file": "media/songs/BV1u7816WEgW_p7 舍得-王唯旖.m4a",
+      "dur": 236,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u88k6mE4o_p1_空心-光泽",
+      "title": "空心",
+      "singer": "光泽",
+      "file": "media/songs/BV1u88k6mE4o_p1 空心-光泽.m4a",
+      "dur": 342,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u88k6mEQB_p1_情人-Beyond",
+      "title": "情人",
+      "singer": "Beyond",
+      "file": "media/songs/BV1u88k6mEQB_p1 情人-Beyond.m4a",
+      "dur": 314,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u88k6mEtN_p1_搁浅-周杰伦",
+      "title": "搁浅",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1u88k6mEtN_p1 搁浅-周杰伦.m4a",
+      "dur": 273,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1u88k6mEzb_p1_蒲公英的约定-周杰伦",
+      "title": "蒲公英的约定",
+      "singer": "周杰伦",
+      "file": "media/songs/BV1u88k6mEzb_p1 蒲公英的约定-周杰伦.m4a",
+      "dur": 238,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ua8k6jEWY_p1_其实-薛之谦",
+      "title": "其实",
+      "singer": "薛之谦",
+      "file": "media/songs/BV1ua8k6jEWY_p1 其实-薛之谦.m4a",
+      "dur": 276,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p1_日不落-蔡依林",
+      "title": "日不落",
+      "singer": "蔡依林",
+      "file": "media/songs/BV1ywYM6SEfy_p1 日不落-蔡依林.m4a",
+      "dur": 204,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p2_情字最大-王天戈",
+      "title": "情字最大",
+      "singer": "王天戈",
+      "file": "media/songs/BV1ywYM6SEfy_p2 情字最大-王天戈.m4a",
+      "dur": 156,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p3_月光-徐良",
+      "title": "月光",
+      "singer": "徐良",
+      "file": "media/songs/BV1ywYM6SEfy_p3 月光-徐良.m4a",
+      "dur": 291,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p4_你在不在-郭采洁",
+      "title": "你在不在",
+      "singer": "郭采洁",
+      "file": "media/songs/BV1ywYM6SEfy_p4 你在不在-郭采洁.m4a",
+      "dur": 231,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p5_专属天使-Tank",
+      "title": "专属天使",
+      "singer": "Tank",
+      "file": "media/songs/BV1ywYM6SEfy_p5 专属天使-Tank.m4a",
+      "dur": 194,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p6_夏天的风-温岚",
+      "title": "夏天的风",
+      "singer": "温岚",
+      "file": "media/songs/BV1ywYM6SEfy_p6 夏天的风-温岚.m4a",
+      "dur": 206,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    },
+    {
+      "id": "bili-BV1ywYM6SEfy_p7_海屿你-陈粒",
+      "title": "海屿你",
+      "singer": "陈粒",
+      "file": "media/songs/BV1ywYM6SEfy_p7 海屿你-陈粒.m4a",
+      "dur": 256,
+      "date": "2026-10-09",
+      "uploader": "bili-import"
+    }
+  ],
+  "playlist": {
+    "title": "吐司大王的点歌单 🍞",
+    "subtitle": "欢迎围观 / 灯牌点歌 (｡･ω･｡)ﾉ",
+    "footer": "歌单持续更新中～",
+    "groups": [
+      {
+        "singer": "蔡健雅",
+        "songs": [
+          "红色高跟鞋",
+          "被驯服的象",
+          "Letting Go",
+          "蓝",
+          "达尔文"
+        ]
+      },
+      {
+        "singer": "蔡依林",
+        "songs": [
+          "倒带",
+          "妥协",
+          "说爱你",
+          "今天你要嫁给我",
+          "日不落"
+        ]
+      },
+      {
+        "singer": "陈粒",
+        "songs": [
+          "走马",
+          "奇妙能力歌",
+          "易燃易爆炸"
+        ]
+      },
+      {
+        "singer": "邓紫棋",
+        "songs": [
+          "唯一",
+          "于是",
+          "多远都要在一起",
+          "倒数",
+          "再见",
+          "泡沫",
+          "光年之外",
+          "喜欢你",
+          "Where did you go",
+          "桃花诺",
+          "来自天堂的魔鬼"
+        ]
+      },
+      {
+        "singer": "梁静茹",
+        "songs": [
+          "勇气",
+          "慢冷",
+          "暖暖",
+          "会呼吸的痛",
+          "没有如果",
+          "情歌",
+          "可惜不是你",
+          "宁夏"
+        ]
+      },
+      {
+        "singer": "林俊杰",
+        "songs": [
+          "她说",
+          "Always Online",
+          "江南",
+          "修炼爱情",
+          "美人鱼",
+          "那些你很冒险的梦",
+          "背对背拥抱",
+          "曹操",
+          "小酒窝",
+          "不为谁而作的歌",
+          "一千年以后"
+        ]
+      },
+      {
+        "singer": "宋冬野",
+        "songs": [
+          "董小姐",
+          "斑马斑马",
+          "安河桥"
+        ]
+      },
+      {
+        "singer": "孙燕姿",
+        "songs": [
+          "我怀念的",
+          "遇见",
+          "绿光"
+        ]
+      },
+      {
+        "singer": "陶喆",
+        "songs": [
+          "普通朋友",
+          "Melody"
+        ]
+      },
+      {
+        "singer": "王菲",
+        "songs": [
+          "百年孤寂",
+          "如愿",
+          "匆匆那年",
+          "传奇"
+        ]
+      },
+      {
+        "singer": "王力宏",
+        "songs": [
+          "爱错",
+          "你不知道的事",
+          "心跳",
+          "好心分手"
+        ]
+      },
+      {
+        "singer": "王心凌",
+        "songs": [
+          "爱你",
+          "梦的光点",
+          "睫毛弯弯",
+          "当你"
+        ]
+      },
+      {
+        "singer": "薛之谦",
+        "songs": [
+          "演员",
+          "其实",
+          "我好像在哪见过你",
+          "认真的雪",
+          "意外",
+          "刚刚好",
+          "你还要我怎样",
+          "绅士",
+          "丑八怪",
+          "方圆几里"
+        ]
+      },
+      {
+        "singer": "张韶涵",
+        "songs": [
+          "欧若拉",
+          "亲爱的那不是爱情",
+          "隐形的翅膀"
+        ]
+      },
+      {
+        "singer": "张学友",
+        "songs": [
+          "偷心",
+          "吻别",
+          "一千个伤心的理由"
+        ]
+      },
+      {
+        "singer": "周杰伦",
+        "songs": [
+          "龙卷风",
+          "画沙",
+          "晴天",
+          "一路向北",
+          "夜曲",
+          "稻香",
+          "兰亭序",
+          "七里香",
+          "明明就",
+          "枫",
+          "说好的幸福呢",
+          "退后",
+          "我落泪情绪零碎",
+          "说了再见",
+          "告白气球",
+          "最长的电影",
+          "我不配",
+          "彩虹",
+          "安静",
+          "屋顶",
+          "给我一首歌的时间",
+          "发如雪",
+          "听妈妈的话"
+        ]
+      },
+      {
+        "singer": "BY2",
+        "songs": [
+          "我知道",
+          "凑热闹",
+          "有点甜",
+          "爱丫爱丫"
+        ]
+      },
+      {
+        "singer": "其他热门歌曲",
+        "songs": [
+          {
+            "t": "4U",
+            "s": "万妮达"
+          },
+          {
+            "t": "阿拉斯加海湾",
+            "s": "蓝心羽"
+          },
+          {
+            "t": "爱的主打歌",
+            "s": "萧亚轩"
+          },
+          {
+            "t": "爱你",
+            "s": "陈芳语"
+          },
+          {
+            "t": "爱如潮水",
+            "s": "张信哲"
+          },
+          {
+            "t": "背叛",
+            "s": "曹格"
+          },
+          {
+            "t": "猜不透",
+            "s": "丁当"
+          },
+          {
+            "t": "成全",
+            "s": "刘若英"
+          },
+          {
+            "t": "春泥",
+            "s": "庾澄庆"
+          },
+          {
+            "t": "此生不换",
+            "s": "青鸟飞鱼"
+          },
+          {
+            "t": "大鱼",
+            "s": "周深"
+          },
+          {
+            "t": "冬天的秘密",
+            "s": "周传雄"
+          },
+          {
+            "t": "给我一个理由忘记",
+            "s": "A-Lin"
+          },
+          {
+            "t": "纱爱",
+            "s": "汪东城 / 杨丞琳"
+          },
+          {
+            "t": "孤独颂歌",
+            "s": "陈文非"
+          },
+          "归期",
+          {
+            "t": "过火",
+            "s": "张信哲"
+          },
+          {
+            "t": "虹之间",
+            "s": "金贵晟"
+          },
+          {
+            "t": "后来",
+            "s": "刘若英"
+          },
+          {
+            "t": "呼吸决定",
+            "s": "Fine乐团"
+          },
+          {
+            "t": "画心",
+            "s": "张靓颖"
+          },
+          {
+            "t": "黄昏",
+            "s": "周传雄"
+          },
+          "记事本",
+          {
+            "t": "寂寞先生",
+            "s": "曹格"
+          },
+          {
+            "t": "嘉宾",
+            "s": "张远"
+          },
+          "空心",
+          {
+            "t": "老人与海",
+            "s": "海鸣威"
+          },
+          "离歌",
+          "流着泪说分手",
+          "疵",
+          {
+            "t": "没那么简单",
+            "s": "黄小琥"
+          },
+          {
+            "t": "迷人的危险",
+            "s": "Dance Flow"
+          },
+          "命运",
+          {
+            "t": "哪里都是你",
+            "s": "队长"
+          },
+          {
+            "t": "男孩",
+            "s": "梁博"
+          },
+          "你",
+          {
+            "t": "你不是真正的快乐",
+            "s": "五月天"
+          },
+          {
+            "t": "你就不要想起我",
+            "s": "田馥甄"
+          },
+          {
+            "t": "你在不在",
+            "s": "郭采洁"
+          },
+          "偏爱",
+          {
+            "t": "如果可以",
+            "s": "韦礼安"
+          },
+          "三国恋",
+          {
+            "t": "身骑白马",
+            "s": "徐佳莹"
+          },
+          "生生世世爱",
+          {
+            "t": "盛夏的果实",
+            "s": "莫文蔚"
+          },
+          {
+            "t": "说散就散",
+            "s": "JC陈咏桐"
+          },
+          {
+            "t": "死了都要爱",
+            "s": "信乐团"
+          },
+          {
+            "t": "素颜",
+            "s": "徐良 / 何曼婷"
+          },
+          {
+            "t": "淘汰",
+            "s": "陈奕迅"
+          },
+          {
+            "t": "特别的人",
+            "s": "方大同"
+          },
+          {
+            "t": "体面",
+            "s": "于文文"
+          },
+          {
+            "t": "天下",
+            "s": "张杰"
+          },
+          {
+            "t": "听海",
+            "s": "张惠妹"
+          },
+          {
+            "t": "童话",
+            "s": "光良"
+          },
+          "童话镇",
+          "突然好想你",
+          {
+            "t": "王妃",
+            "s": "萧敬腾"
+          },
+          "忘记时间",
+          "问风",
+          {
+            "t": "我的歌声里",
+            "s": "曲婉婷"
+          },
+          "我的天空",
+          {
+            "t": "我的未来式",
+            "s": "郭采洁"
+          },
+          {
+            "t": "我们的爱",
+            "s": "F.I.R.飞儿乐团"
+          },
+          "我们的纪念",
+          "我只在乎你",
+          "下雨天",
+          {
+            "t": "夏天的风",
+            "s": "温岚"
+          },
+          {
+            "t": "小幸运",
+            "s": "田馥甄"
+          },
+          {
+            "t": "洋葱",
+            "s": "杨宗纬"
+          },
+          {
+            "t": "一直很安静",
+            "s": "阿桑"
+          },
+          {
+            "t": "遗失的心跳",
+            "s": "萧亚轩"
+          },
+          {
+            "t": "雨爱",
+            "s": "杨丞琳"
+          },
+          {
+            "t": "月半小夜曲",
+            "s": "李克勤"
+          },
+          "月光",
+          {
+            "t": "月亮之上",
+            "s": "凤凰传奇"
+          },
+          "怎么说我不爱你",
+          {
+            "t": "这世界有那么多人",
+            "s": "莫文蔚"
+          },
+          "着魔",
+          {
+            "t": "拯救",
+            "s": "孙楠"
+          },
+          {
+            "t": "追光者",
+            "s": "岑宁儿"
+          },
+          "走在冷风中",
+          "最爱",
+          {
+            "t": "最好的安排",
+            "s": "曲婉婷"
+          },
+          {
+            "t": "最后一页",
+            "s": "江语晨"
+          },
+          "座位",
+          {
+            "t": "My heart will go on",
+            "s": "席琳·迪翁"
+          }
+        ]
+      }
+    ]
+  }
+}

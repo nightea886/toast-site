@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>吐司大王的小站</title>
+<meta name="description" content="吐司大王的小站：相册 / 表情包 / 歌曲 / 歌单。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8D%9E%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.loli.net" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"></noscript>
+<link rel="stylesheet" href="assets/css/main.css?v=20261009b">
+</head>
+<body>
+
+<!--  门禁  -->
+<div class="gate" id="gate">
+  <div class="gate-card">
+    <img class="gate-mascot" src="assets/img/logo.png" alt="吐司猫">
+    <h2>水友验证</h2>
+    <p class="gate-desc">本站为「吐司大王」微信群限定小站<br>请输入群公告中的门禁码进入</p>
+    <form id="gateForm">
+      <input id="gateInput" type="password" placeholder="门禁码" autocomplete="off" enterkeyhint="go">
+      <button class="btn btn-primary" type="submit">进入小站</button>
+    </form>
+    <p class="gate-err" id="gateErr" hidden>门禁码不对哦，去群里问问吧 🍞</p>
+    <p class="gate-tip">门禁码由主播在微信群内发布 · 请勿外传</p>
+  </div>
+</div>
+
+<header class="topbar">
+  <div class="brand">
+    <img class="brand-mark" src="assets/img/logo.png" alt="吐司猫">
+    <span class="brand-text"><strong>吐司大王</strong><small>TOAST KING · FAN SITE</small></span>
+  </div>
+  <nav class="tabs" id="tabs">
+    <button class="tab active" data-tab="album">相册</button>
+    <button class="tab" data-tab="sticker">表情包</button>
+    <button class="tab" data-tab="song">歌曲</button>
+    <button class="tab" data-tab="playlist">歌单</button>
+  </nav>
+  <button class="icon-btn" id="btnSettings" title="设置" aria-label="设置">⚙</button>
+</header>
+
+<main class="main" id="main">
+
+  <!-- 相册 -->
+  <section class="sec active" data-sec="album">
+    <div class="sec-head">
+      <div>
+        <p class="sec-kicker">ALBUM</p>
+        <h2 class="sec-title">相册</h2>
+        <p class="sec-desc">吐司大王 <span class="desc-hl">cosplay · 日常美图</span> 存档<br>电脑点击按钮保存，手机长按图片保存</p>
+      </div>
+      <div class="sec-actions">
+        <button class="btn btn-ghost" data-upload="album">＋ 上传图片</button>
+      </div>
+    </div>
+    <div class="chips" id="albumChips">
+      <button class="chip active" data-cat="all">全部</button>
+      <button class="chip" data-cat="cosplay">cosplay</button>
+      <button class="chip" data-cat="daily">日常</button>
+    </div>
+    <div class="dropzone" data-drop="album"><span>拖入图片上传</span></div>
+    <div class="grid grid-album" id="albumGrid"></div>
+    <div class="empty" id="albumEmpty" hidden><img src="assets/img/logo.png" alt=""><p>相册还空着，等你来投喂第一张图 🍞</p></div>
+  </section>
+
+  <!-- 表情包 -->
+  <section class="sec" data-sec="sticker">
+    <div class="sec-head">
+      <div>
+        <p class="sec-kicker">STICKERS</p>
+        <h2 class="sec-title">表情包</h2>
+        <p class="sec-desc">吐司大王 <span class="desc-hl">表情包 · gif · 名场面</span> 存档<br>电脑点击按钮保存，手机长按图片保存</p>
+      </div>
+      <button class="btn btn-ghost" data-upload="sticker">＋ 上传表情包</button>
+    </div>
+    <div class="chips" id="stickerChips">
+      <button class="chip active" data-cat="all">全部</button>
+      <button class="chip" data-cat="static">图片</button>
+      <button class="chip" data-cat="gif">GIF</button>
+    </div>
+    <div class="dropzone" data-drop="sticker"><span>拖入图片上传</span></div>
+    <div class="grid grid-sticker" id="stickerGrid"></div>
+    <div class="empty" id="stickerEmpty" hidden><img src="assets/img/logo.png" alt=""><p>还没有表情包，快把群里的存货传上来 😝</p></div>
+  </section>
+
+  <!-- 歌曲 -->
+  <section class="sec" data-sec="song">
+    <div class="sec-head">
+      <div>
+        <p class="sec-kicker">SONGS</p>
+        <h2 class="sec-title">歌曲</h2>
+        <p class="sec-desc">吐司大王直播唱过的歌曲，可<span class="desc-hl">在线播放</span>或<span class="desc-hl">下载收藏</span></p>
+      </div>
+      <div class="sec-actions">
+        <input id="songSearch" class="sel search" type="search" placeholder="搜索歌名/歌手" autocomplete="off">
+        <button class="btn btn-ghost" data-upload="song">＋ 上传音频</button>
+      </div>
+    </div>
+    <div class="dropzone" data-drop="song"><span>🎵 支持 mp3 / wav / m4a / flac 等音频</span></div>
+    <div class="songs" id="songList"></div>
+    <div class="empty" id="songEmpty" hidden><img src="assets/img/logo.png" alt=""><p>还没有歌曲，上传一段开嗓录音吧 🎤</p></div>
+  </section>
+
+  <!-- 歌单 -->
+  <section class="sec" data-sec="playlist">
+    <div class="sec-head">
+      <div>
+        <p class="sec-kicker">PLAYLIST</p>
+        <h2 class="sec-title">歌单</h2>
+        <p class="sec-desc">吐司大王歌单，按歌手分类<br>水友可查看与生成歌单图，管理员可编辑管理歌单</p>
+      </div>
+      <div class="sec-actions">
+        <button class="btn btn-ghost" id="btnPlManage">✎ 管理歌单</button>
+        <button class="btn btn-primary" id="btnPlImage">生成歌单图片</button>
+      </div>
+    </div>
+    <div class="pl-manage" id="plManage" hidden>
+      <div class="pl-manage-grid">
+        <label>标题<input id="plTitleIn" type="text"></label>
+        <label>副标题<input id="plSubIn" type="text"></label>
+        <label>页脚<input id="plFooterIn" type="text"></label>
+      </div>
+      <div id="plGroups"></div>
+      <div class="pl-manage-foot">
+        <button class="btn btn-ghost" id="plAddGroup">＋ 添加歌手分组</button>
+        <span class="spacer"></span>
+        <button class="btn btn-primary" id="plSave">保存歌单</button>
+      </div>
+    </div>
+    <div class="pl-poster" id="plPreview"></div>
+  </section>
+
+</main>
+
+<!-- 播放器 -->
+<div class="player" id="player" hidden>
+  <div class="pl-cover">🍞</div>
+  <div class="pl-meta"><strong id="plTitle">-</strong><span id="plSinger">-</span></div>
+  <button class="icon-btn" id="plPrev" title="上一首"><svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+  <button class="icon-btn pl-play" id="plPlay" title="播放/暂停"><svg viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4"/></svg></button>
+  <button class="icon-btn" id="plNext" title="下一首"><svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+  <input type="range" class="seek" id="plSeek" min="0" max="1000" value="0" aria-label="进度">
+  <span class="pl-time" id="plTime">0:00 / 0:00</span>
+  <input type="range" class="vol" id="plVol" min="0" max="100" value="80" aria-label="音量">
+  <button class="icon-btn pl-close" id="plClose" title="关闭播放器"><svg viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button>
+</div>
+
+<!-- 大图 -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lbClose" aria-label="关闭">✕</button>
+  <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一张">‹</button>
+  <figure class="lb-fig">
+    <img id="lbImg" alt="">
+  </figure>
+  <button class="lb-nav lb-next" id="lbNext" aria-label="下一张">›</button>
+  <div class="lb-acts">
+    <a class="btn btn-primary lb-dl" id="lbDl" download>保存原图</a>
+    <button class="btn lb-del" id="lbDel" hidden><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>删除</button>
+  </div>
+</div>
+
+<!-- 设置抽屉 -->
+<aside class="drawer" id="drawer" hidden>
+  <header class="drawer-head"><h3>设置</h3><button class="icon-btn" id="drawerClose" aria-label="关闭">✕</button></header>
+  <div class="drawer-body">
+    <section id="secGateTool">
+      <h4>更换密码（仅管理员）</h4>
+      <p class="hint">输入新密码、选择类型，点「更换密码」一键完成，新密码生效后所有人需重输新密码</p>
+      <div class="row"><input id="newGate" type="text" placeholder="新密码" autocomplete="off">
+        <select id="gateWhich" class="sel">
+          <option value="member">水友密码</option>
+          <option value="admin">管理员密码</option>
+        </select>
+        <button class="btn btn-primary" id="btnGateHash">更换密码</button></div>
+      <pre id="gateHash" class="codebox" hidden></pre>
+    </section>
+    <section>
+      <h4>会话</h4>
+      <p class="hint" id="roleHint"></p>
+      <div class="row"><button class="btn btn-ghost" id="btnLogout">重置缓存</button></div>
+    </section>
+    <section class="about">
+      <h4>关于</h4>
+      <p class="hint">吐司大王的小站，供粉丝群水友们上传图片，记录开心日常。水友可删除自己上传的文件，管理员可管理全站文件及歌单。</p>
+    </section>
+  </div>
+</aside>
+
+<!-- 移动端底栏 -->
+<nav class="mobilenav" id="mobilenav">
+  <button class="active" data-tab="album"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>相册</button>
+  <button data-tab="sticker"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><path d="M8.5 13.5s1.3 1.8 3.5 1.8 3.5-1.8 3.5-1.8"/><line x1="9" y1="9.5" x2="9.01" y2="9.5"/><line x1="15" y1="9.5" x2="15.01" y2="9.5"/></svg>表情包</button>
+  <button data-tab="song"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>歌曲</button>
+  <button data-tab="playlist"><svg viewBox="0 0 24 24"><path d="M21 15V6"/><path d="M18.5 18a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z"/><path d="M12 12H3"/><path d="M16 6H3"/><path d="M12 18H3"/></svg>歌单</button>
+</nav>
+
+<!-- 正在播放全屏页 -->
+<div class="nowplay" id="nowplay" hidden>
+  <div class="np-bar">
+    <button class="np-close" id="npClose" aria-label="收起"><svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+    <span class="np-bar-title">正在播放</span>
+    <span class="np-bar-sp"></span>
+  </div>
+  <div class="np-disc"><img src="assets/img/logo.png" alt=""></div>
+  <strong class="np-title" id="npTitle">-</strong>
+  <span class="np-singer" id="npSinger">-</span>
+  <input type="range" class="np-seek" id="npSeek" min="0" max="1000" value="0" aria-label="进度">
+  <div class="np-times"><span id="npCur">0:00</span><span id="npDur">0:00</span></div>
+  <div class="np-ctrl">
+    <button class="np-btn" id="npPrev" title="上一首"><svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
+    <button class="np-play" id="npPlay" title="播放/暂停"><svg viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4"/></svg></button>
+    <button class="np-btn" id="npNext" title="下一首"><svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
+  </div>
+</div>
+
+<!-- 上传音频信息填写 -->
+<div class="askbox" id="metaBox" hidden>
+  <div class="ask-card">
+    <p>填写歌曲信息</p>
+    <input id="metaTitle" type="text" placeholder="歌曲名" autocomplete="off">
+    <input id="metaSinger" type="text" placeholder="原唱歌手（选填，默认吐司大王）" autocomplete="off">
+    <div class="ask-acts">
+      <button class="btn btn-ghost" id="metaCancel">取消</button>
+      <button class="btn btn-primary" id="metaOk">上传</button>
+    </div>
+  </div>
+</div>
+
+<!-- 歌单长图预览：微信内长按保存 -->
+<div class="posterbox" id="posterBox" hidden>
+  <button class="lb-close" id="pbClose" aria-label="关闭">✕</button>
+  <div class="pb-wrap">
+    <img id="pbImg" alt="歌单 9:16 高清长图">
+    <p class="pb-hint">电脑已自动下载；手机长按图片保存到相册</p>
+  </div>
+</div>
+
+<div class="askbox" id="catBox" hidden>
+  <div class="ask-card">
+    <p>选择上传分类</p>
+    <div class="ask-acts">
+      <button class="btn btn-ghost" id="catCos">cosplay</button>
+      <button class="btn btn-ghost" id="catDaily">日常</button>
+      <button class="btn btn-ghost" id="catCancel">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="askbox" id="askbox" hidden>
+  <div class="ask-card">
+    <p id="askMsg"></p>
+    <div class="ask-acts">
+      <button class="btn btn-ghost" id="askNo">取消</button>
+      <button class="btn btn-primary" id="askYes">删除</button>
+    </div>
+  </div>
+</div>
+
+<button id="toTop" title="回到顶部" aria-label="回到顶部"><svg viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></button>
+
+<div class="toasts" id="toasts"></div>
+<input type="file" id="filePick" hidden multiple>
+
+<script src="assets/js/runtime.js?v=20261008x"></script>
+<script src="assets/js/config.js?v=20261008x"></script>
+<script src="assets/js/gh.js?v=20261008x"></script>
+<script src="assets/js/store.js?v=20261008x"></script>
+<script src="assets/js/playlist.js?v=20261008x"></script>
+<script src="assets/js/app.js?v=20261008x"></script>
+</body>
+</html>
