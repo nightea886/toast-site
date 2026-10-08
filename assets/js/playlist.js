@@ -11,6 +11,9 @@ window.Playlist = (function () {
   const LABEL_H = 44, LABEL_GAP = 18, GROUP_GAP = 44;
   const F_SERIF = '"Noto Serif SC","Songti SC","STSong","SimSun",serif';
   const F_SANS = '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif';
+  /* 内联矢量面包：标题里的 🍞 字符在缺彩色 emoji 字体的系统上会变成色块，统一换掉 */
+  const BREAD_SVG = '<svg style="width:1.05em;height:.8em;vertical-align:-.06em;margin-left:.35em" viewBox="0 0 40 30" aria-hidden="true"><g fill="#E8A04C"><rect x="1" y="10" width="38" height="18" rx="6"/><circle cx="10" cy="10" r="7"/><circle cx="20" cy="10" r="7"/><circle cx="30" cy="10" r="7"/></g><g stroke="#FCF6E9" stroke-width="2.4" stroke-linecap="round"><path d="M8 6l3 3"/><path d="M18 6l3 3"/><path d="M28 6l3 3"/></g></svg>';
+  const stripEmoji = s => String(s == null ? '' : s).replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim();
 
   const songT = o => (o && typeof o === 'object') ? o.t : o;
   const songS = (o, g) => (o && typeof o === 'object' && o.s) ? o.s : g;
@@ -202,9 +205,11 @@ window.Playlist = (function () {
   /* ---------- 页面预览 ---------- */
   function renderPreview(pl, el) {
     const g = pl.groups || [];
+    const rawT = pl.title || '';
+    const headT = esc(stripEmoji(rawT)) + (/\p{Extended_Pictographic}/u.test(rawT) ? BREAD_SVG : '');
     el.innerHTML =
       `<div class="pl-head">
-        <h3>${esc(pl.title || '')}</h3><p>${esc(pl.subtitle || '')}</p></div>` +
+        <h3>${headT}</h3><p>${esc(pl.subtitle || '')}</p></div>` +
       g.map((gr, i) =>
         `<div class="pl-group" style="--i:${i % 10}">
           <div class="pl-group-label"><span class="dot">♪</span><b>${esc(gr.singer)}</b><span>（${(gr.songs || []).length} 首）</span></div>
