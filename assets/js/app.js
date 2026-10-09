@@ -699,7 +699,9 @@
       c.className = 'plm-chip';
       c.innerHTML = `${esc(t)}<button type="button" title="删除标签">×</button>`;
       c.querySelector('button').addEventListener('click', async () => {
-        if (!await askConfirm(`删除标签「${t}」？该标签下的图片不会删除，仍可在「全部」看到`, '删除')) return;
+        const used = Store.get().albums.filter(a => normCat(a.cat) === t).length;
+        if (used) { toast(`「${t}」下还有 ${used} 张图片，先把它们改到其他分类再删标签`, true); return; }
+        if (!await askConfirm(`删除标签「${t}」？`, '删除')) return;
         const next = albumTags().filter(x => x !== t);
         Store.get().albumTags = next;
         renderAlbumChips(); renderTagTool();
