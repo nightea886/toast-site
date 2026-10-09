@@ -1015,6 +1015,15 @@
       "date": "2026-10-09",
       "uploader": "stresstest",
       "dur": 1
+    },
+    {
+      "id": "mv0nux841mirs",
+      "title": "_ss3",
+      "singer": "吐司大王",
+      "file": "media/songs/mv0nux489srpm-_ss3.wav",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "dur": 1
     }
   ],
   "playlist": {
@@ -1493,5 +1502,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 16
+  "rev": 17
 }
