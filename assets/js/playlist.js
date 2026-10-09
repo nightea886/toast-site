@@ -146,7 +146,7 @@ window.Playlist = (function () {
       ctx.save();
       ctx.setLineDash([4, 3]); ctx.strokeStyle = tint(ac, .5); ctx.lineWidth = 1; ctx.stroke();
       ctx.restore();
-      ctx.fillStyle = '#6B5872'; ctx.font = '400 13px ' + F_SANS;
+      ctx.fillStyle = '#6B5872'; ctx.font = '400 13px ' + F_SANS; ctx.textAlign = 'center';
       ctx.fillText('♬', PAD + 15, y + LABEL_H / 2 + 1);
       ctx.textAlign = 'left';
       ctx.fillStyle = ac; ctx.font = '600 16px ' + F_SANS;
@@ -166,6 +166,7 @@ window.Playlist = (function () {
         ctx.fillStyle = '#E9A23B'; ctx.fill();
         seq += 1;
         ctx.fillStyle = '#FFFDF6'; ctx.font = '700 ' + (seq >= 100 ? 10 : 12) + 'px ' + F_SANS;
+        ctx.textAlign = 'center';
         ctx.fillText(String(seq).padStart(2, '0'), cx + 23, cy + CARD_H / 2 + 1);
         ctx.textAlign = 'left';
         ctx.fillStyle = '#3A2E22';
