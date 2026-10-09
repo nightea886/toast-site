@@ -72,14 +72,6 @@
       "date": "2026-10-09",
       "uploader": "stresstest",
       "cat": "cosplay"
-    },
-    {
-      "id": "mv0nuwhgx9r44",
-      "title": "_st4",
-      "file": "media/albums/mv0nuwhgivfo3-_st4.png",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1476,5 +1468,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 12
+  "rev": 13
 }
