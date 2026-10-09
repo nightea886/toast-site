@@ -280,29 +280,34 @@
   function lbGoto(d) {
     const n = lbList.length;
     if (!n || lbAnim) return;
+    const ni = lbIdx + d;
+    if (ni < 0 || ni >= n) { toast('到底啦~', false, 'edge'); return; }  // 边界不循环
     lbAnim = true;
     const st = $('#lbStage');
     st.style.transition = '';
     st.style.transform = 'translateX(' + (-33.3333 - d * 33.3333) + '%)';
     const finish = () => {
-      lbIdx = (lbIdx + d + n) % n;
+      lbIdx = ni;
       lbAnim = false;
       paintLightbox();
     };
     st.addEventListener('transitionend', finish, { once: true });
-    setTimeout(() => { if (lbAnim) finish(); }, 450);
+    setTimeout(() => { if (lbAnim) finish(); }, 340);
   }
   function lbStep(d) { lbGoto(d); }
-  let dragX = null, dragDx = 0;
-  $('#lbStage').addEventListener('pointerdown', e => {
+  let dragX = null, dragDx = 0, dragMoved = false;
+  /* 全屏任意位置起手拖拽（系统相册手感）；按钮/链接/输入框除外 */
+  $('#lightbox').addEventListener('pointerdown', e => {
     if (lbAnim || lbList.length < 2) return;
+    if (e.target.closest('button, a, input')) return;
     if (e.pointerType === 'mouse' && e.button !== 0) return;
-    dragX = e.clientX; dragDx = 0;
+    dragX = e.clientX; dragDx = 0; dragMoved = false;
     $('#lbStage').style.transition = 'none';
   });
   window.addEventListener('pointermove', e => {
     if (dragX == null) return;
     dragDx = e.clientX - dragX;
+    if (Math.abs(dragDx) > 8) dragMoved = true;
     $('#lbStage').style.transform = 'translateX(calc(-33.3333% + ' + (dragDx * .95) + 'px))';
   });
   const lbDragEnd = () => {
@@ -310,8 +315,17 @@
     const dx = dragDx; dragX = null; dragDx = 0;
     const st = $('#lbStage');
     const slotW = st.offsetWidth / 3;
-    if (Math.abs(dx) > Math.min(90, slotW * .22)) lbGoto(dx < 0 ? 1 : -1);
-    else { st.style.transition = ''; st.style.transform = 'translateX(-33.3333%)'; }
+    const d = dx < 0 ? 1 : -1;
+    const ni = lbIdx + d;
+    const overEdge = Math.abs(dx) > Math.min(90, slotW * .22) && (ni < 0 || ni >= lbList.length);
+    if (overEdge) {
+      toast('到底啦~', false, 'edge');
+      st.style.transition = ''; st.style.transform = 'translateX(-33.3333%)';
+    } else if (Math.abs(dx) > Math.min(90, slotW * .22)) {
+      lbGoto(d);
+    } else {
+      st.style.transition = ''; st.style.transform = 'translateX(-33.3333%)';
+    }
   };
   window.addEventListener('pointerup', lbDragEnd);
   window.addEventListener('pointercancel', lbDragEnd);
@@ -324,7 +338,10 @@
     closeLightbox(); // 立即关闭，提交在后台进行，避免等待卡顿
     doDelete(lbKind, it);
   });
-  $('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLightbox(); });
+  $('#lightbox').addEventListener('click', e => {
+    if (dragMoved) { dragMoved = false; return; }   // 拖拽过的松手不算"点空白关闭"
+    if (e.target.id === 'lightbox') closeLightbox();
+  });
   document.addEventListener('keydown', e => {
     if ($('#lightbox').hidden) return;
     if (e.key === 'Escape') closeLightbox();

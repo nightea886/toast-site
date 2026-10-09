@@ -89,7 +89,7 @@ body::after{
 }
 ::selection{background:var(--sel-bg);color:#fff}
 img{display:block;max-width:100%}
-button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer;touch-action:manipulation}
 input,textarea{font-family:inherit;font-size:14px;color:var(--ink)}
 a{color:var(--accent)}
 code{background:var(--code-bg);padding:1px 6px;border-radius:6px;font-size:12px}
@@ -299,12 +299,13 @@ body.lb-open{overflow:hidden}
 .lightbox{
   position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;
   background:var(--veil);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  animation:fadeIn .25s ease both;overscroll-behavior:contain;touch-action:none;
+  animation:fadeIn .25s ease both;overscroll-behavior:contain;touch-action:pan-y;
 }
 .lightbox[hidden]{display:none}
 .lb-fig{max-width:min(88vw,1100px);width:100%;text-align:center;animation:rise .3s ease both;position:relative;overflow:hidden}
 .lb-stage{
-  display:flex;width:300%;transform:translateX(-33.3333%);
+  display:flex;width:300%;height:calc(78vh + 16px);align-items:center;
+  transform:translateX(-33.3333%);
   transition:transform .28s cubic-bezier(.22,.8,.28,1);
   touch-action:pan-y;cursor:grab;
 }
@@ -557,7 +558,7 @@ body.has-player .main{padding-bottom:calc(var(--player-h) + 46px)}
 .ask-card input:focus{border-color:var(--accent)}
 /* 命名输入框内的清空钮 */
 .name-wrap{position:relative}
-.name-wrap input{width:100%;padding-right:36px}
+.name-wrap input{width:100%;padding-right:36px;margin-bottom:0}
 .name-clear{
   position:absolute;right:6px;top:50%;transform:translateY(-50%);
   width:26px;height:26px;border-radius:50%;font-size:12px;line-height:1;
@@ -576,6 +577,9 @@ body.has-player .main{padding-bottom:calc(var(--player-h) + 46px)}
 .cat-opt.cur{border-style:dashed;border-color:var(--accent);color:var(--accent)}
 .cat-opt.sel{background:var(--grad);color:var(--on-grad);border:1px solid transparent;font-weight:700;box-shadow:var(--shadow-glow)}
 .cat-opt.sel.cur{border:1px solid transparent}
+/* 分类弹窗的确认/取消与标签分层：虚线分隔 + 方角通栏按钮，不再和药丸标签混淆 */
+#catBox .ask-acts{border-top:1px dashed var(--line-soft);padding-top:14px}
+#catBox .ask-acts .btn{flex:1;border-radius:var(--r-md);padding:10px 18px}
 
 /* ---------- 回到顶部 ---------- */
 #toTop{
