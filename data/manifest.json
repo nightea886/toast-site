@@ -88,6 +88,14 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
+    },
+    {
+      "id": "mv0pd5ytvpzn0",
+      "title": "回头",
+      "file": "media/albums/mv0pd5ytgnc18-image_1791534266543.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1485,5 +1493,5 @@
     "日常",
     "其他"
   ],
-  "rev": 30
+  "rev": 31
 }
