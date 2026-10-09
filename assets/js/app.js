@@ -83,6 +83,21 @@
 
   /* ================= 渲染：相册 / 表情包 ================= */
   let albumFilter = 'all', stickerFilter = 'all', songQuery = '';
+  let albumQuery = '', stickerQuery = '';
+  /* 相册标签：存 manifest.albumTags，缺失时回退默认两个 */
+  function albumTags() {
+    const t = Store.get().albumTags;
+    return Array.isArray(t) && t.length ? t : ['cosplay', '日常'];
+  }
+  /* 旧数据 cat 值为 daily，与中文标签「日常」等价 */
+  function normCat(c) { return c === 'daily' ? '日常' : (c || '日常'); }
+  function renderAlbumChips() {
+    const wrap = $('#albumChips');
+    if (!wrap) return;
+    if (albumFilter !== 'all' && !albumTags().includes(albumFilter)) albumFilter = 'all';
+    wrap.innerHTML = `<button class="chip${albumFilter === 'all' ? ' active' : ''}" data-cat="all">全部</button>` +
+      albumTags().map(t => `<button class="chip${albumFilter === t ? ' active' : ''}" data-cat="${esc(t)}">${esc(t)}</button>`).join('');
+  }
   /* 管理员永远可删；成员仅在自己上传且有凭证时可删 */
   function canDelete(entry) {
     if (Store.role() === 'admin') return true;
@@ -104,6 +119,21 @@
         singer: $('#metaSinger').value.trim() || '吐司大王'
       });
       $('#metaCancel').onclick = () => done(null);
+    });
+  }
+  /* 站内命名弹窗：上传逐张起名 / 详情重命名复用；取消返回 null */
+  function askName(def, tip) {
+    return new Promise(res => {
+      $('#nameTip').textContent = tip || '给这张图起个名字';
+      $('#nameIn').value = def || '';
+      $('#nameBox').hidden = false;
+      const done = v => {
+        $('#nameBox').hidden = true;
+        $('#nameOk').onclick = null; $('#nameCancel').onclick = null;
+        res(v);
+      };
+      $('#nameOk').onclick = () => done($('#nameIn').value.trim() || def || '未命名');
+      $('#nameCancel').onclick = () => done(null);
     });
   }
   /* 站内确认框：部分手机浏览器屏蔽 window.confirm，故自绘 */
@@ -160,9 +190,11 @@
     const m = Store.get();
     const ag = $('#albumGrid'), sg = $('#stickerGrid');
     ag.innerHTML = ''; sg.innerHTML = '';
-    const albums = m.albums.filter(a => albumFilter === 'all' || (a.cat || 'daily') === albumFilter);
+    const albums = m.albums.filter(a =>
+      (albumFilter === 'all' || normCat(a.cat) === albumFilter) && fuzzy(albumQuery, a.title));
     const stickers = m.stickers.filter(s =>
-      stickerFilter === 'all' || (stickerFilter === 'gif' ? /\.gif$/i.test(s.file) : !/\.gif$/i.test(s.file)));
+      (stickerFilter === 'all' || (stickerFilter === 'gif' ? /\.gif$/i.test(s.file) : !/\.gif$/i.test(s.file))) &&
+      fuzzy(stickerQuery, s.title));
     albums.forEach((it, i) => ag.appendChild(mediaCard(it, i, 'album')));
     stickers.forEach((it, i) => sg.appendChild(mediaCard(it, i, 'sticker')));
     $('#albumEmpty').hidden = albums.length > 0;
@@ -193,13 +225,18 @@
     else stickerFilter = cat;
     renderMedia();
   });
+  /* 图片名模糊搜索（与歌曲搜索同款 fuzzy） */
+  $('#albumSearch').addEventListener('input', e => { albumQuery = e.target.value; renderMedia(); });
+  $('#stickerSearch').addEventListener('input', e => { stickerQuery = e.target.value; renderMedia(); });
 
   /* ================= 大图 Lightbox ================= */
   let lbList = [], lbIdx = 0, lbKind = 'album';
+  function closeLightbox() { $('#lightbox').hidden = true; document.body.classList.remove('lb-open'); }
   function openLightbox(kind, list, idx) {
     lbKind = kind; lbList = list; lbIdx = idx;
     paintLightbox();
     $('#lightbox').hidden = false;
+    document.body.classList.add('lb-open'); // 锁背景滚动：手机端滑动切图不再闪滚动条
   }
   function paintLightbox() {
     const it = lbList[lbIdx];
@@ -210,23 +247,72 @@
     $('#lbDl').href = Store.mediaUrl(it.file);
     $('#lbDl').setAttribute('download', it.file.split('/').pop());
     $('#lbDel').hidden = !canDelete(it);
+    const cap = $('#lbCap');
+    cap.textContent = it.title || '';
+    cap.hidden = !it.title;
+    const editable = canDelete(it);
+    $('#lbRename').hidden = !editable;
+    $('#lbTag').hidden = !editable || lbKind !== 'album';
   }
   function lbStep(d) { lbIdx = (lbIdx + d + lbList.length) % lbList.length; paintLightbox(); }
   $('#lbPrev').addEventListener('click', () => lbStep(-1));
   $('#lbNext').addEventListener('click', () => lbStep(1));
-  $('#lbClose').addEventListener('click', () => { $('#lightbox').hidden = true; });
+  $('#lbClose').addEventListener('click', closeLightbox);
   $('#lbDel').addEventListener('click', () => {
     const it = lbList[lbIdx];
     if (!it) return;
-    $('#lightbox').hidden = true; // 立即关闭，提交在后台进行，避免等待卡顿
+    closeLightbox(); // 立即关闭，提交在后台进行，避免等待卡顿
     doDelete(lbKind, it);
   });
-  $('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') $('#lightbox').hidden = true; });
+  $('#lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLightbox(); });
   document.addEventListener('keydown', e => {
     if ($('#lightbox').hidden) return;
-    if (e.key === 'Escape') $('#lightbox').hidden = true;
+    if (e.key === 'Escape') closeLightbox();
     if (e.key === 'ArrowLeft') lbStep(-1);
     if (e.key === 'ArrowRight') lbStep(1);
+  });
+  /* 桌面端滚轮 = 左右翻图（节流防连翻） */
+  let wheelLast = 0;
+  $('#lightbox').addEventListener('wheel', e => {
+    e.preventDefault();
+    const d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (!d) return;
+    const now = Date.now();
+    if (now - wheelLast < 350) return;
+    wheelLast = now;
+    lbStep(d > 0 ? 1 : -1);
+  }, { passive: false });
+  /* 重命名 / 改分类：与删除同权限（本人或管理员），乐观更新+失败回滚 */
+  async function saveMediaEdit(msg, apply, rollback) {
+    const m = Store.get();
+    apply(m);
+    renderMedia(); paintLightbox();
+    try {
+      await Store.saveManifest(msg);
+      toast('已保存 🍞');
+    } catch (e) {
+      rollback(m);
+      toast('保存失败已还原：' + (e.message === 'NO_CONFIG' ? '缺少上传凭证' : e.message), true);
+      await Store.loadManifest(); renderAll(); paintLightbox();
+    }
+  }
+  $('#lbRename').addEventListener('click', async () => {
+    const it = lbList[lbIdx]; if (!it) return;
+    const nm = await askName(it.title, '改成新名字');
+    if (!nm || nm === it.title) return;
+    const old = it.title;
+    await saveMediaEdit(`rename: ${lbKind} 「${old}」→「${nm}」`,
+      () => { it.title = nm; },
+      () => { it.title = old; });
+  });
+  $('#lbTag').addEventListener('click', async () => {
+    const it = lbList[lbIdx]; if (!it || lbKind !== 'album') return;
+    const tag = await askCat();
+    if (!tag || tag === normCat(it.cat)) return;
+    const old = it.cat || 'daily';
+    await saveMediaEdit(`retag: 相册「${it.title}」${old} → ${tag}`,
+      () => { it.cat = tag; },
+      () => { it.cat = old; });
   });
   /* 手机端左右滑动浏览大图 */
   let touchX = null;
@@ -334,6 +420,10 @@
     }).catch(() => toast('播放失败，文件可能还在部署中', true));
     $('#player').hidden = false;
     document.body.classList.add('has-player');
+    if (!localStorage.getItem('tk_np_hint')) {
+      localStorage.setItem('tk_np_hint', '1');
+      setTimeout(() => toast('点播放条左侧曲名可展开唱片全屏页 🍞'), 800);
+    }
     $('#plTitle').textContent = s.title;
     $('#plSinger').textContent = s.singer || '吐司大王';
     $('#npTitle').textContent = s.title;
@@ -486,19 +576,24 @@
     });
   }
 
-  /* 上传分类选择弹窗（相册上传前询问 cosplay / 日常） */
+  /* 上传分类选择弹窗（标签来自 manifest.albumTags，管理员可在设置里增删） */
   function askCat() {
     return new Promise(res => {
       const box = $('#catBox');
+      const acts = $('#catActs');
+      acts.innerHTML = '';
+      const done = v => { box.hidden = true; acts.innerHTML = ''; res(v); };
+      albumTags().forEach(t => {
+        const b = document.createElement('button');
+        b.className = 'btn btn-ghost'; b.type = 'button'; b.textContent = t;
+        b.onclick = () => done(t);
+        acts.appendChild(b);
+      });
+      const c = document.createElement('button');
+      c.className = 'btn btn-ghost'; c.type = 'button'; c.textContent = '取消';
+      c.onclick = () => done(null);
+      acts.appendChild(c);
       box.hidden = false;
-      const done = v => {
-        box.hidden = true;
-        ['catCos', 'catDaily', 'catCancel'].forEach(id => { document.getElementById(id).onclick = null; });
-        res(v);
-      };
-      $('#catCos').onclick = () => done('cosplay');
-      $('#catDaily').onclick = () => done('daily');
-      $('#catCancel').onclick = () => done(null);
     });
   }
   async function handleFiles(kind, fileList) {
@@ -522,6 +617,11 @@
       for (let fi = 0; fi < files.length; fi++) {
         const f = files[fi];
         if (f.size > 80 * 1024 * 1024) { toast(`「${f.name}」超过 80MB 已跳过`, true); continue; }
+        let imgName = null;
+        if (kind !== 'song') {
+          imgName = await askName(f.name.replace(/\.[^.]+$/, ''), `给这张图起个名字（${fi + 1}/${files.length}）`);
+          if (!imgName) continue; // 取消起名 = 不上传这张
+        }
         toast(`上传中 ${fi + 1}/${files.length}：${f.name}`);
         const base64 = await GH.fileToBase64(f);
         const safe = f.name.replace(/[\\/:*?"<>|]/g, '_');
@@ -529,7 +629,7 @@
         const path = `media/${dir}/${Store.uid()}-${safe}`;
         commits.push({ path, base64 });
         previewUrls[path] = URL.createObjectURL(f);
-        const entry = { id: Store.uid(), title: f.name.replace(/\.[^.]+$/, ''), file: path, date: Store.today(), uploader: Store.myId(), _kind: kind };
+        const entry = { id: Store.uid(), title: imgName || f.name.replace(/\.[^.]+$/, ''), file: path, date: Store.today(), uploader: Store.myId(), _kind: kind };
         if (kind === 'song') {
           const meta = await askSongMeta(f.name.replace(/\.[^.]+$/, ''));
           if (!meta) continue;
@@ -569,10 +669,52 @@
   /* ================= 设置抽屉 ================= */
   function openDrawer() {
     $('#secGateTool').hidden = Store.role() !== 'admin'; // 换密码仅管理员
+    $('#secTagTool').hidden = Store.role() !== 'admin';  // 标签管理仅管理员
+    if (!$('#secTagTool').hidden) renderTagTool();
     $('#roleHint').innerHTML = '当前身份：' + (Store.role() === 'admin' ? '管理员（可删除全站内容）' : '水友（仅可删除本机上传的内容）') + '<br>本机上传ID：' + Store.myId();
     $('#drawer').hidden = false;
   }
   function closeDrawer() { $('#drawer').hidden = true; }
+  /* 相册标签管理（仅管理员）：增删 manifest.albumTags */
+  function renderTagTool() {
+    const wrap = $('#tagList');
+    if (!wrap) return;
+    wrap.innerHTML = '';
+    albumTags().forEach(t => {
+      const c = document.createElement('span');
+      c.className = 'plm-chip';
+      c.innerHTML = `${esc(t)}<button type="button" title="删除标签">×</button>`;
+      c.querySelector('button').addEventListener('click', async () => {
+        if (!await askConfirm(`删除标签「${t}」？该标签下的图片不会删除，仍可在「全部」看到`, '删除')) return;
+        const m = Store.get();
+        m.albumTags = albumTags().filter(x => x !== t);
+        try {
+          await Store.saveManifest(`chore: 删除相册标签「${t}」`);
+          renderAlbumChips(); renderTagTool();
+        } catch (e) {
+          toast('保存失败：' + e.message, true);
+          await Store.loadManifest(); renderAlbumChips(); renderTagTool();
+        }
+      });
+      wrap.appendChild(c);
+    });
+  }
+  $('#btnAddTag').addEventListener('click', async () => {
+    if (Store.role() !== 'admin') { toast('标签仅管理员可修改哦', true); return; }
+    const v = $('#newTag').value.trim();
+    if (!v) return;
+    if (albumTags().includes(v)) { toast('标签已存在', true); return; }
+    const m = Store.get();
+    m.albumTags = albumTags().concat([v]);
+    $('#newTag').value = '';
+    try {
+      await Store.saveManifest(`chore: 新增相册标签「${v}」`);
+      renderAlbumChips(); renderTagTool(); toast('标签已添加 🍞');
+    } catch (e) {
+      toast('保存失败：' + e.message, true);
+      await Store.loadManifest(); renderAlbumChips(); renderTagTool();
+    }
+  });
   $('#btnSettings').addEventListener('click', openDrawer);
   $('#drawerClose').addEventListener('click', closeDrawer);
   /* 一键换密码：改 config.js 哈希行并经 GitHub API 提交，无需手动复制哈希 */
@@ -667,7 +809,7 @@
       setTimeout(() => toast('上传凭证已存入本机 🍞'), 400);
     }
   })();
-  function renderAll() { renderMedia(); renderSongs(); renderPlaylist(); }
+  function renderAll() { renderAlbumChips(); renderMedia(); renderSongs(); renderPlaylist(); }
   async function init() {
     Store.gateOk() ? hideGate() : showGate();
     await Store.loadManifest();

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"></noscript>
-<link rel="stylesheet" href="assets/css/main.css?v=20261009m">
+<link rel="stylesheet" href="assets/css/main.css?v=20261009n">
 </head>
 <body>
 
@@ -53,14 +53,11 @@
         <p class="sec-desc">吐司大王 <span class="desc-hl">cosplay · 日常美图</span> 存档<br>电脑点击按钮保存，手机长按图片保存</p>
       </div>
       <div class="sec-actions">
+        <input id="albumSearch" class="sel search" type="search" placeholder="搜索图片名字" autocomplete="off">
         <button class="btn btn-ghost" data-upload="album">＋ 上传图片</button>
       </div>
     </div>
-    <div class="chips" id="albumChips">
-      <button class="chip active" data-cat="all">全部</button>
-      <button class="chip" data-cat="cosplay">cosplay</button>
-      <button class="chip" data-cat="daily">日常</button>
-    </div>
+    <div class="chips" id="albumChips"></div>
     <div class="dropzone" data-drop="album"><span>拖入图片上传</span></div>
     <div class="grid grid-album" id="albumGrid"></div>
     <div class="empty" id="albumEmpty" hidden><img src="assets/img/logo.png" alt=""><p>相册还空着，等你来投喂第一张图 🍞</p></div>
@@ -74,7 +71,10 @@
         <h2 class="sec-title">表情包</h2>
         <p class="sec-desc">吐司大王 <span class="desc-hl">表情包 · gif · 名场面</span> 存档<br>电脑点击按钮保存，手机长按图片保存</p>
       </div>
-      <button class="btn btn-ghost" data-upload="sticker">＋ 上传表情包</button>
+      <div class="sec-actions">
+        <input id="stickerSearch" class="sel search" type="search" placeholder="搜索表情名字" autocomplete="off">
+        <button class="btn btn-ghost" data-upload="sticker">＋ 上传表情包</button>
+      </div>
     </div>
     <div class="chips" id="stickerChips">
       <button class="chip active" data-cat="all">全部</button>
@@ -138,7 +138,7 @@
 <!-- 播放器 -->
 <div class="player" id="player" hidden>
   <div class="pl-cover">🍞</div>
-  <div class="pl-meta"><strong id="plTitle">-</strong><span id="plSinger">-</span></div>
+  <div class="pl-meta"><strong class="pl-trow"><span id="plTitle">-</span><span class="pl-expand" title="展开唱片全屏页" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m6 15 6-6 6 6"/></svg></span></strong><span id="plSinger">-</span></div>
   <button class="icon-btn" id="plPrev" title="上一首"><svg viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg></button>
   <button class="icon-btn pl-play" id="plPlay" title="播放/暂停"><svg viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4"/></svg></button>
   <button class="icon-btn" id="plNext" title="下一首"><svg viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg></button>
@@ -154,10 +154,13 @@
   <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一张">‹</button>
   <figure class="lb-fig">
     <img id="lbImg" alt="">
+    <figcaption id="lbCap" hidden></figcaption>
   </figure>
   <button class="lb-nav lb-next" id="lbNext" aria-label="下一张">›</button>
   <div class="lb-acts">
     <a class="btn btn-primary lb-dl" id="lbDl" download>保存原图</a>
+    <button class="btn" id="lbRename" hidden>✎ 重命名</button>
+    <button class="btn" id="lbTag" hidden>🏷 改分类</button>
     <button class="btn lb-del" id="lbDel" hidden><svg viewBox="0 0 24 24"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>删除</button>
   </div>
 </div>
@@ -166,6 +169,13 @@
 <aside class="drawer" id="drawer" hidden>
   <header class="drawer-head"><h3>设置</h3><button class="icon-btn" id="drawerClose" aria-label="关闭">✕</button></header>
   <div class="drawer-body">
+    <section id="secTagTool" hidden>
+      <h4>相册标签（仅管理员）</h4>
+      <p class="hint">增删相册的分类标签；删除标签不会删除该标签下的图片（仍可在「全部」看到）</p>
+      <div class="row" id="tagList"></div>
+      <div class="row"><input id="newTag" type="text" maxlength="12" placeholder="新标签名" autocomplete="off">
+        <button class="btn btn-primary" id="btnAddTag">添加标签</button></div>
+    </section>
     <section id="secGateTool">
       <h4>更换密码（仅管理员）</h4>
       <p class="hint">输入新密码、选择类型，点「更换密码」一键完成，新密码生效后所有人需重输新密码</p>
@@ -241,10 +251,18 @@
 <div class="askbox" id="catBox" hidden>
   <div class="ask-card">
     <p>选择上传分类</p>
+    <div class="ask-acts" id="catActs"></div>
+  </div>
+</div>
+
+<!-- 图片命名弹窗（上传时逐个起名 / 重命名复用） -->
+<div class="askbox" id="nameBox" hidden>
+  <div class="ask-card">
+    <p id="nameTip">给这张图起个名字</p>
+    <input id="nameIn" type="text" maxlength="40" placeholder="输入名字，可重复" autocomplete="off">
     <div class="ask-acts">
-      <button class="btn btn-ghost" id="catCos">cosplay</button>
-      <button class="btn btn-ghost" id="catDaily">日常</button>
-      <button class="btn btn-ghost" id="catCancel">取消</button>
+      <button class="btn btn-ghost" id="nameCancel">取消</button>
+      <button class="btn btn-primary" id="nameOk">确定</button>
     </div>
   </div>
 </div>
@@ -264,11 +282,11 @@
 <div class="toasts" id="toasts"></div>
 <input type="file" id="filePick" hidden multiple>
 
-<script src="assets/js/runtime.js?v=20261009m"></script>
-<script src="assets/js/config.js?v=20261009m"></script>
-<script src="assets/js/gh.js?v=20261009m"></script>
-<script src="assets/js/store.js?v=20261009m"></script>
-<script src="assets/js/playlist.js?v=20261009m"></script>
-<script src="assets/js/app.js?v=20261009m"></script>
+<script src="assets/js/runtime.js?v=20261009n"></script>
+<script src="assets/js/config.js?v=20261009n"></script>
+<script src="assets/js/gh.js?v=20261009n"></script>
+<script src="assets/js/store.js?v=20261009n"></script>
+<script src="assets/js/playlist.js?v=20261009n"></script>
+<script src="assets/js/app.js?v=20261009n"></script>
 </body>
 </html>
