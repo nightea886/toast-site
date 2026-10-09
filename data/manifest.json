@@ -48,102 +48,6 @@
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "cosplay"
-    },
-    {
-      "id": "mv0nb2ja6dipa",
-      "title": "_conc1",
-      "file": "media/albums/mv0nb2jacf0ee-_conc1.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nb2jamf5jo",
-      "title": "_conc2",
-      "file": "media/albums/mv0nb2jasakgu-_conc2.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nb2ja8ps57",
-      "title": "_conc3",
-      "file": "media/albums/mv0nb2ja6zl6h-_conc3.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nb2jaxgtos",
-      "title": "_conc4",
-      "file": "media/albums/mv0nb2jatotfs-_conc4.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nezk5s0xtv",
-      "title": "_conc1",
-      "file": "media/albums/mv0nezk58dxrb-_conc1.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nezk5uvj18",
-      "title": "_conc2",
-      "file": "media/albums/mv0nezk53z0mj-_conc2.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nezk5focqm",
-      "title": "_conc3",
-      "file": "media/albums/mv0nezk58pilw-_conc3.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nezk5cv6hc",
-      "title": "_conc4",
-      "file": "media/albums/mv0nezk57f03a-_conc4.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nhiilj91v3",
-      "title": "_concR1",
-      "file": "media/albums/mv0nhiil4v76d-_conc1.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nhiilcvom3",
-      "title": "_concR2",
-      "file": "media/albums/mv0nhiil1vn9m-_conc2.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nhiilswkn3",
-      "title": "_concR3",
-      "file": "media/albums/mv0nhiillddh5-_conc3.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nhiil5y68x",
-      "title": "_concR4",
-      "file": "media/albums/mv0nhiilf0bkm-_conc4.png",
-      "date": "2026-10-09",
-      "uploader": "conctest",
-      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1540,5 +1444,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 7
+  "rev": 8
 }
