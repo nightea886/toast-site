@@ -98,6 +98,16 @@ window.GH = (function () {
     return commit.sha;
   }
 
+  /* 原始文件内容（部署窗口内媒体兜底中转用）；404 抛错 */
+  async function rawContent(repo, path) {
+    const token = window.Store && window.Store.token();
+    const headers = { Accept: 'application/vnd.github.raw+json' };
+    if (token) headers['Authorization'] = 'Bearer ' + token;
+    const res = await fetch(`${API}/repos/${repo}/contents/${path}`, { headers });
+    if (!res.ok) throw new Error('GitHub API ' + res.status);
+    return await res.blob();
+  }
+
   /* 单文件读写（一键换密码用）：读 config.js → 改哈希行 → 写回提交 */
   async function readContent(repo, path) {
     const r = await api(repo, `/contents/${path}`);
@@ -117,5 +127,5 @@ window.GH = (function () {
     return !!ref.object.sha;
   }
 
-  return { api, commitFiles, fileToBase64, blobFromBinary, blobFromText, test, readContent, writeContent };
+  return { api, commitFiles, fileToBase64, blobFromBinary, blobFromText, test, readContent, rawContent, writeContent };
 })();

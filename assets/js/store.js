@@ -66,6 +66,12 @@ window.Store = (function () {
   }
 
   async function loadManifest() {
+    if (token() && repo()) {
+      try {
+        manifest = JSON.parse((await window.GH.readContent(repo(), 'data/manifest.json')).text);
+        return manifest;
+      } catch (e) { /* 落到 CDN 回退 */ }
+    }
     try {
       const res = await fetch('data/manifest.json?t=' + Date.now(), { cache: 'no-store' });
       if (res.ok) {
@@ -158,13 +164,22 @@ window.Store = (function () {
 
   function mediaUrl(path) { return path; } // 媒体与站点同仓库同目录，相对路径即可
 
+  /* 部署窗口内媒体兜底：静态路径 404 时经 GitHub API 取回 blob 转 objectURL（按 path 缓存） */
+  const mediaBlobUrls = {};
+  async function mediaObjectUrl(path) {
+    if (mediaBlobUrls[path]) return mediaBlobUrls[path];
+    const blob = await window.GH.rawContent(repo(), path);
+    mediaBlobUrls[path] = URL.createObjectURL(blob);
+    return mediaBlobUrls[path];
+  }
+
   function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
   function today() { return new Date().toISOString().slice(0, 10); }
 
   return {
     cfg, token, repo, branch,
     gateOk, setGateOk, clearGate, clearToken, setTokenLocal, role, myId, sha256hex,
-    decryptToken, encryptToken,
+    decryptToken, encryptToken, mediaObjectUrl,
     loadManifest, get, set, manifestText, saveManifest, commitUploads, commitDelete, isPending,
     mediaUrl, uid, today
   };

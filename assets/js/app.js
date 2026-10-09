@@ -148,7 +148,7 @@
     d.style.setProperty('--i', i % 12);
     const isGif = /\.gif$/i.test(it.file);
     d.innerHTML =
-      `<div class="thumb"><img loading="lazy" src="${esc(Store.mediaUrl(it.file))}" alt="${esc(it.title)}"></div>
+      `<div class="thumb"><img loading="lazy" data-path="${esc(it.file)}" src="${esc(Store.mediaUrl(it.file))}" alt="${esc(it.title)}"></div>
        ${isGif ? '<span class="badge-gif">GIF</span>' : ''}`;
     d.addEventListener('click', () => {
       const list = kind === 'album' ? Store.get().albums : Store.get().stickers;
@@ -205,6 +205,8 @@
     const it = lbList[lbIdx];
     if (!it) return;
     $('#lbImg').src = Store.mediaUrl(it.file);
+    $('#lbImg').dataset.path = it.file;
+    delete $('#lbImg').dataset.fb;
     $('#lbDl').href = Store.mediaUrl(it.file);
     $('#lbDl').setAttribute('download', it.file.split('/').pop());
     $('#lbDel').hidden = !canDelete(it);
@@ -296,7 +298,11 @@
     if (rangeOK === null) {
       try {
         const r = await fetch(url, { method: 'HEAD' });
-        rangeOK = r.ok ? (r.headers.get('accept-ranges') || '').includes('bytes') : true;
+        if (!r.ok) {
+          // 部署窗口内静态路径尚不存在：经 GitHub API 中转取回整首 blob 播放
+          try { return await Store.mediaObjectUrl(url); } catch (e2) { /* 落回原链 */ }
+        }
+        rangeOK = (r.headers.get('accept-ranges') || '').includes('bytes');
       } catch (e) { rangeOK = true; }
     }
     if (rangeOK) return url;
@@ -307,6 +313,14 @@
     blobCache = { src: url, url: URL.createObjectURL(await r.blob()) };
     return blobCache.url;
   }
+  /* 裂图兜底：部署窗口内缩略图/大图 404 时经 GitHub API 中转替换 src（error 不冒泡，用捕获） */
+  document.addEventListener('error', e => {
+    const el = e.target;
+    if (el && el.tagName === 'IMG' && el.dataset.path && el.dataset.fb !== '1') {
+      el.dataset.fb = '1';
+      Store.mediaObjectUrl(el.dataset.path).then(u => { el.src = u; }).catch(() => {});
+    }
+  }, true);
   function playAt(i) {
     const songs = Store.get().songs;
     if (i < 0 || i >= songs.length) return;
