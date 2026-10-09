@@ -249,12 +249,22 @@
     $('#lightbox').hidden = false;
     document.body.classList.add('lb-open'); // 锁背景滚动：手机端滑动切图不再闪滚动条
   }
+  function lbSrc(i) {
+    const n = lbList.length;
+    const it = n ? lbList[((i % n) + n) % n] : null;
+    return it ? Store.mediaUrl(it.file) : '';
+  }
   function paintLightbox() {
     const it = lbList[lbIdx];
     if (!it) return;
+    const st = $('#lbStage');
+    st.style.transition = 'none';
+    st.style.transform = 'translateX(-33.3333%)';
+    $('#lbPrevImg').src = lbSrc(lbIdx - 1);   // 三段滑轨即邻图预载
     $('#lbImg').src = Store.mediaUrl(it.file);
     $('#lbImg').dataset.path = it.file;
     delete $('#lbImg').dataset.fb;
+    $('#lbNextImg').src = lbSrc(lbIdx + 1);
     $('#lbDl').href = Store.mediaUrl(it.file);
     $('#lbDl').setAttribute('download', it.file.split('/').pop());
     $('#lbDel').hidden = !canDelete(it);
@@ -264,32 +274,47 @@
     const editable = canDelete(it);
     $('#lbRename').hidden = !editable;
     $('#lbTag').hidden = !editable || lbKind !== 'album';
-    [1, -1].forEach(d => {           // 预载邻图，滑动不等网络
-      const nb = lbList[(lbIdx + d + lbList.length) % lbList.length];
-      if (nb) { const im = new Image(); im.src = Store.mediaUrl(nb.file); }
-    });
   }
-  function lbStep(d, animate) {
+  /* 系统相册式滑动：拖拽跟手，松手过阈值滑到邻图，否则弹回 */
+  let lbAnim = false;
+  function lbGoto(d) {
     const n = lbList.length;
-    if (!n) return;
-    const ni = (lbIdx + d + n) % n;
-    const oldSrc = $('#lbImg').src;
-    lbIdx = ni;
-    paintLightbox();
-    const img = $('#lbImg');
-    img.style.transform = '';
-    if (animate === false) return;
-    const cls = d > 0 ? 'next' : 'prev';
-    const g = document.createElement('img');   // 旧图残影滑出
-    g.className = 'lb-ghost g-' + cls;
-    g.src = oldSrc; g.alt = '';
-    $('#lbFig').appendChild(g);
-    g.addEventListener('animationend', () => g.remove(), { once: true });
-    img.classList.remove('in-next', 'in-prev');
-    void img.offsetWidth;
-    img.classList.add('in-' + cls);
-    img.addEventListener('animationend', () => img.classList.remove('in-next', 'in-prev'), { once: true });
+    if (!n || lbAnim) return;
+    lbAnim = true;
+    const st = $('#lbStage');
+    st.style.transition = '';
+    st.style.transform = 'translateX(' + (-33.3333 - d * 33.3333) + '%)';
+    const finish = () => {
+      lbIdx = (lbIdx + d + n) % n;
+      lbAnim = false;
+      paintLightbox();
+    };
+    st.addEventListener('transitionend', finish, { once: true });
+    setTimeout(() => { if (lbAnim) finish(); }, 450);
   }
+  function lbStep(d) { lbGoto(d); }
+  let dragX = null, dragDx = 0;
+  $('#lbStage').addEventListener('pointerdown', e => {
+    if (lbAnim || lbList.length < 2) return;
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragX = e.clientX; dragDx = 0;
+    $('#lbStage').style.transition = 'none';
+  });
+  window.addEventListener('pointermove', e => {
+    if (dragX == null) return;
+    dragDx = e.clientX - dragX;
+    $('#lbStage').style.transform = 'translateX(calc(-33.3333% + ' + (dragDx * .95) + 'px))';
+  });
+  const lbDragEnd = () => {
+    if (dragX == null) return;
+    const dx = dragDx; dragX = null; dragDx = 0;
+    const st = $('#lbStage');
+    const slotW = st.offsetWidth / 3;
+    if (Math.abs(dx) > Math.min(90, slotW * .22)) lbGoto(dx < 0 ? 1 : -1);
+    else { st.style.transition = ''; st.style.transform = 'translateX(-33.3333%)'; }
+  };
+  window.addEventListener('pointerup', lbDragEnd);
+  window.addEventListener('pointercancel', lbDragEnd);
   $('#lbPrev').addEventListener('click', () => lbStep(-1));
   $('#lbNext').addEventListener('click', () => lbStep(1));
   $('#lbClose').addEventListener('click', closeLightbox);
@@ -346,7 +371,7 @@
   });
   $('#lbTag').addEventListener('click', async () => {
     const it = lbList[lbIdx]; if (!it || lbKind !== 'album') return;
-    const tag = await askCat();
+    const tag = await askCat(normCat(it.cat));
     if (!tag || tag === normCat(it.cat)) return;
     const old = it.cat || 'daily';
     await saveMediaEdit(`retag: 相册「${it.title}」${old} → ${tag}`,
@@ -354,34 +379,6 @@
       x => { x.cat = tag; },
       x => { x.cat = old; });
   });
-  /* 相册式拖拽跟手：手机滑动/桌面鼠标拖拽通用（pointer 事件） */
-  let dragX = null, dragDx = 0;
-  $('#lbImg').addEventListener('pointerdown', e => {
-    if (e.pointerType === 'mouse' && e.button !== 0) return;
-    dragX = e.clientX; dragDx = 0;
-    const el = $('#lbImg');
-    el.style.transition = 'none';
-    if (el.setPointerCapture) { try { el.setPointerCapture(e.pointerId); } catch (err) {} }
-  });
-  $('#lightbox').addEventListener('pointermove', e => {
-    if (dragX == null) return;
-    dragDx = e.clientX - dragX;
-    $('#lbImg').style.transform = 'translateX(' + (dragDx * .92) + 'px)';
-  });
-  const dragEnd = () => {
-    if (dragX == null) return;
-    const dx = dragDx; dragX = null; dragDx = 0;
-    const el = $('#lbImg');
-    el.style.transition = '';
-    if (Math.abs(dx) > 70) { lbStep(dx < 0 ? 1 : -1); }
-    else {
-      el.classList.add('lb-spring');
-      el.style.transform = 'translateX(0)';
-      setTimeout(() => { el.classList.remove('lb-spring'); el.style.transform = ''; }, 280);
-    }
-  };
-  $('#lightbox').addEventListener('pointerup', dragEnd);
-  $('#lightbox').addEventListener('pointercancel', dragEnd);
 
   /* ================= 渲染：歌曲 + 播放器 ================= */
   const IC_PLAY = '<svg viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4"/></svg>';
@@ -709,24 +706,30 @@
     });
   }
 
-  /* 上传分类选择弹窗（标签来自 manifest.albumTags，管理员可在设置里增删） */
-  function askCat() {
+  /* 分类选择弹窗：展示全部标签，当前分类虚线高亮，选中实心，确认/取消在下方 */
+  function askCat(current) {
     return new Promise(res => {
       const box = $('#catBox');
-      const acts = $('#catActs');
-      acts.innerHTML = '';
-      const done = v => { box.hidden = true; acts.innerHTML = ''; res(v); };
-      albumTags().forEach(t => {
-        const b = document.createElement('button');
-        b.className = 'btn btn-ghost'; b.type = 'button'; b.textContent = t;
-        b.onclick = () => done(t);
-        acts.appendChild(b);
-      });
-      const c = document.createElement('button');
-      c.className = 'btn btn-ghost'; c.type = 'button'; c.textContent = '取消';
-      c.onclick = () => done(null);
-      acts.appendChild(c);
+      const grid = $('#catGrid');
+      const tags = albumTags();
+      let sel = current && tags.includes(current) ? current : tags[0];
+      const paint = () => {
+        grid.innerHTML = '';
+        tags.forEach(t => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'cat-opt' + (t === sel ? ' sel' : '') + (t === current ? ' cur' : '');
+          b.textContent = t;
+          b.onclick = () => { sel = t; paint(); };
+          grid.appendChild(b);
+        });
+      };
+      $('#catTip').textContent = current ? '修改分类（当前：' + normCat(current) + '）' : '选择上传分类';
+      paint();
       box.hidden = false;
+      const done = v => { box.hidden = true; grid.innerHTML = ''; res(v); };
+      $('#catOk').onclick = () => done(!current || sel !== current ? sel : null);
+      $('#catCancel').onclick = () => done(null);
     });
   }
   async function handleFiles(kind, fileList) {
