@@ -311,7 +311,9 @@ body.lb-open{overflow:hidden}
 }
 .lb-stage:active{cursor:grabbing}
 .lb-slot{width:33.3333%;flex:none;display:flex;align-items:center;justify-content:center;padding:0 10px}
-.lb-slot img{max-height:78vh;max-width:100%;margin:0 auto;border-radius:var(--r-md);box-shadow:var(--shadow);background:var(--card);pointer-events:none;user-select:none;-webkit-user-drag:none}
+.lb-slot img{max-height:78vh;max-width:100%;margin:0 auto;border-radius:var(--r-md);box-shadow:var(--shadow);background:var(--card);user-select:none;-webkit-user-drag:none}
+/* 注意：不可加 pointer-events:none——微信/系统"长按保存图片"依赖 img 本身接收触摸；
+   拖拽翻图绑定在光箱层靠冒泡工作，不受影响 */
 .lb-fig figcaption{margin-top:12px;color:var(--muted);font-size:13px}
 .lb-close{position:absolute;top:18px;right:20px;font-size:20px;color:var(--muted);width:44px;height:44px;border-radius:50%;border:1px solid var(--line)}
 .lb-close:hover{color:var(--ink);background:var(--tint-2)}
