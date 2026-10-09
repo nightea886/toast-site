@@ -163,6 +163,13 @@
       "file": "media/stickers/mv0pf4e6lvclt-image_1791534241110.jpg",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl"
+    },
+    {
+      "id": "mv0pg0wrnyjzp",
+      "title": "小丑",
+      "file": "media/stickers/mv0pg0wqnj8za-bili_poster-1791534587696.png",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl"
     }
   ],
   "songs": [
@@ -1544,5 +1551,5 @@
     "日常",
     "其他"
   ],
-  "rev": 38
+  "rev": 39
 }
