@@ -136,6 +136,14 @@
       "date": "2026-10-09",
       "uploader": "u-bgg87afdmv0qx6p5",
       "cat": "其他"
+    },
+    {
+      "id": "mv12y8odcoz4j",
+      "title": "吐司",
+      "file": "media/albums/mv12y8ocn0f6q-image_1787569209555.png",
+      "date": "2026-10-09",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1631,5 +1639,5 @@
     "日常",
     "其他"
   ],
-  "rev": 58
+  "rev": 59
 }
