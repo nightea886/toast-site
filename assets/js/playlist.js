@@ -2,12 +2,13 @@
    playlist.js —— 歌单：页面预览 / 管理编辑（仅管理员）/ 9:16 高清长图
    长图为纯 canvas 绘制（2 倍像素、宽 2160）：不依赖任何第三方库，
    规避 html-to-image 在部分环境输出全黑的问题；版式对照示例图：
-   吉祥物 + 渐变标题 + 副标题 + 徽章 + 歌手分组 + 五列歌曲卡片 + 页脚 + 边框角标。
+   吉祥物 + 渐变标题 + 副标题 + 徽章 + 歌手分组 + 五列歌曲卡片（标号跨组连续、
+   长歌名自动缩字号）+ 页脚 + 边框。
    高度不足 1920（9:16）时补底，内容多时自然延伸为长图。
    ========================================================== */
 window.Playlist = (function () {
   const W = 1080, PAD = 56, MIN_H = 1920;
-  const COLS = 4, CARD_GAP = 14, CARD_H = 104;
+  const COLS = 5, CARD_GAP = 14, CARD_H = 104;
   const LABEL_H = 44, LABEL_GAP = 18, GROUP_GAP = 44;
   const F_SERIF = '"Noto Serif SC","Songti SC","STSong","SimSun",serif';
   const F_SANS = '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif';
@@ -36,6 +37,16 @@ window.Playlist = (function () {
     let t = text;
     while (t.length > 1 && ctx.measureText(t + '…').width > maxW) t = t.slice(0, -1);
     return t + '…';
+  }
+  /* 长歌名按宽度自动缩字号尽量显示全（缩到下限仍放不下才截断） */
+  function drawFit(ctx, text, maxW, weight, base, min, family) {
+    let size = base;
+    ctx.font = weight + ' ' + size + 'px ' + family;
+    while (size > min && ctx.measureText(text).width > maxW) {
+      size -= 1;
+      ctx.font = weight + ' ' + size + 'px ' + family;
+    }
+    return trunc(ctx, text, maxW);
   }
   /* 吐司猫 logo（透明 PNG）；加载失败时头部回退为 🍞 */
   let _logo = null;
@@ -86,9 +97,7 @@ window.Playlist = (function () {
     ctx.fillStyle = g2; ctx.fillRect(0, H - 300, W, 300);
     ctx.strokeStyle = 'rgba(217,142,74,.4)'; ctx.lineWidth = 2;
     rr(ctx, 26, 26, W - 52, H - 52, 26); ctx.stroke();
-    ctx.font = '34px ' + F_SANS; ctx.textAlign = 'center';
-    ctx.fillText('🍞', 62, 52);
-    ctx.fillText('🍞', W - 62, H - 48);
+    ctx.textAlign = 'center';
 
     // 头部：吐司猫 logo + 棕色标题
     const logo = await loadLogo().catch(() => null);
@@ -116,8 +125,9 @@ window.Playlist = (function () {
     ctx.fillText(pl.subtitle || '', W / 2, y + 16);
     y += 40 + 36;
 
-    // 分组与歌曲卡片（白卡 + 暖边框 + 轻投影）
+    // 分组与歌曲卡片（白卡 + 暖边框 + 轻投影）；标号跨分组连续
     const cw = (W - PAD * 2 - (COLS - 1) * CARD_GAP) / COLS;
+    let seq = 0;
     (pl.groups || []).forEach(gr => {
       rr(ctx, PAD, y + 2, 44, 44, 12);
       ctx.fillStyle = 'rgba(232,160,76,.18)'; ctx.fill();
@@ -145,13 +155,14 @@ window.Playlist = (function () {
         ctx.beginPath(); ctx.arc(cx + 28, cy + 32, 16, 0, 7);
         ctx.fillStyle = 'rgba(232,160,76,.16)'; ctx.fill();
         ctx.strokeStyle = 'rgba(217,142,74,.45)'; ctx.stroke();
-        ctx.fillStyle = '#D98E4A'; ctx.font = '600 17px ' + F_SANS;
-        ctx.fillText(String(i + 1), cx + 28, cy + 33);
+        seq += 1;
+        ctx.fillStyle = '#D98E4A'; ctx.font = '600 ' + (seq >= 100 ? 14 : 17) + 'px ' + F_SANS;
+        ctx.fillText(String(seq), cx + 28, cy + 33);
         ctx.textAlign = 'left';
-        ctx.font = '600 25px ' + F_SANS; ctx.fillStyle = '#5C3A1E';
-        ctx.fillText(trunc(ctx, songT(s), cw - 62), cx + 52, cy + 38);
-        ctx.font = '400 19px ' + F_SANS; ctx.fillStyle = '#B49B7F';
-        ctx.fillText(trunc(ctx, songS(s, gr.singer), cw - 62), cx + 52, cy + 72);
+        ctx.fillStyle = '#5C3A1E';
+        ctx.fillText(drawFit(ctx, songT(s), cw - 62, '600', 25, 14, F_SANS), cx + 52, cy + 38);
+        ctx.fillStyle = '#B49B7F';
+        ctx.fillText(drawFit(ctx, songS(s, gr.singer), cw - 62, '400', 19, 13, F_SANS), cx + 52, cy + 72);
         ctx.textAlign = 'center';
       });
       y += groupHeight(gr);
@@ -168,16 +179,20 @@ window.Playlist = (function () {
   /* ---------- 页面预览 ---------- */
   function renderPreview(pl, el) {
     const g = pl.groups || [];
+    let off = 0;
     el.innerHTML =
       `<div class="pl-head">
         <h3>${esc(stripEmoji(pl.title || ''))}</h3><p>${esc(pl.subtitle || '')}</p></div>` +
-      g.map((gr, i) =>
-        `<div class="pl-group" style="--i:${i % 10}">
+      g.map((gr, i) => {
+        const start = off;
+        off += (gr.songs || []).length;
+        return `<div class="pl-group" style="--i:${i % 10}">
           <div class="pl-group-label"><span class="dot">♪</span><b>${esc(gr.singer)}</b><span>（${(gr.songs || []).length} 首）</span></div>
           <div class="pl-cards">${(gr.songs || []).map((s, si) =>
-            `<div class="pl-card"><span class="n">${si + 1}</span><span class="t"><b title="${esc(songT(s))}">${esc(songT(s))}</b><span>${esc(songS(s, gr.singer))}</span></span></div>`).join('')}
+            `<div class="pl-card"><span class="n">${start + si + 1}</span><span class="t"><b title="${esc(songT(s))}">${esc(songT(s))}</b><span>${esc(songS(s, gr.singer))}</span></span></div>`).join('')}
           </div>
-        </div>`).join('') +
+        </div>`;
+      }).join('') +
       `<div class="pl-foot">${esc(pl.footer || '')}</div>`;
   }
 
