@@ -61,7 +61,7 @@
           }
         } catch (e) { /* 解密失败时保留已有凭证/种子链接 */ }
         renderAll();
-        toast(isAdmin ? '管理员模式 🍞 可删除任意内容' : '欢迎回家，面包人 🍞');
+        toast(isAdmin ? '管理员模式' : '欢迎回家，面包人 🍞');
       } else {
         $('#gateErr').hidden = false;
         const card = $('#gate .gate-card');
@@ -182,7 +182,10 @@
        ${isGif ? '<span class="badge-gif">GIF</span>' : ''}`;
     d.addEventListener('click', () => {
       const list = kind === 'album' ? Store.get().albums : Store.get().stickers;
-      openLightbox(kind, list, list.indexOf(it));
+      /* 轮询会替换清单对象，旧卡片闭包可能持有孤儿对象：按 id/file 重新定位 */
+      const idx = list.findIndex(x => x.id === it.id || x.file === it.file);
+      if (idx < 0) { renderMedia(); return; }
+      openLightbox(kind, list, idx);
     });
     return d;
   }
@@ -282,16 +285,19 @@
     wheelLast = now;
     lbStep(d > 0 ? 1 : -1);
   }, { passive: false });
-  /* 重命名 / 改分类：与删除同权限（本人或管理员），乐观更新+失败回滚 */
-  async function saveMediaEdit(msg, apply, rollback) {
-    const m = Store.get();
-    apply(m);
+  /* 重命名 / 改分类：与删除同权限（本人或管理员），乐观更新+服务器叠加提交+失败回滚 */
+  async function saveMediaEdit(msg, finder, change, rollbackChange) {
+    const it = lbList[lbIdx]; if (!it) return;
+    change(it);
     renderMedia(); paintLightbox();
     try {
-      await Store.saveManifest(msg);
+      await Store.saveManifestApply(mm => {
+        const x = finder(mm);
+        if (x) change(x);
+      }, msg);
       toast('已保存 🍞');
     } catch (e) {
-      rollback(m);
+      rollbackChange(it);
       toast('保存失败已还原：' + (e.message === 'NO_CONFIG' ? '缺少上传凭证' : e.message), true);
       await Store.loadManifest(); renderAll(); paintLightbox();
     }
@@ -302,8 +308,9 @@
     if (!nm || nm === it.title) return;
     const old = it.title;
     await saveMediaEdit(`rename: ${lbKind} 「${old}」→「${nm}」`,
-      () => { it.title = nm; },
-      () => { it.title = old; });
+      mm => (lbKind === 'album' ? mm.albums : mm.stickers).find(y => y.file === it.file),
+      x => { x.title = nm; },
+      x => { x.title = old; });
   });
   $('#lbTag').addEventListener('click', async () => {
     const it = lbList[lbIdx]; if (!it || lbKind !== 'album') return;
@@ -311,8 +318,9 @@
     if (!tag || tag === normCat(it.cat)) return;
     const old = it.cat || 'daily';
     await saveMediaEdit(`retag: 相册「${it.title}」${old} → ${tag}`,
-      () => { it.cat = tag; },
-      () => { it.cat = old; });
+      mm => mm.albums.find(y => y.file === it.file),
+      x => { x.cat = tag; },
+      x => { x.cat = old; });
   });
   /* 手机端左右滑动浏览大图 */
   let touchX = null;
@@ -686,11 +694,11 @@
       c.innerHTML = `${esc(t)}<button type="button" title="删除标签">×</button>`;
       c.querySelector('button').addEventListener('click', async () => {
         if (!await askConfirm(`删除标签「${t}」？该标签下的图片不会删除，仍可在「全部」看到`, '删除')) return;
-        const m = Store.get();
-        m.albumTags = albumTags().filter(x => x !== t);
+        const next = albumTags().filter(x => x !== t);
+        Store.get().albumTags = next;
+        renderAlbumChips(); renderTagTool();
         try {
-          await Store.saveManifest(`chore: 删除相册标签「${t}」`);
-          renderAlbumChips(); renderTagTool();
+          await Store.saveManifestApply(mm => { mm.albumTags = next.slice(); }, `chore: 删除相册标签「${t}」`);
         } catch (e) {
           toast('保存失败：' + e.message, true);
           await Store.loadManifest(); renderAlbumChips(); renderTagTool();
@@ -704,12 +712,13 @@
     const v = $('#newTag').value.trim();
     if (!v) return;
     if (albumTags().includes(v)) { toast('标签已存在', true); return; }
-    const m = Store.get();
-    m.albumTags = albumTags().concat([v]);
+    const next = albumTags().concat([v]);
+    Store.get().albumTags = next;
     $('#newTag').value = '';
+    renderAlbumChips(); renderTagTool();
     try {
-      await Store.saveManifest(`chore: 新增相册标签「${v}」`);
-      renderAlbumChips(); renderTagTool(); toast('标签已添加 🍞');
+      await Store.saveManifestApply(mm => { mm.albumTags = next.slice(); }, `chore: 新增相册标签「${v}」`);
+      toast('标签已添加 🍞');
     } catch (e) {
       toast('保存失败：' + e.message, true);
       await Store.loadManifest(); renderAlbumChips(); renderTagTool();

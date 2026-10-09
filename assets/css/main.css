@@ -3,10 +3,10 @@
    原暖黑底整体提亮一档 + 吐司焦糖金 + 衬线中文标题
    ========================================================== */
 :root{
-  --bg:        #1a1512;
-  --bg-2:      #221b17;
-  --card:      #291f19;
-  --card-2:    #31261e;
+  --bg:        #221b16;
+  --bg-2:      #2a221c;
+  --card:      #332822;
+  --card-2:    #3b2f27;
   --line:      rgba(232,176,107,.18);
   --line-soft: rgba(232,176,107,.10);
   --ink:       #f6ede1;
@@ -27,7 +27,7 @@
   --gate-aura: rgba(232,176,107,.12);
   --grain-o: .04;
   --sel-bg: rgba(232,176,107,.35);
-  --thumb: #43372c;
+  --thumb: #4d4034;
   --code-bg: rgba(232,176,107,.12);
   --line-hover: rgba(232,176,107,.40);
   --line-accent: rgba(232,176,107,.50);
@@ -37,17 +37,17 @@
   --tint-2: rgba(232,176,107,.10);
   --tint-3: rgba(232,176,107,.14);
   --tint-4: rgba(232,176,107,.22);
-  --glass: rgba(26,21,18,.80);
-  --glass-strong: rgba(24,19,16,.92);
-  --glass-act: rgba(24,19,16,.66);
-  --glass-full: rgba(22,17,14,.97);
+  --glass: rgba(34,27,22,.82);
+  --glass-strong: rgba(30,24,20,.93);
+  --glass-act: rgba(30,24,20,.68);
+  --glass-full: rgba(28,22,18,.97);
   --veil: rgba(8,6,5,.90);
   --veil-soft: rgba(8,6,5,.72);
   --focus-ring: rgba(232,176,107,.15);
   --row-play: linear-gradient(90deg,rgba(232,176,107,.12),var(--card));
-  --disc: radial-gradient(circle at 50% 40%, #332619, #201812 70%);
+  --disc: radial-gradient(circle at 50% 40%, #3a2c1e, #251c14 70%);
   --disc-shadow: 0 18px 50px rgba(0,0,0,.55), inset 0 0 30px rgba(0,0,0,.55);
-  --toast-bg: rgba(42,34,28,.96);
+  --toast-bg: rgba(50,41,34,.96);
   --danger-ink: #f5b8a5;
   --r-lg: 20px;
   --r-md: 14px;

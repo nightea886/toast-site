@@ -87,14 +87,6 @@ window.Store = (function () {
 
   function manifestText() { return JSON.stringify(manifest, null, 2); }
 
-  /* 把当前 manifest 提交回仓库 */
-  async function saveManifest(message) {
-    if (!token() || !repo()) throw new Error('NO_CONFIG');
-    await window.GH.commitFiles(repo(), branch(),
-      [{ path: 'data/manifest.json', blob: window.GH.blobFromText(manifestText()) }],
-      message || 'chore: 更新 manifest');
-  }
-
   /* 提交前基线：GitHub head 实时清单。部署产物有分钟级延迟，拿它当基线
      会在部署窗口内把别人已提交的条目覆盖丢掉；API 不可用时回退 CDN 副本 */
   async function freshManifest() {
@@ -162,6 +154,12 @@ window.Store = (function () {
     await commitWith(mm => { mm.playlist = localPlaylist; }, () => [], message || 'chore: 更新歌单');
   }
 
+  /* 通用清单编辑提交：mutator 叠加到服务器最新清单（重命名/改分类/标签增删等用） */
+  async function saveManifestApply(mutator, message) {
+    if (!token() || !repo()) throw new Error('NO_CONFIG');
+    await commitWith(mutator, () => [], message || 'chore: 更新 manifest');
+  }
+
   function mediaUrl(path) { return path; } // 媒体与站点同仓库同目录，相对路径即可
 
   /* 部署窗口内媒体兜底：静态路径 404 时经 GitHub API 取回 blob 转 objectURL（按 path 缓存） */
@@ -180,7 +178,7 @@ window.Store = (function () {
     cfg, token, repo, branch,
     gateOk, setGateOk, clearGate, clearToken, setTokenLocal, role, myId, sha256hex,
     decryptToken, encryptToken, mediaObjectUrl,
-    loadManifest, get, set, manifestText, saveManifest, commitUploads, commitDelete, isPending,
+    loadManifest, get, set, manifestText, saveManifest, saveManifestApply, commitUploads, commitDelete, isPending,
     mediaUrl, uid, today
   };
 })();
