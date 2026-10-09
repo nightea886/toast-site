@@ -151,13 +151,6 @@
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
     {
-      "id": "mv0pez8kq4zf6",
-      "title": "小丑",
-      "file": "media/stickers/mv0pez8jjw975-image_1791534179325.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl"
-    },
-    {
       "id": "mv0pf4e7hvl80",
       "title": "乌龟",
       "file": "media/stickers/mv0pf4e6lvclt-image_1791534241110.jpg",
@@ -1551,5 +1544,5 @@
     "日常",
     "其他"
   ],
-  "rev": 39
+  "rev": 40
 }
