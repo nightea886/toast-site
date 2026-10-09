@@ -219,6 +219,13 @@
       "file": "media/stickers/mv0rnh9x8s2cr-10665.jpeg",
       "date": "2026-10-09",
       "uploader": "u-1uewlfhcmv0rbj8r"
+    },
+    {
+      "id": "mv0rnqfdzn543",
+      "title": "光头",
+      "file": "media/stickers/mv0rnqfdciqam-10667.jpeg",
+      "date": "2026-10-09",
+      "uploader": "u-1uewlfhcmv0rbj8r"
     }
   ],
   "songs": [
@@ -1600,5 +1607,5 @@
     "日常",
     "其他"
   ],
-  "rev": 54
+  "rev": 55
 }
