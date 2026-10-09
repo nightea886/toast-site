@@ -48,46 +48,6 @@
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "cosplay"
-    },
-    {
-      "id": "mv0nuwhgt8pjc",
-      "title": "_stR1",
-      "file": "media/albums/mv0nuwhgd4puh-_st1.png",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nuwhg30qaf",
-      "title": "_stR2",
-      "file": "media/albums/mv0nuwhgye8lk-_st2.png",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nuwhgiptcd",
-      "title": "_st3",
-      "file": "media/albums/mv0nuwhg65ab8-_st3.png",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "cat": "cosplay"
-    },
-    {
-      "id": "mv0nuwxk9s772",
-      "title": "_st5",
-      "file": "media/albums/mv0nuwlc1x4bn-_st5.png",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0nuwxk29aak",
-      "title": "_st6",
-      "file": "media/albums/mv0nuwlch56da-_st6.png",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1006,24 +966,6 @@
       "dur": 256,
       "date": "2026-10-09",
       "uploader": "bili-import"
-    },
-    {
-      "id": "mv0nux202juzt",
-      "title": "_ss2",
-      "singer": "压测歌手",
-      "file": "media/songs/mv0nux0w0qcff-_ss2.wav",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "dur": 1
-    },
-    {
-      "id": "mv0nux841mirs",
-      "title": "_ss3",
-      "singer": "吐司大王",
-      "file": "media/songs/mv0nux489srpm-_ss3.wav",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "dur": 1
     }
   ],
   "playlist": {
@@ -1502,5 +1444,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 18
+  "rev": 19
 }
