@@ -104,6 +104,14 @@
       "date": "2026-10-09",
       "uploader": "u-5yqalioqmv0qlvjr",
       "cat": "其他"
+    },
+    {
+      "id": "mv0r1ns1q5non",
+      "title": "2",
+      "file": "media/albums/mv0r1ns1bsi0h-微信图片_20260808151741_10186_20.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1543,5 +1551,5 @@
     "日常",
     "其他"
   ],
-  "rev": 46
+  "rev": 47
 }
