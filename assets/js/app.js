@@ -505,7 +505,10 @@
       const m = Store.get();
       const commits = [];
       const newEntries = [];
-      for (const f of files) {
+      for (let fi = 0; fi < files.length; fi++) {
+        const f = files[fi];
+        if (f.size > 80 * 1024 * 1024) { toast(`「${f.name}」超过 80MB 已跳过`, true); continue; }
+        toast(`上传中 ${fi + 1}/${files.length}：${f.name}`);
         const base64 = await GH.fileToBase64(f);
         const safe = f.name.replace(/[\\/:*?"<>|]/g, '_');
         const dir = kind === 'album' ? 'albums' : kind === 'sticker' ? 'stickers' : 'songs';
@@ -606,12 +609,23 @@
   window.addEventListener('scroll', () => { toTop.classList.toggle('show', window.scrollY > 600); }, { passive: true });
   toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  /* 轮询 manifest：其他设备上传/删除后本页自动更新，免手动刷新 */
+  /* 轮询 manifest：其他设备上传/删除后本页自动更新，免手动刷新。
+     带凭证时读 GitHub head 实时清单（秒级看见他人上传，不等部署）；无凭证回退 CDN 副本 */
   let manifestSig = '';
+  async function fetchManifestText() {
+    if (Store.token()) {
+      try {
+        const r = await window.GH.readContent(Store.repo(), 'data/manifest.json');
+        return r.text;
+      } catch (e) { /* 落到 CDN 回退 */ }
+    }
+    const res = await fetch('data/manifest.json?t=' + Date.now(), { cache: 'no-store' });
+    return res.ok ? await res.text() : null;
+  }
   async function syncManifestBaseline() {
     try {
-      const res = await fetch('data/manifest.json?t=' + Date.now(), { cache: 'no-store' });
-      if (res.ok) manifestSig = await res.text();
+      const txt = await fetchManifestText();
+      if (txt) manifestSig = txt;
     } catch (e) { /* ignore */ }
   }
   setInterval(async () => {
@@ -619,10 +633,8 @@
     if (!$('#plManage').hidden) return;          // 歌单编辑中有未保存修改时不覆盖
     if (Store.isPending()) return;               // 本机提交进行中不轮询覆盖
     try {
-      const res = await fetch('data/manifest.json?t=' + Date.now(), { cache: 'no-store' });
-      if (!res.ok) return;
-      const txt = await res.text();
-      if (txt === manifestSig) return;
+      const txt = await fetchManifestText();
+      if (!txt || txt === manifestSig) return;
       const parsed = JSON.parse(txt);
       manifestSig = txt;
       if (JSON.stringify(parsed) === JSON.stringify(Store.get())) return; // 本机刚提交的内容，无需提示

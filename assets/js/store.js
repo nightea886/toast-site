@@ -89,8 +89,15 @@ window.Store = (function () {
       message || 'chore: 更新 manifest');
   }
 
-  /* 提交前拉取服务器最新 manifest 作为基线，避免本机旧内存清单覆盖/复活他端改动 */
+  /* 提交前基线：GitHub head 实时清单。部署产物有分钟级延迟，拿它当基线
+     会在部署窗口内把别人已提交的条目覆盖丢掉；API 不可用时回退 CDN 副本 */
   async function freshManifest() {
+    if (token() && repo()) {
+      try {
+        const r = await window.GH.readContent(repo(), 'data/manifest.json');
+        return JSON.parse(r.text);
+      } catch (e) { /* 落到 CDN 回退 */ }
+    }
     try {
       const res = await fetch('data/manifest.json?t=' + Date.now(), { cache: 'no-store' });
       if (res.ok) return await res.json();
@@ -114,7 +121,8 @@ window.Store = (function () {
         return;
       } catch (e) {
         lastErr = e;
-        if (!/409|422|conflict/i.test(String(e.message))) throw e;
+        if (!/409|422|conflict|rate limit/i.test(String(e.message))) throw e;
+        await new Promise(r => setTimeout(r, 800 * (attempt + 1)));
       } finally { pending--; }
     }
     throw lastErr;
