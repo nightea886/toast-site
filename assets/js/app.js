@@ -385,6 +385,18 @@
       wrap.appendChild(row);
     });
   }
+  /* 播放状态原地同步：只改行类名/序号/按钮图标，不重建列表，杜绝整列刷新闪烁 */
+  function syncPlayState() {
+    $$('#songList .song-row').forEach(row => {
+      const i = +row.dataset.idx;
+      const isCur = i === cur;
+      row.classList.toggle('playing', isCur);
+      const idxEl = row.querySelector('.song-idx');
+      if (idxEl) idxEl.textContent = isCur ? '♪' : String(i + 1);
+      const btn = row.querySelector('[data-act="play"]');
+      if (btn) btn.innerHTML = (isCur && !audio.paused) ? IC_PAUSE : IC_PLAY;
+    });
+  }
   document.addEventListener('input', e => {
     if (e.target.id === 'songSearch') { songQuery = e.target.value; renderSongs(); }
   });
@@ -440,7 +452,7 @@
     $('#plSinger').textContent = s.singer || '吐司大王';
     $('#npTitle').textContent = s.title;
     $('#npSinger').textContent = s.singer || '吐司大王';
-    renderSongs();
+    syncPlayState();
   }
   function togglePause() {
     if (cur < 0) { playAt(0); return; }
@@ -448,11 +460,11 @@
   }
   audio.addEventListener('play', () => {
     $('#plPlay').innerHTML = IC_PAUSE; $('#npPlay').innerHTML = IC_PAUSE;
-    $('#nowplay').classList.add('playing'); renderSongs();
+    $('#nowplay').classList.add('playing'); syncPlayState();
   });
   audio.addEventListener('pause', () => {
     $('#plPlay').innerHTML = IC_PLAY; $('#npPlay').innerHTML = IC_PLAY;
-    $('#nowplay').classList.remove('playing'); renderSongs();
+    $('#nowplay').classList.remove('playing'); syncPlayState();
   });
   audio.addEventListener('timeupdate', () => {
     const v = audio.duration ? Math.round(audio.currentTime / audio.duration * 1000) : 0;
@@ -461,13 +473,68 @@
     $('#npCur').textContent = fmtTime(audio.currentTime);
     $('#npDur').textContent = fmtTime(audio.duration);
   });
-  audio.addEventListener('ended', () => {
+  /* 播放模式：顺序 / 循环 / 随机，本机记忆 */
+  const PM_MODES = ['seq', 'loop', 'shuffle'];
+  const PM_LABEL = { seq: '顺序播放', loop: '循环播放', shuffle: '随机播放' };
+  const PM_ICON = {
+    seq: '<svg viewBox="0 0 24 24"><path d="M3 6h11"/><path d="M3 12h11"/><path d="M3 18h7"/><path d="m16 14 5 4-5 4z"/></svg>',
+    loop: '<svg viewBox="0 0 24 24"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>',
+    shuffle: '<svg viewBox="0 0 24 24"><path d="M2 18h1.4c1.3 0 2.5-.6 3.3-1.7l6.1-8.6c.8-1.1 2-1.7 3.3-1.7H22"/><path d="m18 2 4 4-4 4"/><path d="M2 6h1.9c1.5 0 2.9.9 3.6 2.2"/><path d="M22 18h-5.9c-1.3 0-2.6-.7-3.3-1.8l-.5-.8"/><path d="m18 14 4 4-4 4"/></svg>',
+  };
+  let playMode = PM_MODES.includes(localStorage.getItem('tk_playmode')) ? localStorage.getItem('tk_playmode') : 'seq';
+  function applyModeUI() {
+    ['#plMode', '#npMode'].forEach(sel => {
+      const b = $(sel);
+      if (!b) return;
+      b.innerHTML = PM_ICON[playMode];
+      b.title = PM_LABEL[playMode];
+      b.classList.toggle('mode-active', playMode !== 'seq');
+    });
+  }
+  function cycleMode() {
+    playMode = PM_MODES[(PM_MODES.indexOf(playMode) + 1) % PM_MODES.length];
+    localStorage.setItem('tk_playmode', playMode);
+    applyModeUI();
+    toast(PM_LABEL[playMode]);
+  }
+  $('#plMode').addEventListener('click', cycleMode);
+  $('#npMode').addEventListener('click', cycleMode);
+  applyModeUI();
+  function randIdx() {
     const n = Store.get().songs.length;
-    if (cur + 1 < n) playAt(cur + 1); else { audio.pause(); audio.currentTime = 0; }
+    if (n < 2) return 0;
+    let r = cur;
+    while (r === cur) r = Math.floor(Math.random() * n);
+    return r;
+  }
+  function nextIdx() {
+    const n = Store.get().songs.length;
+    if (!n) return -1;
+    if (playMode === 'shuffle') return randIdx();
+    if (cur + 1 < n) return cur + 1;
+    return playMode === 'loop' ? 0 : -1;
+  }
+  function prevIdx() {
+    const n = Store.get().songs.length;
+    if (!n) return -1;
+    if (playMode === 'shuffle') return randIdx();
+    if (cur > 0) return cur - 1;
+    return playMode === 'loop' ? n - 1 : -1;
+  }
+  audio.addEventListener('ended', () => {
+    const ni = nextIdx();
+    if (ni < 0) { audio.pause(); audio.currentTime = 0; }
+    else playAt(ni);
   });
   $('#plPlay').addEventListener('click', togglePause);
-  $('#plPrev').addEventListener('click', () => playAt(Math.max(0, cur - 1)));
-  $('#plNext').addEventListener('click', () => playAt(Math.min(Store.get().songs.length - 1, cur + 1)));
+  $('#plPrev').addEventListener('click', () => {
+    const pi = prevIdx();
+    if (pi < 0) toast('已经是第一首啦'); else playAt(pi);
+  });
+  $('#plNext').addEventListener('click', () => {
+    const ni = nextIdx();
+    if (ni < 0) toast('已经是最后一首啦'); else playAt(ni);
+  });
   $('#plSeek').addEventListener('input', e => {
     if (audio.duration) audio.currentTime = e.target.value / 1000 * audio.duration;
   });
@@ -490,11 +557,17 @@
     $('#player').hidden = true;
     $('#nowplay').hidden = true;
     document.body.classList.remove('has-player');
-    renderSongs();
+    syncPlayState();
   });
   $('#npPlay').addEventListener('click', togglePause);
-  $('#npPrev').addEventListener('click', () => playAt(Math.max(0, cur - 1)));
-  $('#npNext').addEventListener('click', () => playAt(Math.min(Store.get().songs.length - 1, cur + 1)));
+  $('#npPrev').addEventListener('click', () => {
+    const pi = prevIdx();
+    if (pi < 0) toast('已经是第一首啦'); else playAt(pi);
+  });
+  $('#npNext').addEventListener('click', () => {
+    const ni = nextIdx();
+    if (ni < 0) toast('已经是最后一首啦'); else playAt(ni);
+  });
   $('#plVol').addEventListener('input', e => { audio.volume = e.target.value / 100; });
   audio.volume = .8;
 

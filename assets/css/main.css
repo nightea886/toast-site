@@ -117,6 +117,7 @@ code{background:var(--code-bg);padding:1px 6px;border-radius:6px;font-size:12px}
   transition:background .18s,color .18s,transform .18s;
 }
 .icon-btn:hover{background:var(--tint-2);color:var(--accent);transform:translateY(-1px)}
+.icon-btn.mode-active{color:var(--accent)}
 
 /* ---------- 门禁 ---------- */
 .gate{
