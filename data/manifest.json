@@ -96,6 +96,14 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
+    },
+    {
+      "id": "mv0qmadgryfzu",
+      "title": "蓉琳",
+      "file": "media/albums/mv0qmadfe5cq6-c3ffed717395967a0d484d369ec73018.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-5yqalioqmv0qlvjr",
+      "cat": "其他"
     }
   ],
   "stickers": [
@@ -1528,5 +1536,5 @@
     "日常",
     "其他"
   ],
-  "rev": 44
+  "rev": 45
 }
