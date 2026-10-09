@@ -72,6 +72,22 @@
       "date": "2026-10-09",
       "uploader": "stresstest",
       "cat": "cosplay"
+    },
+    {
+      "id": "mv0nuwxk9s772",
+      "title": "_st5",
+      "file": "media/albums/mv0nuwlc1x4bn-_st5.png",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nuwxk29aak",
+      "title": "_st6",
+      "file": "media/albums/mv0nuwlch56da-_st6.png",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1468,5 +1484,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 13
+  "rev": 14
 }
