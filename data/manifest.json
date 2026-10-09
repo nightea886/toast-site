@@ -149,6 +149,13 @@
       "file": "media/stickers/mv0perqtwmmmp-image_1791534202852.jpg",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl"
+    },
+    {
+      "id": "mv0pez8kq4zf6",
+      "title": "小丑",
+      "file": "media/stickers/mv0pez8jjw975-image_1791534179325.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl"
     }
   ],
   "songs": [
@@ -1530,5 +1537,5 @@
     "日常",
     "其他"
   ],
-  "rev": 36
+  "rev": 37
 }
