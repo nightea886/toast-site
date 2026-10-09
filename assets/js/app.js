@@ -42,7 +42,7 @@
   }
 
   /* ================= 门禁 ================= */
-  function showGate() { $('#gate').hidden = false; setTimeout(() => $('#gateInput').focus(), 60); }
+  function showGate() { document.documentElement.classList.remove('gate-ok'); $('#gate').hidden = false; setTimeout(() => $('#gateInput').focus(), 60); }
   function hideGate() { $('#gate').hidden = true; }
   $('#gateForm').addEventListener('submit', async e => {
     e.preventDefault();
@@ -137,9 +137,10 @@
       };
       $('#nameOk').onclick = () => {
         const v = $('#nameIn').value.trim();
-        if (!v) { toast('先起个名字才能上传哦', true); return; }
+        if (!v) { toast('先起个名字才能上传哦', false, 'name'); return; }
         done(v);
       };
+      $('#nameClear').onclick = () => { $('#nameIn').value = ''; $('#nameIn').focus(); };
       $('#nameCancel').onclick = () => done(null);
     });
   }
@@ -263,8 +264,32 @@
     const editable = canDelete(it);
     $('#lbRename').hidden = !editable;
     $('#lbTag').hidden = !editable || lbKind !== 'album';
+    [1, -1].forEach(d => {           // 预载邻图，滑动不等网络
+      const nb = lbList[(lbIdx + d + lbList.length) % lbList.length];
+      if (nb) { const im = new Image(); im.src = Store.mediaUrl(nb.file); }
+    });
   }
-  function lbStep(d) { lbIdx = (lbIdx + d + lbList.length) % lbList.length; paintLightbox(); }
+  function lbStep(d, animate) {
+    const n = lbList.length;
+    if (!n) return;
+    const ni = (lbIdx + d + n) % n;
+    const oldSrc = $('#lbImg').src;
+    lbIdx = ni;
+    paintLightbox();
+    const img = $('#lbImg');
+    img.style.transform = '';
+    if (animate === false) return;
+    const cls = d > 0 ? 'next' : 'prev';
+    const g = document.createElement('img');   // 旧图残影滑出
+    g.className = 'lb-ghost g-' + cls;
+    g.src = oldSrc; g.alt = '';
+    $('#lbFig').appendChild(g);
+    g.addEventListener('animationend', () => g.remove(), { once: true });
+    img.classList.remove('in-next', 'in-prev');
+    void img.offsetWidth;
+    img.classList.add('in-' + cls);
+    img.addEventListener('animationend', () => img.classList.remove('in-next', 'in-prev'), { once: true });
+  }
   $('#lbPrev').addEventListener('click', () => lbStep(-1));
   $('#lbNext').addEventListener('click', () => lbStep(1));
   $('#lbClose').addEventListener('click', closeLightbox);
@@ -297,12 +322,12 @@
     const it = lbList[lbIdx]; if (!it) return;
     change(it);
     renderMedia(); paintLightbox();
+    toast('已保存 🍞'); // 乐观提示：提交在后台排队进行，失败会回滚并报错
     try {
       await Store.saveManifestApply(mm => {
         const x = finder(mm);
         if (x) change(x);
       }, msg);
-      toast('已保存 🍞');
     } catch (e) {
       rollbackChange(it);
       toast('保存失败已还原：' + (e.message === 'NO_CONFIG' ? '缺少上传凭证' : e.message), true);
@@ -311,7 +336,7 @@
   }
   $('#lbRename').addEventListener('click', async () => {
     const it = lbList[lbIdx]; if (!it) return;
-    const nm = await askName(it.title, '改成新名字');
+    const nm = await askName(it.title, '修改图片名');
     if (!nm || nm === it.title) return;
     const old = it.title;
     await saveMediaEdit(`rename: ${lbKind} 「${old}」→「${nm}」`,
@@ -329,15 +354,34 @@
       x => { x.cat = tag; },
       x => { x.cat = old; });
   });
-  /* 手机端左右滑动浏览大图 */
-  let touchX = null;
-  $('#lightbox').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
-  $('#lightbox').addEventListener('touchend', e => {
-    if (touchX == null) return;
-    const dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 40) lbStep(dx < 0 ? 1 : -1);
-    touchX = null;
-  }, { passive: true });
+  /* 相册式拖拽跟手：手机滑动/桌面鼠标拖拽通用（pointer 事件） */
+  let dragX = null, dragDx = 0;
+  $('#lbImg').addEventListener('pointerdown', e => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    dragX = e.clientX; dragDx = 0;
+    const el = $('#lbImg');
+    el.style.transition = 'none';
+    if (el.setPointerCapture) { try { el.setPointerCapture(e.pointerId); } catch (err) {} }
+  });
+  $('#lightbox').addEventListener('pointermove', e => {
+    if (dragX == null) return;
+    dragDx = e.clientX - dragX;
+    $('#lbImg').style.transform = 'translateX(' + (dragDx * .92) + 'px)';
+  });
+  const dragEnd = () => {
+    if (dragX == null) return;
+    const dx = dragDx; dragX = null; dragDx = 0;
+    const el = $('#lbImg');
+    el.style.transition = '';
+    if (Math.abs(dx) > 70) { lbStep(dx < 0 ? 1 : -1); }
+    else {
+      el.classList.add('lb-spring');
+      el.style.transform = 'translateX(0)';
+      setTimeout(() => { el.classList.remove('lb-spring'); el.style.transform = ''; }, 280);
+    }
+  };
+  $('#lightbox').addEventListener('pointerup', dragEnd);
+  $('#lightbox').addEventListener('pointercancel', dragEnd);
 
   /* ================= 渲染：歌曲 + 播放器 ================= */
   const IC_PLAY = '<svg viewBox="0 0 24 24"><polygon points="7 4 20 12 7 20 7 4"/></svg>';
@@ -699,7 +743,6 @@
       cat = await askCat();
       if (!cat) return; // 取消上传
     }
-    toast('上传中');
     try {
       const m = Store.get();
       const commits = [];
@@ -709,7 +752,7 @@
         if (f.size > 80 * 1024 * 1024) { toast(`「${f.name}」超过 80MB 已跳过`, true); continue; }
         let imgName = null;
         if (kind !== 'song') {
-          imgName = await askName('', '给这张图起个名字（必填）');
+          imgName = await askName('', '输入图片名');
           if (!imgName) return; // 不输入名字 = 不上传
         }
         toast(`上传中 ${fi + 1}/${files.length}：${f.name}`);
@@ -796,15 +839,17 @@
     const v = $('#newTag').value.trim();
     if (!v) return;
     if (albumTags().includes(v)) { toast('标签已存在', true); return; }
-    const next = albumTags().concat([v]);
+    const prev = albumTags();
+    const next = prev.concat([v]);
     Store.get().albumTags = next;
     $('#newTag').value = '';
     renderAlbumChips(); renderTagTool();
+    toast('标签已添加 🍞'); // 乐观提示，后台提交
     try {
       await Store.saveManifestApply(mm => { mm.albumTags = next.slice(); }, `chore: 新增相册标签「${v}」`);
-      toast('标签已添加 🍞');
     } catch (e) {
-      toast('保存失败：' + e.message, true);
+      Store.get().albumTags = prev;
+      toast('保存失败已还原：' + e.message, true);
       await Store.loadManifest(); renderAlbumChips(); renderTagTool();
     }
   });

@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
+<script>/* 门禁防闪：首帧前按本地凭证标记隐藏门禁，避免"先闪密码页再进站" */
+if (localStorage.getItem('tk_gate_ok')) document.documentElement.classList.add('gate-ok');</script>
 <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -13,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"></noscript>
-<link rel="stylesheet" href="assets/css/main.css?v=20261009t">
+<link rel="stylesheet" href="assets/css/main.css?v=20261009u">
 </head>
 <body>
 
@@ -157,7 +159,7 @@
 <div class="lightbox" id="lightbox" hidden>
   <button class="lb-close" id="lbClose" aria-label="关闭">✕</button>
   <button class="lb-nav lb-prev" id="lbPrev" aria-label="上一张">‹</button>
-  <figure class="lb-fig">
+  <figure class="lb-fig" id="lbFig">
     <img id="lbImg" alt="">
     <figcaption id="lbCap" hidden></figcaption>
   </figure>
@@ -265,7 +267,7 @@
 <div class="askbox" id="nameBox" hidden>
   <div class="ask-card">
     <p id="nameTip">给这张图起个名字</p>
-    <input id="nameIn" type="text" maxlength="40" placeholder="输入图片名字（必填）" autocomplete="off">
+    <div class="row"><input id="nameIn" type="text" maxlength="40" placeholder="输入图片名（必填）" autocomplete="off"><button class="icon-btn name-clear" id="nameClear" title="清空" type="button">✕</button></div>
     <div class="ask-acts">
       <button class="btn btn-ghost" id="nameCancel">取消</button>
       <button class="btn btn-primary" id="nameOk">确定</button>
@@ -288,11 +290,11 @@
 <div class="toasts" id="toasts"></div>
 <input type="file" id="filePick" hidden multiple>
 
-<script src="assets/js/runtime.js?v=20261009t"></script>
-<script src="assets/js/config.js?v=20261009t"></script>
-<script src="assets/js/gh.js?v=20261009t"></script>
-<script src="assets/js/store.js?v=20261009t"></script>
-<script src="assets/js/playlist.js?v=20261009t"></script>
-<script src="assets/js/app.js?v=20261009t"></script>
+<script src="assets/js/runtime.js?v=20261009u"></script>
+<script src="assets/js/config.js?v=20261009u"></script>
+<script src="assets/js/gh.js?v=20261009u"></script>
+<script src="assets/js/store.js?v=20261009u"></script>
+<script src="assets/js/playlist.js?v=20261009u"></script>
+<script src="assets/js/app.js?v=20261009u"></script>
 </body>
 </html>

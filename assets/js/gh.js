@@ -63,8 +63,10 @@ window.GH = (function () {
   }
 
   /* files: [{ path, blob: {content, encoding} }] 或 [{ path, del: true }]（删除该路径）；message: commit 信息 */
-  async function commitFiles(repo, branch, files, message) {
+  async function commitFiles(repo, branch, files, message, expectedBase) {
     const ref = await api(repo, `/git/refs/heads/${branch}`);
+    /* 基线在读完后被别人推进（跨标签/跨设备并发）→ 按冲突处理，交由上层重放，防静默覆盖 */
+    if (expectedBase && ref.object.sha !== expectedBase) throw new Error('409 base moved during commit');
     const baseSha = ref.object.sha;
     const baseCommit = await api(repo, `/git/commits/${baseSha}`);
     const baseTree = baseCommit.tree.sha;
@@ -113,6 +115,19 @@ window.GH = (function () {
     const r = await api(repo, `/contents/${path}`);
     return { sha: r.sha, text: decodeURIComponent(escape(atob(r.content.replace(/\n/g, '')))) };
   }
+  /* 强一致读清单：refs→commit→tree→blob，写后立即可读（/contents 有读后写延迟） */
+  async function headManifest(repo, branch) {
+    const ref = await api(repo, `/git/refs/heads/${branch}`);
+    const commit = await api(repo, `/git/commits/${ref.object.sha}`);
+    const tree = await api(repo, `/git/trees/${commit.tree.sha}?recursive=1`);
+    const entry = tree.tree.find(t => t.path === 'data/manifest.json');
+    if (!entry) throw new Error('manifest.json not in head tree');
+    const blob = await api(repo, `/git/blobs/${entry.sha}`);
+    const m = JSON.parse(decodeURIComponent(escape(atob(blob.content.replace(/\n/g, '')))));
+    /* 记录读取时的 head sha（不可枚举属性，不会被序列化进清单），供提交时校验基线是否被推进 */
+    Object.defineProperty(m, '__baseSha', { value: ref.object.sha });
+    return m;
+  }
   async function writeContent(repo, path, text, message) {
     const cur = await api(repo, `/contents/${path}`);
     return api(repo, `/contents/${path}`, {
@@ -127,5 +142,5 @@ window.GH = (function () {
     return !!ref.object.sha;
   }
 
-  return { api, commitFiles, fileToBase64, blobFromBinary, blobFromText, test, readContent, rawContent, writeContent };
+  return { api, commitFiles, fileToBase64, blobFromBinary, blobFromText, test, readContent, rawContent, writeContent, headManifest };
 })();

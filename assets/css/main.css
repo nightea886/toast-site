@@ -130,6 +130,7 @@ code{background:var(--code-bg);padding:1px 6px;border-radius:6px;font-size:12px}
   padding:24px;
 }
 .gate[hidden]{display:none}
+html.gate-ok .gate{display:none}
 .gate-card{
   width:min(400px,100%);text-align:center;
   background:linear-gradient(180deg,var(--card-2),var(--card));
@@ -301,8 +302,19 @@ body.lb-open{overflow:hidden}
   animation:fadeIn .25s ease both;overscroll-behavior:contain;touch-action:none;
 }
 .lightbox[hidden]{display:none}
-.lb-fig{max-width:min(88vw,1100px);text-align:center;animation:rise .3s ease both}
-.lb-fig img{max-height:78vh;max-width:100%;margin:0 auto;border-radius:var(--r-md);box-shadow:var(--shadow);background:var(--card)}
+.lb-fig{max-width:min(88vw,1100px);text-align:center;animation:rise .3s ease both;position:relative}
+.lb-fig img{max-height:78vh;max-width:100%;margin:0 auto;border-radius:var(--r-md);box-shadow:var(--shadow);background:var(--card);touch-action:pan-y}
+.lb-fig img.lb-spring{transition:transform .26s cubic-bezier(.2,.8,.3,1)}
+/* 相册式翻页：旧图滑出 + 新图滑入 */
+.lb-ghost{position:absolute;inset:0;margin:auto;max-height:78vh;max-width:100%;object-fit:contain;pointer-events:none;border-radius:var(--r-md)}
+.lb-ghost.g-next{animation:lbOutNext .26s ease both}
+.lb-ghost.g-prev{animation:lbOutPrev .26s ease both}
+#lbImg.in-next{animation:lbInNext .26s ease both}
+#lbImg.in-prev{animation:lbInPrev .26s ease both}
+@keyframes lbOutNext{to{transform:translateX(-34%);opacity:0}}
+@keyframes lbInNext{from{transform:translateX(34%);opacity:0}to{transform:none;opacity:1}}
+@keyframes lbOutPrev{to{transform:translateX(34%);opacity:0}}
+@keyframes lbInPrev{from{transform:translateX(-34%);opacity:0}to{transform:none;opacity:1}}
 .lb-fig figcaption{margin-top:12px;color:var(--muted);font-size:13px}
 .lb-close{position:absolute;top:18px;right:20px;font-size:20px;color:var(--muted);width:44px;height:44px;border-radius:50%;border:1px solid var(--line)}
 .lb-close:hover{color:var(--ink);background:var(--tint-2)}
@@ -547,6 +559,8 @@ body.has-player .main{padding-bottom:calc(var(--player-h) + 46px)}
   border-radius:10px;padding:9px 12px;color:var(--ink);outline:none;font-size:14px;
 }
 .ask-card input:focus{border-color:var(--accent)}
+.ask-card .row input{flex:1;width:auto;min-width:0}
+.name-clear{width:34px;height:34px;flex:none;font-size:14px}
 
 /* ---------- 回到顶部 ---------- */
 #toTop{
