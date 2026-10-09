@@ -1008,15 +1008,6 @@
       "uploader": "bili-import"
     },
     {
-      "id": "mv0nux20iwo70",
-      "title": "_ss1",
-      "singer": "吐司大王",
-      "file": "media/songs/mv0nux0wxvh48-_ss1.wav",
-      "date": "2026-10-09",
-      "uploader": "stresstest",
-      "dur": 1
-    },
-    {
       "id": "mv0nux202juzt",
       "title": "_ss2",
       "singer": "吐司大王",
@@ -1502,5 +1493,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 15
+  "rev": 16
 }
