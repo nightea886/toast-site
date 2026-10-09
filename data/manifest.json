@@ -966,6 +966,15 @@
       "dur": 256,
       "date": "2026-10-09",
       "uploader": "bili-import"
+    },
+    {
+      "id": "mv0kwnsd24vh3",
+      "title": "_链路自验音轨",
+      "singer": "吐司大王",
+      "file": "media/songs/mv0kwns9ubpia-_autotest.wav",
+      "date": "2026-10-09",
+      "uploader": "autotest",
+      "dur": 1
     }
   ],
   "playlist": {
