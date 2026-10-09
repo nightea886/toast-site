@@ -80,6 +80,38 @@
       "date": "2026-10-09",
       "uploader": "conctest",
       "cat": "日常"
+    },
+    {
+      "id": "mv0nezk5s0xtv",
+      "title": "_conc1",
+      "file": "media/albums/mv0nezk58dxrb-_conc1.png",
+      "date": "2026-10-09",
+      "uploader": "conctest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nezk5uvj18",
+      "title": "_conc2",
+      "file": "media/albums/mv0nezk53z0mj-_conc2.png",
+      "date": "2026-10-09",
+      "uploader": "conctest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nezk5focqm",
+      "title": "_conc3",
+      "file": "media/albums/mv0nezk58pilw-_conc3.png",
+      "date": "2026-10-09",
+      "uploader": "conctest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nezk5cv6hc",
+      "title": "_conc4",
+      "file": "media/albums/mv0nezk57f03a-_conc4.png",
+      "date": "2026-10-09",
+      "uploader": "conctest",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1476,5 +1508,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 1
+  "rev": 2
 }
