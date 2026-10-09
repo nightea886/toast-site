@@ -442,10 +442,17 @@ body.lb-open{overflow:hidden}
 .ask-card{
   width:min(340px,100%);background:var(--card-2);border:1px solid var(--line);
   border-radius:var(--r-lg);padding:26px 24px 20px;text-align:center;box-shadow:var(--shadow);
-  animation:rise .25s ease both;
+  animation:rise .25s ease both;position:relative;
 }
+/* 弹窗右上圆圈叉叉 */
+.ask-close{
+  position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;
+  color:var(--faint);font-size:14px;line-height:1;display:flex;align-items:center;justify-content:center;
+  border:1px solid var(--line-soft);transition:color .15s,background .15s;
+}
+.ask-close:hover{color:var(--ink);background:var(--tint-2)}
 .ask-card p{font-size:14px;line-height:1.7;margin-bottom:18px;word-break:break-all}
-.ask-acts{display:flex;gap:10px;justify-content:center}
+.ask-acts{display:flex;gap:10px;justify-content:center;margin-top:16px}
 
 /* ---------- 歌单长图预览层（微信长按保存） ---------- */
 .posterbox{
@@ -575,11 +582,12 @@ body.has-player .main{padding-bottom:calc(var(--player-h) + 46px)}
 }
 .cat-opt:hover{color:var(--ink);border-color:var(--line-hover)}
 .cat-opt.cur{border-style:dashed;border-color:var(--accent);color:var(--accent)}
-.cat-opt.sel{background:var(--grad);color:var(--on-grad);border:1px solid transparent;font-weight:700;box-shadow:var(--shadow-glow)}
-.cat-opt.sel.cur{border:1px solid transparent}
-/* 分类弹窗的确认/取消与标签分层：虚线分隔 + 方角通栏按钮，不再和药丸标签混淆 */
-#catBox .ask-acts{border-top:1px dashed var(--line-soft);padding-top:14px}
-#catBox .ask-acts .btn{flex:1;border-radius:var(--r-md);padding:10px 18px}
+/* 大图说明文字避开底部操作按钮区 */
+.lb-fig{margin-bottom:90px}
+@media (max-width:860px){
+  .lb-stage{height:calc(58vh + 16px)}
+  .lb-fig{margin-bottom:130px}
+}
 
 /* ---------- 回到顶部 ---------- */
 #toTop{

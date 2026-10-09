@@ -250,9 +250,8 @@
     document.body.classList.add('lb-open'); // 锁背景滚动：手机端滑动切图不再闪滚动条
   }
   function lbSrc(i) {
-    const n = lbList.length;
-    const it = n ? lbList[((i % n) + n) % n] : null;
-    return it ? Store.mediaUrl(it.file) : '';
+    const it = lbList[i];
+    return it ? Store.mediaUrl(it.file) : '';   // 边界不回绕：外侧槽留空，杜绝露出半张别的图
   }
   function paintLightbox() {
     const it = lbList[lbIdx];
@@ -269,7 +268,7 @@
     $('#lbDl').setAttribute('download', it.file.split('/').pop());
     $('#lbDel').hidden = !canDelete(it);
     const cap = $('#lbCap');
-    cap.textContent = it.title || '';
+    cap.textContent = it.title ? it.title + (lbKind === 'album' ? '（' + normCat(it.cat) + '）' : '') : '';
     cap.hidden = !it.title;
     const editable = canDelete(it);
     $('#lbRename').hidden = !editable;
@@ -308,7 +307,9 @@
     if (dragX == null) return;
     dragDx = e.clientX - dragX;
     if (Math.abs(dragDx) > 8) dragMoved = true;
-    $('#lbStage').style.transform = 'translateX(calc(-33.3333% + ' + (dragDx * .95) + 'px))';
+    let eff = dragDx;
+    if ((lbIdx === 0 && eff > 0) || (lbIdx === lbList.length - 1 && eff < 0)) eff = 0; // 边界越界方向纹丝不动
+    $('#lbStage').style.transform = 'translateX(calc(-33.3333% + ' + (eff * .95) + 'px))';
   });
   const lbDragEnd = () => {
     if (dragX == null) return;
@@ -723,32 +724,36 @@
     });
   }
 
-  /* 分类选择弹窗：展示全部标签，当前分类虚线高亮，选中实心，确认/取消在下方 */
+  /* 分类选择弹窗：点标签即确认（点当前分类=不变关闭）；右上✕与黑色遮罩=取消 */
   function askCat(current) {
     return new Promise(res => {
       const box = $('#catBox');
       const grid = $('#catGrid');
       const tags = albumTags();
-      let sel = current && tags.includes(current) ? current : tags[0];
-      const paint = () => {
-        grid.innerHTML = '';
-        tags.forEach(t => {
-          const b = document.createElement('button');
-          b.type = 'button';
-          b.className = 'cat-opt' + (t === sel ? ' sel' : '') + (t === current ? ' cur' : '');
-          b.textContent = t;
-          b.onclick = () => { sel = t; paint(); };
-          grid.appendChild(b);
-        });
-      };
-      $('#catTip').textContent = current ? '修改分类（当前：' + normCat(current) + '）' : '选择上传分类';
-      paint();
-      box.hidden = false;
+      const cur = current ? normCat(current) : null;
       const done = v => { box.hidden = true; grid.innerHTML = ''; res(v); };
-      $('#catOk').onclick = () => done(!current || sel !== current ? sel : null);
-      $('#catCancel').onclick = () => done(null);
+      grid.innerHTML = '';
+      tags.forEach(t => {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'cat-opt' + (t === cur ? ' cur' : '');
+        b.textContent = t;
+        b.onclick = () => done(t === cur ? null : t);
+        grid.appendChild(b);
+      });
+      $('#catTip').textContent = cur ? '修改分类（当前：' + cur + '）' : '选择上传分类';
+      $('#catClose').onclick = () => done(null);
+      box.hidden = false;
     });
   }
+  /* 所有弹窗：点黑色遮罩 = 取消 */
+  document.addEventListener('click', e => {
+    const box = e.target.closest('.askbox');
+    if (!box || e.target !== box) return;
+    const map = { nameBox: 'nameCancel', catBox: 'catClose', askbox: 'askNo', metaBox: 'metaCancel' };
+    const btn = document.getElementById(map[box.id]);
+    if (btn) btn.click();
+  });
   async function handleFiles(kind, fileList) {
     let files = Array.from(fileList || []);
     if (!files.length) return;
