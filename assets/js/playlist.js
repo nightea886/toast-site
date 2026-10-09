@@ -158,10 +158,10 @@ window.Playlist = (function () {
         const cx = PAD + (i % COLS) * (cw + CARD_GAP);
         const cy = y0 + Math.floor(i / COLS) * (CARD_H + CARD_GAP);
         const cg = ctx.createLinearGradient(0, cy, 0, cy + CARD_H);
-        cg.addColorStop(0, '#FEFFFA'); cg.addColorStop(1, '#F6EEDF');
+        cg.addColorStop(0, '#FEFFFA'); cg.addColorStop(.55, '#FCF9F1'); cg.addColorStop(1, '#F8F1E4');
         rr(ctx, cx, cy, cw, CARD_H, 14);
         ctx.fillStyle = cg; ctx.fill();
-        ctx.strokeStyle = '#F0E3CE'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.strokeStyle = '#EBD9BD'; ctx.lineWidth = 1; ctx.stroke();
         ctx.beginPath(); ctx.arc(cx + 23, cy + CARD_H / 2, 12, 0, 7);
         ctx.fillStyle = '#E9A23B'; ctx.fill();
         seq += 1;
