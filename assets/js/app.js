@@ -61,7 +61,7 @@
           }
         } catch (e) { /* 解密失败时保留已有凭证/种子链接 */ }
         renderAll();
-        toast(isAdmin ? '管理员模式 🍞 可删除任意内容' : '欢迎回家，水友 🍞');
+        toast(isAdmin ? '管理员模式 🍞 可删除任意内容' : '欢迎回家，面包人 🍞');
       } else {
         $('#gateErr').hidden = false;
         const card = $('#gate .gate-card');
