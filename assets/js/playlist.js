@@ -8,9 +8,9 @@
    ========================================================== */
 window.Playlist = (function () {
   const W = 1080, PAD = 56, MIN_H = 1920;
-  const COLS = 5, CARD_GAP = 10, CARD_H = 76;
-  const LABEL_H = 30, LABEL_GAP = 10, GROUP_GAP = 26;
-  /* 分组强调色循环（参照示例图：粉/紫/橙…暖系小药丸标签） */
+  const COLS = 5, CARD_GAP = 16, CARD_H = 60;
+  const LABEL_H = 34, LABEL_GAP = 17, GROUP_GAP = 19;
+  /* 分组强调色循环（参照示例图：粉/紫/橙…暖系虚线小药丸标签） */
   const ACCENTS = ['#E4698A', '#9C7BD4', '#E08A3C', '#C85A6E', '#8E6BC4', '#D97B4F'];
   const tint = (hex, a) => {
     const n = parseInt(hex.slice(1), 16);
@@ -65,7 +65,7 @@ window.Playlist = (function () {
   /* 网页字体异步预加载（镜像源，不阻塞）；超时即用系统字体，保证出图 */
   function ensureFonts() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    const specs = ['900 58px ' + F_SERIF, '700 34px ' + F_SERIF, '600 21px ' + F_SANS, '600 20px ' + F_SANS, '400 24px ' + F_SANS, '400 15px ' + F_SANS];
+    const specs = ['900 58px ' + F_SERIF, '700 34px ' + F_SERIF, '600 16px ' + F_SANS, '400 13px ' + F_SANS, '400 24px ' + F_SANS, '700 12px ' + F_SANS, '400 11px ' + F_SANS];
     return Promise.race([
       Promise.all(specs.map(s => document.fonts.load(s).catch(() => null))),
       new Promise(r => setTimeout(r, 2500)),
@@ -131,42 +131,47 @@ window.Playlist = (function () {
     ctx.fillText(pl.subtitle || '', W / 2, y + 16);
     y += 40 + 36;
 
-    // 分组与歌曲卡片（参照示例图：彩色小药丸组标 + 紧凑细边卡片）；标号跨分组连续
+    // 分组与歌曲卡片（参照示例图：虚线彩色药丸组标 + 暖渐变扁卡 + 琥珀实心序号圆）；标号跨分组连续
     const cw = (W - PAD * 2 - (COLS - 1) * CARD_GAP) / COLS;
     let seq = 0;
     (pl.groups || []).forEach((gr, gi) => {
       const ac = ACCENTS[gi % ACCENTS.length];
-      ctx.font = '600 21px ' + F_SANS;
+      ctx.font = '600 16px ' + F_SANS;
       const nw = ctx.measureText(gr.singer).width;
-      ctx.font = '400 17px ' + F_SANS;
+      ctx.font = '400 13px ' + F_SANS;
       const cnt = `（${(gr.songs || []).length} 首）`;
       const cntw = ctx.measureText(cnt).width;
-      rr(ctx, PAD, y, 34 + nw + 8 + cntw + 16, LABEL_H, 15);
-      ctx.fillStyle = tint(ac, .12); ctx.fill();
-      ctx.fillStyle = ac; ctx.font = '600 16px ' + F_SANS;
-      ctx.fillText('♪', PAD + 16, y + 16);
+      rr(ctx, PAD, y, 32 + nw + 6 + cntw + 14, LABEL_H, LABEL_H / 2);
+      ctx.fillStyle = tint(ac, .1); ctx.fill();
+      ctx.save();
+      ctx.setLineDash([4, 3]); ctx.strokeStyle = tint(ac, .5); ctx.lineWidth = 1; ctx.stroke();
+      ctx.restore();
+      ctx.fillStyle = '#6B5872'; ctx.font = '400 13px ' + F_SANS;
+      ctx.fillText('♬', PAD + 15, y + LABEL_H / 2 + 1);
       ctx.textAlign = 'left';
-      ctx.font = '600 21px ' + F_SANS;
-      ctx.fillText(gr.singer, PAD + 30, y + 16);
-      ctx.font = '400 17px ' + F_SANS; ctx.fillStyle = tint(ac, .8);
-      ctx.fillText(cnt, PAD + 30 + nw + 8, y + 17);
+      ctx.fillStyle = ac; ctx.font = '600 16px ' + F_SANS;
+      ctx.fillText(gr.singer, PAD + 28, y + LABEL_H / 2 + 1);
+      ctx.font = '400 13px ' + F_SANS; ctx.fillStyle = tint(ac, .8);
+      ctx.fillText(cnt, PAD + 28 + nw + 6, y + LABEL_H / 2 + 2);
       const y0 = y + LABEL_H + LABEL_GAP;
       (gr.songs || []).forEach((s, i) => {
         const cx = PAD + (i % COLS) * (cw + CARD_GAP);
         const cy = y0 + Math.floor(i / COLS) * (CARD_H + CARD_GAP);
-        rr(ctx, cx, cy, cw, CARD_H, 12);
-        ctx.fillStyle = '#FFFEFB'; ctx.fill();
-        ctx.strokeStyle = 'rgba(217,142,74,.25)'; ctx.lineWidth = 1; ctx.stroke();
-        ctx.beginPath(); ctx.arc(cx + 22, cy + CARD_H / 2, 12, 0, 7);
-        ctx.fillStyle = tint(ac, .14); ctx.fill();
+        const cg = ctx.createLinearGradient(0, cy, 0, cy + CARD_H);
+        cg.addColorStop(0, '#FEFFFA'); cg.addColorStop(1, '#F6EEDF');
+        rr(ctx, cx, cy, cw, CARD_H, 14);
+        ctx.fillStyle = cg; ctx.fill();
+        ctx.strokeStyle = '#F0E3CE'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx + 23, cy + CARD_H / 2, 12, 0, 7);
+        ctx.fillStyle = '#E9A23B'; ctx.fill();
         seq += 1;
-        ctx.fillStyle = ac; ctx.font = '600 ' + (seq >= 100 ? 11 : 13) + 'px ' + F_SANS;
-        ctx.fillText(String(seq), cx + 22, cy + CARD_H / 2 + 1);
+        ctx.fillStyle = '#FFFDF6'; ctx.font = '700 ' + (seq >= 100 ? 10 : 12) + 'px ' + F_SANS;
+        ctx.fillText(String(seq).padStart(2, '0'), cx + 23, cy + CARD_H / 2 + 1);
         ctx.textAlign = 'left';
-        ctx.fillStyle = '#4A3423';
-        ctx.fillText(drawFit(ctx, songT(s), cw - 46, '600', 20, 13, F_SANS), cx + 42, cy + 28);
-        ctx.fillStyle = '#B49B7F';
-        ctx.fillText(drawFit(ctx, songS(s, gr.singer), cw - 46, '400', 15, 11, F_SANS), cx + 42, cy + 54);
+        ctx.fillStyle = '#3A2E22';
+        ctx.fillText(drawFit(ctx, songT(s), cw - 48, '600', 16, 11, F_SANS), cx + 42, cy + 19);
+        ctx.fillStyle = '#B9A897';
+        ctx.fillText(drawFit(ctx, songS(s, gr.singer), cw - 48, '400', 11, 9, F_SANS), cx + 42, cy + 42);
         ctx.textAlign = 'center';
       });
       y += groupHeight(gr);
