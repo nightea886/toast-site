@@ -48,6 +48,38 @@
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "cosplay"
+    },
+    {
+      "id": "mv0nuwhgt8pjc",
+      "title": "_st1",
+      "file": "media/albums/mv0nuwhgd4puh-_st1.png",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nuwhg30qaf",
+      "title": "_st2",
+      "file": "media/albums/mv0nuwhgye8lk-_st2.png",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nuwhgiptcd",
+      "title": "_st3",
+      "file": "media/albums/mv0nuwhg65ab8-_st3.png",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "cat": "日常"
+    },
+    {
+      "id": "mv0nuwhgx9r44",
+      "title": "_st4",
+      "file": "media/albums/mv0nuwhgivfo3-_st4.png",
+      "date": "2026-10-09",
+      "uploader": "stresstest",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1444,5 +1476,5 @@
     "cosplay",
     "日常"
   ],
-  "rev": 8
+  "rev": 9
 }
