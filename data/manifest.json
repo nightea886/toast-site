@@ -96,6 +96,14 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
+    },
+    {
+      "id": "mv0pdpblf7p5i",
+      "title": "头发飘飘",
+      "file": "media/albums/mv0pdpbk60rhl-image_1791534272697.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1493,5 +1501,5 @@
     "日常",
     "其他"
   ],
-  "rev": 31
+  "rev": 32
 }
