@@ -558,17 +558,6 @@
   function closeDrawer() { $('#drawer').hidden = true; }
   $('#btnSettings').addEventListener('click', openDrawer);
   $('#drawerClose').addEventListener('click', closeDrawer);
-  /* 外观主题：夜间（默认）/ 明亮，偏好存 localStorage（tk_theme） */
-  const themeToggle = $('#themeToggle');
-  function applyTheme(t) {
-    document.documentElement.dataset.theme = t;
-    localStorage.setItem('tk_theme', t);
-    if (themeToggle) themeToggle.checked = (t === 'dark');
-  }
-  if (themeToggle) {
-    themeToggle.checked = (document.documentElement.dataset.theme || 'dark') === 'dark';
-    themeToggle.addEventListener('change', () => applyTheme(themeToggle.checked ? 'dark' : 'light'));
-  }
   /* 一键换密码：改 config.js 哈希行并经 GitHub API 提交，无需手动复制哈希 */
   $('#btnGateHash').addEventListener('click', async () => {
     const code = $('#newGate').value.trim();
