@@ -14,11 +14,14 @@
     return String(s == null ? '' : s).replace(/[&<>"']/g, c => (
       { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   }
-  function toast(msg, err) {
+  function toast(msg, err, ch) {
+    const box = $('#toasts');
+    if (ch) box.querySelectorAll('.toast[data-ch="' + ch + '"]').forEach(t => t.remove()); // 同通道新提示挤掉旧提示
     const d = document.createElement('div');
     d.className = 'toast' + (err ? ' err' : '');
+    if (ch) d.setAttribute('data-ch', ch);
     d.textContent = msg;
-    $('#toasts').appendChild(d);
+    box.appendChild(d);
     setTimeout(() => { d.classList.add('out'); setTimeout(() => d.remove(), 320); }, 2800);
   }
   function downloadUrl(url, name) {
@@ -495,10 +498,10 @@
     playMode = PM_MODES[(PM_MODES.indexOf(playMode) + 1) % PM_MODES.length];
     localStorage.setItem('tk_playmode', playMode);
     applyModeUI();
-    toast(PM_LABEL[playMode]);
+    toast(PM_LABEL[playMode], false, 'mode'); // 同通道互挤：快切不叠提示
   }
-  $('#plMode').addEventListener('click', cycleMode);
-  $('#npMode').addEventListener('click', cycleMode);
+  $('#plMode').addEventListener('click', e => { e.stopPropagation(); cycleMode(); }); // 阻止冒泡到播放条，防误开光碟页
+  $('#npMode').addEventListener('click', e => { e.stopPropagation(); cycleMode(); });
   applyModeUI();
   function randIdx() {
     const n = Store.get().songs.length;
@@ -529,11 +532,11 @@
   $('#plPlay').addEventListener('click', togglePause);
   $('#plPrev').addEventListener('click', () => {
     const pi = prevIdx();
-    if (pi < 0) toast('已经是第一首啦'); else playAt(pi);
+    if (pi < 0) toast('已经是第一首啦', false, 'edge'); else playAt(pi);
   });
   $('#plNext').addEventListener('click', () => {
     const ni = nextIdx();
-    if (ni < 0) toast('已经是最后一首啦'); else playAt(ni);
+    if (ni < 0) toast('已经是最后一首啦', false, 'edge'); else playAt(ni);
   });
   $('#plSeek').addEventListener('input', e => {
     if (audio.duration) audio.currentTime = e.target.value / 1000 * audio.duration;
@@ -562,11 +565,11 @@
   $('#npPlay').addEventListener('click', togglePause);
   $('#npPrev').addEventListener('click', () => {
     const pi = prevIdx();
-    if (pi < 0) toast('已经是第一首啦'); else playAt(pi);
+    if (pi < 0) toast('已经是第一首啦', false, 'edge'); else playAt(pi);
   });
   $('#npNext').addEventListener('click', () => {
     const ni = nextIdx();
-    if (ni < 0) toast('已经是最后一首啦'); else playAt(ni);
+    if (ni < 0) toast('已经是最后一首啦', false, 'edge'); else playAt(ni);
   });
   $('#plVol').addEventListener('input', e => { audio.volume = e.target.value / 100; });
   audio.volume = .8;
