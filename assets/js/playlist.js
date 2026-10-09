@@ -2,14 +2,20 @@
    playlist.js —— 歌单：页面预览 / 管理编辑（仅管理员）/ 9:16 高清长图
    长图为纯 canvas 绘制（2 倍像素、宽 2160）：不依赖任何第三方库，
    规避 html-to-image 在部分环境输出全黑的问题；版式对照示例图：
-   吉祥物 + 渐变标题 + 副标题 + 徽章 + 歌手分组 + 五列歌曲卡片（标号跨组连续、
-   长歌名自动缩字号）+ 页脚 + 边框。
+   吉祥物 + 渐变标题 + 副标题 + 徽章 + 歌手分组（彩色小药丸标签）+ 五列紧凑歌曲
+   卡片（标号跨组连续、长歌名自动缩字号）+ 页脚 + 边框。
    高度不足 1920（9:16）时补底，内容多时自然延伸为长图。
    ========================================================== */
 window.Playlist = (function () {
   const W = 1080, PAD = 56, MIN_H = 1920;
-  const COLS = 5, CARD_GAP = 14, CARD_H = 104;
-  const LABEL_H = 44, LABEL_GAP = 18, GROUP_GAP = 44;
+  const COLS = 5, CARD_GAP = 10, CARD_H = 76;
+  const LABEL_H = 30, LABEL_GAP = 10, GROUP_GAP = 26;
+  /* 分组强调色循环（参照示例图：粉/紫/橙…暖系小药丸标签） */
+  const ACCENTS = ['#E4698A', '#9C7BD4', '#E08A3C', '#C85A6E', '#8E6BC4', '#D97B4F'];
+  const tint = (hex, a) => {
+    const n = parseInt(hex.slice(1), 16);
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+  };
   const F_SERIF = '"Noto Serif SC","Songti SC","STSong","SimSun",serif';
   const F_SANS = '"Noto Sans SC","PingFang SC","Microsoft YaHei",sans-serif';
   const stripEmoji = s => String(s == null ? '' : s).replace(/\p{Extended_Pictographic}|\uFE0F/gu, '').trim();
@@ -59,7 +65,7 @@ window.Playlist = (function () {
   /* 网页字体异步预加载（镜像源，不阻塞）；超时即用系统字体，保证出图 */
   function ensureFonts() {
     if (!document.fonts || !document.fonts.load) return Promise.resolve();
-    const specs = ['900 58px ' + F_SERIF, '700 34px ' + F_SERIF, '600 21px ' + F_SANS, '400 24px ' + F_SANS];
+    const specs = ['900 58px ' + F_SERIF, '700 34px ' + F_SERIF, '600 21px ' + F_SANS, '600 20px ' + F_SANS, '400 24px ' + F_SANS, '400 15px ' + F_SANS];
     return Promise.race([
       Promise.all(specs.map(s => document.fonts.load(s).catch(() => null))),
       new Promise(r => setTimeout(r, 2500)),
@@ -125,44 +131,42 @@ window.Playlist = (function () {
     ctx.fillText(pl.subtitle || '', W / 2, y + 16);
     y += 40 + 36;
 
-    // 分组与歌曲卡片（白卡 + 暖边框 + 轻投影）；标号跨分组连续
+    // 分组与歌曲卡片（参照示例图：彩色小药丸组标 + 紧凑细边卡片）；标号跨分组连续
     const cw = (W - PAD * 2 - (COLS - 1) * CARD_GAP) / COLS;
     let seq = 0;
-    (pl.groups || []).forEach(gr => {
-      rr(ctx, PAD, y + 2, 44, 44, 12);
-      ctx.fillStyle = 'rgba(232,160,76,.18)'; ctx.fill();
-      ctx.strokeStyle = 'rgba(217,142,74,.5)'; ctx.lineWidth = 1.5; ctx.stroke();
-      ctx.fillStyle = '#D98E4A'; ctx.font = '600 24px ' + F_SANS;
-      ctx.fillText('♪', PAD + 22, y + 25);
+    (pl.groups || []).forEach((gr, gi) => {
+      const ac = ACCENTS[gi % ACCENTS.length];
+      ctx.font = '600 21px ' + F_SANS;
+      const nw = ctx.measureText(gr.singer).width;
+      ctx.font = '400 17px ' + F_SANS;
+      const cnt = `（${(gr.songs || []).length} 首）`;
+      const cntw = ctx.measureText(cnt).width;
+      rr(ctx, PAD, y, 34 + nw + 8 + cntw + 16, LABEL_H, 15);
+      ctx.fillStyle = tint(ac, .12); ctx.fill();
+      ctx.fillStyle = ac; ctx.font = '600 16px ' + F_SANS;
+      ctx.fillText('♪', PAD + 16, y + 16);
       ctx.textAlign = 'left';
-      ctx.font = '700 34px ' + F_SERIF; ctx.fillStyle = '#6B4A2F';
-      ctx.fillText(gr.singer, PAD + 58, y + 24);
-      const sw = ctx.measureText(gr.singer).width;
-      ctx.font = '400 24px ' + F_SANS; ctx.fillStyle = '#B49B7F';
-      ctx.fillText(`（${(gr.songs || []).length} 首）`, PAD + 58 + sw + 12, y + 26);
-      ctx.textAlign = 'center';
+      ctx.font = '600 21px ' + F_SANS;
+      ctx.fillText(gr.singer, PAD + 30, y + 16);
+      ctx.font = '400 17px ' + F_SANS; ctx.fillStyle = tint(ac, .8);
+      ctx.fillText(cnt, PAD + 30 + nw + 8, y + 17);
       const y0 = y + LABEL_H + LABEL_GAP;
       (gr.songs || []).forEach((s, i) => {
         const cx = PAD + (i % COLS) * (cw + CARD_GAP);
         const cy = y0 + Math.floor(i / COLS) * (CARD_H + CARD_GAP);
-        ctx.save();
-        ctx.shadowColor = 'rgba(176,132,74,.18)'; ctx.shadowBlur = 10; ctx.shadowOffsetY = 3;
-        rr(ctx, cx, cy, cw, CARD_H, 16);
-        ctx.fillStyle = '#FFFCF5'; ctx.fill();
-        ctx.restore();
-        rr(ctx, cx, cy, cw, CARD_H, 16);
-        ctx.strokeStyle = '#EFDFC3'; ctx.lineWidth = 1.5; ctx.stroke();
-        ctx.beginPath(); ctx.arc(cx + 28, cy + 32, 16, 0, 7);
-        ctx.fillStyle = 'rgba(232,160,76,.16)'; ctx.fill();
-        ctx.strokeStyle = 'rgba(217,142,74,.45)'; ctx.stroke();
+        rr(ctx, cx, cy, cw, CARD_H, 12);
+        ctx.fillStyle = '#FFFEFB'; ctx.fill();
+        ctx.strokeStyle = 'rgba(217,142,74,.25)'; ctx.lineWidth = 1; ctx.stroke();
+        ctx.beginPath(); ctx.arc(cx + 22, cy + CARD_H / 2, 12, 0, 7);
+        ctx.fillStyle = tint(ac, .14); ctx.fill();
         seq += 1;
-        ctx.fillStyle = '#D98E4A'; ctx.font = '600 ' + (seq >= 100 ? 14 : 17) + 'px ' + F_SANS;
-        ctx.fillText(String(seq), cx + 28, cy + 33);
+        ctx.fillStyle = ac; ctx.font = '600 ' + (seq >= 100 ? 11 : 13) + 'px ' + F_SANS;
+        ctx.fillText(String(seq), cx + 22, cy + CARD_H / 2 + 1);
         ctx.textAlign = 'left';
-        ctx.fillStyle = '#5C3A1E';
-        ctx.fillText(drawFit(ctx, songT(s), cw - 62, '600', 25, 14, F_SANS), cx + 52, cy + 38);
+        ctx.fillStyle = '#4A3423';
+        ctx.fillText(drawFit(ctx, songT(s), cw - 46, '600', 20, 13, F_SANS), cx + 42, cy + 28);
         ctx.fillStyle = '#B49B7F';
-        ctx.fillText(drawFit(ctx, songS(s, gr.singer), cw - 62, '400', 19, 13, F_SANS), cx + 52, cy + 72);
+        ctx.fillText(drawFit(ctx, songS(s, gr.singer), cw - 46, '400', 15, 11, F_SANS), cx + 42, cy + 54);
         ctx.textAlign = 'center';
       });
       y += groupHeight(gr);
