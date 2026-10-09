@@ -164,13 +164,6 @@
   ],
   "stickers": [
     {
-      "id": "muza1l2bfuzi3",
-      "title": "舌头",
-      "file": "media/stickers/muza1l2a78ab0-image_1791114691465.jpg",
-      "date": "2026-10-08",
-      "uploader": "u-iir0580kmuz95yox"
-    },
-    {
       "id": "muza2ewlcw9v2",
       "title": "手指",
       "file": "media/stickers/muza2ewk215cs-image_1790869336372.jpg",
@@ -1655,5 +1648,5 @@
     "日常",
     "其他"
   ],
-  "rev": 68
+  "rev": 69
 }
