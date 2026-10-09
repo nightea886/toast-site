@@ -132,7 +132,11 @@
         $('#nameOk').onclick = null; $('#nameCancel').onclick = null;
         res(v);
       };
-      $('#nameOk').onclick = () => done($('#nameIn').value.trim() || def || '未命名');
+      $('#nameOk').onclick = () => {
+        const v = $('#nameIn').value.trim();
+        if (!v) { toast('先起个名字才能上传哦', true); return; }
+        done(v);
+      };
       $('#nameCancel').onclick = () => done(null);
     });
   }
@@ -560,6 +564,7 @@
   function openPicker(kind) {
     pickKind = kind;
     pick.accept = kind === 'song' ? '' : 'image/*'; // 音频不限定 accept，兼容手机文件选择器
+    pick.multiple = kind === 'song'; // 图片逐张起名，一次只选一张
     pick.click();
   }
   document.addEventListener('click', e => {
@@ -611,6 +616,7 @@
       ? files.filter(f => f.type.startsWith('audio') || /\.(mp3|wav|m4a|flac|aac|ogg)$/i.test(f.name))
       : files.filter(f => f.type.startsWith('image'));
     if (!files.length) { toast('文件类型不匹配哦', true); return; }
+    if (kind !== 'song' && files.length > 1) { toast('图片一次只能上传一张哦', true); return; }
     if (!Store.token()) { toast('请先用群公告里的「进入链接」打开一次本站（自动带入上传凭证）', true); return; }
     let cat = 'daily';
     if (kind === 'album') {
@@ -627,8 +633,8 @@
         if (f.size > 80 * 1024 * 1024) { toast(`「${f.name}」超过 80MB 已跳过`, true); continue; }
         let imgName = null;
         if (kind !== 'song') {
-          imgName = await askName(f.name.replace(/\.[^.]+$/, ''), `给这张图起个名字（${fi + 1}/${files.length}）`);
-          if (!imgName) continue; // 取消起名 = 不上传这张
+          imgName = await askName('', '给这张图起个名字（必填）');
+          if (!imgName) return; // 不输入名字 = 不上传
         }
         toast(`上传中 ${fi + 1}/${files.length}：${f.name}`);
         const base64 = await GH.fileToBase64(f);
