@@ -66,6 +66,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv1303clptfhc",
+      "title": "校服",
+      "file": "media/albums/mv1303ckv7ysr-image_1791557318272.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "日常"
+    },
+    {
       "id": "mv0pcof71ct57",
       "title": "海边",
       "file": "media/albums/mv0pcof7nzg88-image_1791534262908.jpg",
@@ -87,14 +95,6 @@
       "file": "media/albums/mv0pdpbk60rhl-image_1791534272697.jpg",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
-      "cat": "日常"
-    },
-    {
-      "id": "mv1303clptfhc",
-      "title": "校服",
-      "file": "media/albums/mv1303ckv7ysr-image_1791557318272.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-7h0124ezmv12x4fk",
       "cat": "日常"
     },
     {
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 119
+  "rev": 120
 }
