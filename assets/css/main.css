@@ -197,8 +197,18 @@ html.gate-ok .gate{display:none}
 
 /* ---------- 相册 / 表情包 网格 ---------- */
 .grid{display:grid;gap:16px}
-/* 管理员拖拽排序态 */
-.grid.sorting .card{cursor:grab;touch-action:none;animation:none}
+/* 管理员拖拽排序态：只有把手禁滚动，卡身保留页面滚动能力 */
+.grid.sorting .card{cursor:default;animation:none}
+.sort-grip{
+  position:absolute;top:8px;right:8px;z-index:3;
+  width:42px;height:42px;border-radius:12px;
+  background:var(--glass-act);border:1px solid var(--line);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--accent);touch-action:none;cursor:grab;
+}
+.sort-grip:active{cursor:grabbing}
+.sort-grip svg{width:18px;height:18px;fill:currentColor}
 .grid.sorting .card.dragging{
   cursor:grabbing;opacity:.9;z-index:6;position:relative;
   box-shadow:var(--shadow);border-color:var(--line-hover);

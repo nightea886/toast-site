@@ -191,6 +191,10 @@
       `<div class="thumb"><img loading="lazy" data-path="${esc(it.file)}" src="${esc(Store.mediaUrl(it.file))}" alt="${esc(it.title)}"></div>
        ${isGif ? '<span class="badge-gif">GIF</span>' : ''}`;
     d.dataset.file = it.file;
+    if (sortMode) {
+      d.insertAdjacentHTML('beforeend',
+        '<span class="sort-grip" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="9" cy="6" r="1.8"/><circle cx="15" cy="6" r="1.8"/><circle cx="9" cy="12" r="1.8"/><circle cx="15" cy="12" r="1.8"/><circle cx="9" cy="18" r="1.8"/><circle cx="15" cy="18" r="1.8"/></svg></span>');
+    }
     d.addEventListener('click', () => {
       if (sortMode) return; // 排序模式下点卡片不开大图
       const list = kind === 'album' ? viewAlbums : viewStickers;
@@ -262,7 +266,8 @@
     $$('.grid').forEach(g => g.classList.remove('sorting'));
     if (sortMode) (sortMode === 'album' ? $('#albumGrid') : $('#stickerGrid')).classList.add('sorting');
     setSortButtons();
-    if (sortMode) toast('拖动卡片调整顺序，松手即保存', false, 'mode');
+    renderMedia(); // 重建卡片以加/去拖拽把手
+    if (sortMode) toast('按住卡片右上 ⠿ 把手拖动排序，其余区域仍可正常滑动页面', false, 'mode');
   }
   $('#btnSortAlbum').addEventListener('click', () => toggleSort('album'));
   $('#btnSortSticker').addEventListener('click', () => toggleSort('sticker'));
@@ -290,8 +295,10 @@
   let drag = null;
   document.addEventListener('pointerdown', e => {
     if (!sortMode) return;
-    const card = e.target.closest('.card');
-    const grid = e.target.closest('.grid');
+    const grip = e.target.closest('.sort-grip');   // 只有把手起手才拖拽，卡身保留滚动
+    if (!grip) return;
+    const card = grip.closest('.card');
+    const grid = card && card.closest('.grid');
     if (!card || !grid || !grid.classList.contains('sorting')) return;
     e.preventDefault();
     drag = { kind: sortMode, el: card, grid, ox: e.clientX, oy: e.clientY, dx: 0, dy: 0, lastOver: null };
