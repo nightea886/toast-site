@@ -90,6 +90,14 @@
       "cat": "daily"
     },
     {
+      "id": "mv2alk66x7vh2",
+      "title": "天使彦",
+      "file": "media/albums/mv2alk651s4wv-image_1791630572711.png",
+      "date": "2026-10-10",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "cosplay"
+    },
+    {
       "id": "muza027h1f80y",
       "title": "校服",
       "file": "media/albums/muza027g444df-image_1791428956000.jpg",
@@ -136,14 +144,6 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
-    },
-    {
-      "id": "mv2alk66x7vh2",
-      "title": "天使彦",
-      "file": "media/albums/mv2alk651s4wv-image_1791630572711.png",
-      "date": "2026-10-10",
-      "uploader": "u-7h0124ezmv12x4fk",
-      "cat": "cosplay"
     },
     {
       "id": "mv0r1ns1q5non",
@@ -1718,5 +1718,5 @@
     "日常",
     "其他"
   ],
-  "rev": 162
+  "rev": 163
 }
