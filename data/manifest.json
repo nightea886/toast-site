@@ -154,19 +154,19 @@
       "cat": "日常"
     },
     {
-      "id": "mv14seniheycx",
-      "title": "短发",
-      "file": "media/albums/mv14senhi3aj6-image_1791560310190.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl",
-      "cat": "日常"
-    },
-    {
       "id": "mv1qc6mw18vyj",
       "title": "欧美风",
       "file": "media/albums/mv1qc6mw1v77e-微信图片_20260808151754_10192_20.jpg",
       "date": "2026-10-10",
       "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "日常"
+    },
+    {
+      "id": "mv14seniheycx",
+      "title": "短发",
+      "file": "media/albums/mv14senhi3aj6-image_1791560310190.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
     },
     {
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 93
+  "rev": 94
 }
