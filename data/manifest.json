@@ -200,6 +200,14 @@
       "date": "2026-10-10",
       "uploader": "u-a6n8962mmv1tbxc4",
       "cat": "日常"
+    },
+    {
+      "id": "mv1tebudwjo83",
+      "title": "团播",
+      "file": "media/albums/mv1tebudbttk6-image_1791601670246.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1688,5 +1696,5 @@
     "日常",
     "其他"
   ],
-  "rev": 135
+  "rev": 136
 }
