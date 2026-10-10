@@ -10,6 +10,14 @@
       "cat": "cosplay"
     },
     {
+      "id": "muzcg97azzinx",
+      "title": "芸阿娜",
+      "file": "media/albums/muzcg9794s73z-bili_poster-1791452291124.png",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "cosplay"
+    },
+    {
       "id": "muza0kbh3nri0",
       "title": "校服",
       "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
@@ -40,14 +48,6 @@
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "日常"
-    },
-    {
-      "id": "muzcg97azzinx",
-      "title": "芸阿娜",
-      "file": "media/albums/muzcg9794s73z-bili_poster-1791452291124.png",
-      "date": "2026-10-08",
-      "uploader": "u-iir0580kmuz95yox",
-      "cat": "cosplay"
     },
     {
       "id": "mv0rt7o4bgg5f",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 115
+  "rev": 116
 }
