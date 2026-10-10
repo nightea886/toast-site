@@ -224,6 +224,13 @@
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
     {
+      "id": "mv0qr2k6pefbn",
+      "title": "吐舌",
+      "file": "media/stickers/mv0qr2k6sx6kf-130.gif",
+      "date": "2026-10-09",
+      "uploader": "u-3sty9aemmv0qo9jw"
+    },
+    {
       "id": "mv0pemlpk8wxi",
       "title": "光头",
       "file": "media/stickers/mv0pemlpxyerf-image_1791534066767.jpg",
@@ -236,13 +243,6 @@
       "file": "media/stickers/mv0perqtwmmmp-image_1791534202852.jpg",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl"
-    },
-    {
-      "id": "mv0qr2k6pefbn",
-      "title": "吐舌",
-      "file": "media/stickers/mv0qr2k6sx6kf-130.gif",
-      "date": "2026-10-09",
-      "uploader": "u-3sty9aemmv0qo9jw"
     },
     {
       "id": "mv0rerqxlhhn6",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 131
+  "rev": 132
 }
