@@ -74,20 +74,20 @@
       "cat": "日常"
     },
     {
-      "id": "mv0pbyko3sj42",
-      "title": "cp",
-      "file": "media/albums/mv0pbyknd9juf-image_1791534114098.png",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl",
-      "cat": "其他"
-    },
-    {
       "id": "mv0pe0qeo8lga",
       "title": "思考",
       "file": "media/albums/mv0pe0qc5ddy5-image_1791534107398.png",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
+    },
+    {
+      "id": "mv0pbyko3sj42",
+      "title": "cp",
+      "file": "media/albums/mv0pbyknd9juf-image_1791534114098.png",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "其他"
     },
     {
       "id": "mv0pcav5zr43m",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 83
+  "rev": 84
 }
