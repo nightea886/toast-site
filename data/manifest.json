@@ -272,6 +272,14 @@
       "date": "2026-10-10",
       "uploader": "u-7h0124ezmv12x4fk",
       "cat": "日常"
+    },
+    {
+      "id": "mv2t0nocvoqps",
+      "title": "校服",
+      "file": "media/albums/mv2t0nob0s9xb-image_1791661432597.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1788,5 +1796,5 @@
     "日常",
     "其他"
   ],
-  "rev": 175
+  "rev": 176
 }
