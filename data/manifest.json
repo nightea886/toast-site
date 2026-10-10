@@ -138,6 +138,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv2alk66x7vh2",
+      "title": "天使彦",
+      "file": "media/albums/mv2alk651s4wv-image_1791630572711.png",
+      "date": "2026-10-10",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "cosplay"
+    },
+    {
       "id": "mv0r1ns1q5non",
       "title": "生日",
       "file": "media/albums/mv0r1ns1bsi0h-微信图片_20260808151741_10186_20.jpg",
@@ -208,14 +216,6 @@
       "date": "2026-10-10",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
-    },
-    {
-      "id": "mv2alk66x7vh2",
-      "title": "天使彦",
-      "file": "media/albums/mv2alk651s4wv-image_1791630572711.png",
-      "date": "2026-10-10",
-      "uploader": "u-7h0124ezmv12x4fk",
-      "cat": "cosplay"
     }
   ],
   "stickers": [
@@ -1718,5 +1718,5 @@
     "日常",
     "其他"
   ],
-  "rev": 161
+  "rev": 162
 }
