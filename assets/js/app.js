@@ -293,15 +293,22 @@
     });
   }
   let drag = null;
-  /* 行主序插入索引：指针落在某兄弟卡之前(上一行或同行左半)即插入其位，单调不振荡 */
-  function insertionIndex(grid, el, px, py) {
-    const sibs = [...grid.children].filter(c => c !== el);
-    for (let i = 0; i < sibs.length; i++) {
-      const r = sibs[i].getBoundingClientRect();
-      const inRow = py >= r.top && py <= r.bottom;
-      if (py < r.top || (inRow && px < r.left + r.width / 2)) return i;
-    }
-    return sibs.length;
+  /* 指针→网格槽位（行主序）：均匀网格直接用几何算，比逐卡矩形稳定 */
+  function cellAt(grid, px, py) {
+    const gr = grid.getBoundingClientRect();
+    const st = getComputedStyle(grid);
+    const cols = st.gridTemplateColumns.split(' ').length || 1;
+    const first = grid.children[0];
+    if (!first) return { c: 0, colF: .5, rowF: .5, inside: false };
+    const fr = first.getBoundingClientRect();
+    const colW = fr.width + (parseFloat(st.columnGap) || 0);
+    const rowH = fr.height + (parseFloat(st.rowGap) || 0);
+    const inside = px >= gr.left && px <= gr.right && py >= gr.top && py <= gr.bottom;
+    const col = Math.max(0, Math.min(cols - 1, Math.floor((px - gr.left) / colW)));
+    const maxRow = Math.ceil(grid.children.length / cols) - 1;
+    const row = Math.max(0, Math.min(maxRow, Math.floor((py - gr.top) / rowH)));
+    const c = Math.max(0, Math.min(grid.children.length - 1, row * cols + col));
+    return { c, colF: ((px - gr.left) / colW) % 1, rowF: ((py - gr.top) / rowH) % 1, inside };
   }
   document.addEventListener('pointerdown', e => {
     if (!sortMode) return;
@@ -311,24 +318,41 @@
     const grid = card && card.closest('.grid');
     if (!card || !grid || !grid.classList.contains('sorting')) return;
     e.preventDefault();
+    const r0 = card.getBoundingClientRect();
     drag = {
       kind: sortMode, el: card, grid, ox: e.clientX, oy: e.clientY, dx: 0, dy: 0,
-      lastIdx: [...grid.children].indexOf(card),
+      gx: e.clientX - r0.left, gy: e.clientY - r0.top,   // 抓取点在卡内的偏移
+      lastC: [...grid.children].indexOf(card), lastSwap: 0,
     };
     card.classList.add('dragging');
   }, { passive: false });
   document.addEventListener('pointermove', e => {
     if (!drag) return;
-    drag.dx = e.clientX - drag.ox; drag.dy = e.clientY - drag.oy;
+    /* 每帧重归零：布局位置(去掉当前 transform)→ 指针想要的视觉位置，FLIP 换槽后仍贴手 */
+    const rect = drag.el.getBoundingClientRect();
+    const layoutL = rect.left - drag.dx, layoutT = rect.top - drag.dy;
+    drag.dx = (e.clientX - drag.gx) - layoutL;
+    drag.dy = (e.clientY - drag.gy) - layoutT;
     drag.el.style.transform = `translate(${drag.dx}px,${drag.dy}px) scale(1.04)`;
-    const idx = insertionIndex(drag.grid, drag.el, e.clientX, e.clientY);
-    if (idx !== drag.lastIdx) {
-      drag.lastIdx = idx;
-      const sibs = [...drag.grid.children].filter(c => c !== drag.el);
+    const { c, colF, rowF, inside } = cellAt(drag.grid, e.clientX, e.clientY);
+    /* 边界迟滞：格子边缘 18% 区域内视作未离开原槽，吃掉手指微抖 */
+    const target = (inside && (colF < .18 || colF > .82 || rowF < .18 || rowF > .82)) ? drag.lastC : c;
+    drag.lastC = target;
+    const p = [...drag.grid.children].indexOf(drag.el);
+    const now = Date.now();
+    if (target !== p && now - drag.lastSwap > 160) {   // 换位节流：最多 ~6 次/秒
+      drag.lastSwap = now;
+      const sibs = [...drag.grid.children].filter(x => x !== drag.el);
+      const at = Math.max(0, Math.min(sibs.length, target));
       flip(drag.grid, () => {
-        if (idx >= sibs.length) drag.grid.appendChild(drag.el);
-        else sibs[idx].before(drag.el);
+        if (at >= sibs.length) drag.grid.appendChild(drag.el);
+        else sibs[at].before(drag.el);
       });
+      /* 换槽后布局原点已变：立即重归零位移，否则卡片视觉跳一个槽 */
+      const r2 = drag.el.getBoundingClientRect();
+      drag.dx = (e.clientX - drag.gx) - (r2.left - drag.dx);
+      drag.dy = (e.clientY - drag.gy) - (r2.top - drag.dy);
+      drag.el.style.transform = `translate(${drag.dx}px,${drag.dy}px) scale(1.04)`;
     }
   });
   const sortDrop = commit => {
