@@ -2,17 +2,17 @@
   "version": 1,
   "albums": [
     {
-      "id": "muza027h1f80y",
+      "id": "muza0kbh3nri0",
       "title": "校服",
-      "file": "media/albums/muza027g444df-image_1791428956000.jpg",
+      "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "daily"
     },
     {
-      "id": "muza0kbh3nri0",
+      "id": "muza027h1f80y",
       "title": "校服",
-      "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
+      "file": "media/albums/muza027g444df-image_1791428956000.jpg",
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "daily"
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 98
+  "rev": 99
 }
