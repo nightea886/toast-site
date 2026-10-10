@@ -90,19 +90,19 @@
       "cat": "其他"
     },
     {
-      "id": "mv0qmadgryfzu",
-      "title": "cp",
-      "file": "media/albums/mv0qmadfe5cq6-c3ffed717395967a0d484d369ec73018.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-5yqalioqmv0qlvjr",
-      "cat": "其他"
-    },
-    {
       "id": "mv0s4rgj2jg8p",
       "title": "cp",
       "file": "media/albums/mv0s4rginmcxo-1784165498220.png",
       "date": "2026-10-09",
       "uploader": "u-bgg87afdmv0qx6p5",
+      "cat": "其他"
+    },
+    {
+      "id": "mv0qmadgryfzu",
+      "title": "cp",
+      "file": "media/albums/mv0qmadfe5cq6-c3ffed717395967a0d484d369ec73018.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-5yqalioqmv0qlvjr",
       "cat": "其他"
     },
     {
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 99
+  "rev": 100
 }
