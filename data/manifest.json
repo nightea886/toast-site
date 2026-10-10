@@ -138,6 +138,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv1qba6yldwzy",
+      "title": "生日",
+      "file": "media/albums/mv1qba6yz1mnu-微信图片_20260808151748_10187_20.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "日常"
+    },
+    {
       "id": "mv0s4rgj2jg8p",
       "title": "cp",
       "file": "media/albums/mv0s4rginmcxo-1784165498220.png",
@@ -168,14 +176,6 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "其他"
-    },
-    {
-      "id": "mv1qba6yldwzy",
-      "title": "生日",
-      "file": "media/albums/mv1qba6yz1mnu-微信图片_20260808151748_10187_20.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-3sty9aemmv0qo9jw",
-      "cat": "日常"
     },
     {
       "id": "mv1qbgujaa477",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 124
+  "rev": 125
 }
