@@ -224,6 +224,14 @@
       "date": "2026-10-10",
       "uploader": "u-gun368vomv0r3u5j",
       "cat": "日常"
+    },
+    {
+      "id": "mv2q286hudsl3",
+      "title": "天使彦",
+      "file": "media/albums/mv2q286faf4ee-812900701d8db5139a6b0c533d1b475d.png",
+      "date": "2026-10-10",
+      "uploader": "u-gun368vomv0r3u5j",
+      "cat": "cosplay"
     }
   ],
   "stickers": [
@@ -1733,5 +1741,5 @@
     "日常",
     "其他"
   ],
-  "rev": 166
+  "rev": 167
 }
