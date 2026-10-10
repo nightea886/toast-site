@@ -154,6 +154,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv1qbo8axnwbb",
+      "title": "生日",
+      "file": "media/albums/mv1qbo8996rhn-微信图片_20260808151752_10189_20.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "日常"
+    },
+    {
       "id": "mv0s4rgj2jg8p",
       "title": "cp",
       "file": "media/albums/mv0s4rginmcxo-1784165498220.png",
@@ -184,14 +192,6 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "其他"
-    },
-    {
-      "id": "mv1qbo8axnwbb",
-      "title": "生日",
-      "file": "media/albums/mv1qbo8996rhn-微信图片_20260808151752_10189_20.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-3sty9aemmv0qo9jw",
-      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 126
+  "rev": 127
 }
