@@ -368,6 +368,13 @@
       "file": "media/stickers/mv2nt02g69ua7-8c24d776bba6c7f09dc702d6982c9c6f.png",
       "date": "2026-10-10",
       "uploader": "u-gun368vomv0r3u5j"
+    },
+    {
+      "id": "mv2q2ulr061ye",
+      "title": "天使彦",
+      "file": "media/stickers/mv2q2ulqdu2b2-88f7395851cfcecede97143c821b501e.png",
+      "date": "2026-10-10",
+      "uploader": "u-gun368vomv0r3u5j"
     }
   ],
   "songs": [
@@ -1749,5 +1756,5 @@
     "日常",
     "其他"
   ],
-  "rev": 168
+  "rev": 169
 }
