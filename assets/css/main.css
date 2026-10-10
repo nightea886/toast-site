@@ -197,6 +197,13 @@ html.gate-ok .gate{display:none}
 
 /* ---------- 相册 / 表情包 网格 ---------- */
 .grid{display:grid;gap:16px}
+/* 管理员拖拽排序态 */
+.grid.sorting .card{cursor:grab;touch-action:none;animation:none}
+.grid.sorting .card.dragging{
+  cursor:grabbing;opacity:.9;z-index:6;position:relative;
+  box-shadow:var(--shadow);border-color:var(--line-hover);
+}
+.btn.sort-on{border-color:var(--accent);color:var(--accent);background:var(--tint-2)}
 .grid-album{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
 .grid-sticker{grid-template-columns:repeat(auto-fill,minmax(150px,1fr))}
 .card{

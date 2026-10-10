@@ -15,7 +15,7 @@ if (localStorage.getItem('tk_gate_ok')) document.documentElement.classList.add('
 <link rel="preconnect" href="https://fonts.loli.net" crossorigin>
 <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap">
 <noscript><link rel="stylesheet" href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@600;700;900&family=Noto+Sans+SC:wght@400;500;700&display=swap"></noscript>
-<link rel="stylesheet" href="assets/css/main.css?v=20261009z">
+<link rel="stylesheet" href="assets/css/main.css?v=20261010a">
 </head>
 <body>
 
@@ -60,6 +60,7 @@ if (localStorage.getItem('tk_gate_ok')) document.documentElement.classList.add('
       </div>
       <div class="sec-actions">
         <input id="albumSearch" class="sel search" type="search" placeholder="搜索图片名字" autocomplete="off">
+        <button class="btn btn-ghost" id="btnSortAlbum" hidden>✥ 排序</button>
         <button class="btn btn-ghost" data-upload="album">＋ 上传图片</button>
       </div>
     </div>
@@ -79,6 +80,7 @@ if (localStorage.getItem('tk_gate_ok')) document.documentElement.classList.add('
       </div>
       <div class="sec-actions">
         <input id="stickerSearch" class="sel search" type="search" placeholder="搜索表情名字" autocomplete="off">
+        <button class="btn btn-ghost" id="btnSortSticker" hidden>✥ 排序</button>
         <button class="btn btn-ghost" data-upload="sticker">＋ 上传表情包</button>
       </div>
     </div>
@@ -295,11 +297,11 @@ if (localStorage.getItem('tk_gate_ok')) document.documentElement.classList.add('
 <div class="toasts" id="toasts"></div>
 <input type="file" id="filePick" hidden multiple>
 
-<script src="assets/js/runtime.js?v=20261009z"></script>
-<script src="assets/js/config.js?v=20261009z"></script>
-<script src="assets/js/gh.js?v=20261009z"></script>
-<script src="assets/js/store.js?v=20261009z"></script>
-<script src="assets/js/playlist.js?v=20261009z"></script>
-<script src="assets/js/app.js?v=20261009z"></script>
+<script src="assets/js/runtime.js?v=20261010a"></script>
+<script src="assets/js/config.js?v=20261010a"></script>
+<script src="assets/js/gh.js?v=20261010a"></script>
+<script src="assets/js/store.js?v=20261010a"></script>
+<script src="assets/js/playlist.js?v=20261010a"></script>
+<script src="assets/js/app.js?v=20261010a"></script>
 </body>
 </html>

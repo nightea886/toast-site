@@ -87,6 +87,8 @@
   /* ================= 渲染：相册 / 表情包 ================= */
   let albumFilter = 'all', stickerFilter = 'all', songQuery = '';
   let albumQuery = '', stickerQuery = '';
+  /* 当前视图列表（筛选/搜索后）：光箱导航与歌曲切歌都按它走，而非全局 */
+  let viewAlbums = [], viewStickers = [], viewSongs = [];
   /* 相册标签：存 manifest.albumTags，缺失时回退默认两个 */
   function albumTags() {
     const t = Store.get().albumTags;
@@ -188,8 +190,10 @@
     d.innerHTML =
       `<div class="thumb"><img loading="lazy" data-path="${esc(it.file)}" src="${esc(Store.mediaUrl(it.file))}" alt="${esc(it.title)}"></div>
        ${isGif ? '<span class="badge-gif">GIF</span>' : ''}`;
+    d.dataset.file = it.file;
     d.addEventListener('click', () => {
-      const list = kind === 'album' ? Store.get().albums : Store.get().stickers;
+      if (sortMode) return; // 排序模式下点卡片不开大图
+      const list = kind === 'album' ? viewAlbums : viewStickers;
       /* 轮询会替换清单对象，旧卡片闭包可能持有孤儿对象：按 id/file 重新定位 */
       const idx = list.findIndex(x => x.id === it.id || x.file === it.file);
       if (idx < 0) { renderMedia(); return; }
@@ -206,6 +210,7 @@
     const stickers = m.stickers.filter(s =>
       (stickerFilter === 'all' || (stickerFilter === 'gif' ? /\.gif$/i.test(s.file) : !/\.gif$/i.test(s.file))) &&
       fuzzy(stickerQuery, s.title));
+    viewAlbums = albums; viewStickers = stickers;
     albums.forEach((it, i) => ag.appendChild(mediaCard(it, i, 'album')));
     stickers.forEach((it, i) => sg.appendChild(mediaCard(it, i, 'sticker')));
     $('#albumEmpty').hidden = albums.length > 0;
@@ -239,6 +244,112 @@
   /* 图片名模糊搜索（与歌曲搜索同款 fuzzy） */
   $('#albumSearch').addEventListener('input', e => { albumQuery = e.target.value; renderMedia(); });
   $('#stickerSearch').addEventListener('input', e => { stickerQuery = e.target.value; renderMedia(); });
+
+  /* ================= 管理员拖拽排序（FLIP 丝滑动画） ================= */
+  let sortMode = null;
+  function setSortButtons() {
+    const admin = Store.role() === 'admin';
+    [['#btnSortAlbum', 'album'], ['#btnSortSticker', 'sticker']].forEach(([sel, kind]) => {
+      const b = $(sel);
+      if (!b) return;
+      b.hidden = !admin;
+      b.classList.toggle('sort-on', sortMode === kind);
+      b.textContent = sortMode === kind ? '✥ 完成排序' : '✥ 排序';
+    });
+  }
+  function toggleSort(kind) {
+    sortMode = sortMode === kind ? null : kind;
+    $$('.grid').forEach(g => g.classList.remove('sorting'));
+    if (sortMode) (sortMode === 'album' ? $('#albumGrid') : $('#stickerGrid')).classList.add('sorting');
+    setSortButtons();
+    if (sortMode) toast('拖动卡片调整顺序，松手即保存', false, 'mode');
+  }
+  $('#btnSortAlbum').addEventListener('click', () => toggleSort('album'));
+  $('#btnSortSticker').addEventListener('click', () => toggleSort('sticker'));
+  /* FLIP：记录旧位置→改 DOM→从旧位置动画滑到新位置 */
+  function flip(grid, mutate) {
+    const els = [...grid.children];
+    const first = new Map(els.map(el => [el, el.getBoundingClientRect()]));
+    mutate();
+    [...grid.children].forEach(el => {
+      if (el.classList.contains('dragging')) return;
+      const f = first.get(el);
+      if (!f) return;
+      const l = el.getBoundingClientRect();
+      const dx = f.left - l.left, dy = f.top - l.top;
+      if (!dx && !dy) return;
+      el.style.transition = 'none';
+      el.style.transform = `translate(${dx}px,${dy}px)`;
+      requestAnimationFrame(() => {
+        el.style.transition = 'transform .22s cubic-bezier(.2,.8,.28,1)';
+        el.style.transform = '';
+        el.addEventListener('transitionend', () => { el.style.transition = ''; }, { once: true });
+      });
+    });
+  }
+  let drag = null;
+  document.addEventListener('pointerdown', e => {
+    if (!sortMode) return;
+    const card = e.target.closest('.card');
+    const grid = e.target.closest('.grid');
+    if (!card || !grid || !grid.classList.contains('sorting')) return;
+    e.preventDefault();
+    drag = { kind: sortMode, el: card, grid, ox: e.clientX, oy: e.clientY, dx: 0, dy: 0, lastOver: null };
+    card.classList.add('dragging');
+  }, { passive: false });
+  document.addEventListener('pointermove', e => {
+    if (!drag) return;
+    drag.dx = e.clientX - drag.ox; drag.dy = e.clientY - drag.oy;
+    drag.el.style.transform = `translate(${drag.dx}px,${drag.dy}px) scale(1.04)`;
+    const px = e.clientX, py = e.clientY;
+    const sibs = [...drag.grid.children].filter(c => c !== drag.el);
+    const over = sibs.find(s => {
+      const r2 = s.getBoundingClientRect();
+      return px >= r2.left && px <= r2.right && py >= r2.top && py <= r2.bottom;
+    });
+    if (over && over !== drag.lastOver) {
+      drag.lastOver = over;
+      const r2 = over.getBoundingClientRect();
+      const after = px > r2.left + r2.width / 2 || py > r2.top + r2.height / 2;
+      flip(drag.grid, () => { if (after) over.after(drag.el); else over.before(drag.el); });
+    }
+  });
+  const sortDrop = commit => {
+    if (!drag) return;
+    const d0 = drag; drag = null;
+    d0.el.classList.remove('dragging');
+    d0.el.style.transform = '';
+    d0.el.style.transition = '';
+    if (commit) commitOrder(d0.kind);
+  };
+  document.addEventListener('pointerup', () => sortDrop(true));
+  document.addEventListener('pointercancel', () => sortDrop(false));
+  /* 视图内重排语义：未参与筛选的条目全局位置不动，筛选出的子集按新相对序回填原槽位 */
+  function commitOrder(kind) {
+    const grid = kind === 'album' ? $('#albumGrid') : $('#stickerGrid');
+    const files = [...grid.querySelectorAll('.card')].map(c => c.dataset.file);
+    const m = Store.get();
+    const arr = kind === 'album' ? m.albums : m.stickers;
+    const byFile = new Map(arr.map(e => [e.file, e]));
+    const newView = files.map(f => byFile.get(f)).filter(Boolean);
+    const viewSet = new Set(files);
+    const slots = [];
+    arr.forEach((e, i) => { if (viewSet.has(e.file)) slots.push(i); });
+    const next = arr.slice();
+    slots.forEach((gi, k) => { next[gi] = newView[k]; });
+    if (!next.some((e, i) => e !== arr[i])) return;
+    const old = arr.slice();
+    if (kind === 'album') m.albums = next; else m.stickers = next;
+    renderMedia();
+    toast('顺序已保存 🍞', false, 'mode');
+    Store.saveManifestApply(mm => {
+      if (kind === 'album') mm.albums = next.slice(); else mm.stickers = next.slice();
+    }, `reorder: ${kind} 管理员拖拽排序`).catch(async e => {
+      if (kind === 'album') m.albums = old; else m.stickers = old;
+      toast('保存失败已还原：' + e.message, true);
+      await Store.loadManifest(); renderMedia();
+    });
+  }
 
   /* ================= 大图 Lightbox ================= */
   let lbList = [], lbIdx = 0, lbKind = 'album';
@@ -420,6 +531,7 @@
     const wrap = $('#songList');
     wrap.innerHTML = '';
     const list = m.songs.filter(s => fuzzy(songQuery, s.title + ' ' + (s.singer || '')));
+    viewSongs = list;
     $('#songEmpty').hidden = m.songs.length > 0;
     if (m.songs.length && !list.length) {
       wrap.innerHTML = '<div class="empty"><p>没搜到相关歌曲，换个词试试 🔍</p></div>';
@@ -562,26 +674,36 @@
   $('#plMode').addEventListener('click', e => { e.stopPropagation(); cycleMode(); }); // 阻止冒泡到播放条，防误开光碟页
   $('#npMode').addEventListener('click', e => { e.stopPropagation(); cycleMode(); });
   applyModeUI();
-  function randIdx() {
-    const n = Store.get().songs.length;
-    if (n < 2) return 0;
-    let r = cur;
-    while (r === cur) r = Math.floor(Math.random() * n);
-    return r;
+  /* 切歌按"当前搜索/筛选出的列表"顺序，而非全局清单 */
+  function viewPos() {
+    const s = Store.get().songs[cur];
+    return s ? viewSongs.indexOf(s) : -1;
+  }
+  function gIdx(song) { return Store.get().songs.indexOf(song); }
+  function randViewIdx() {
+    const vs = viewSongs;
+    if (vs.length < 2) return cur;
+    let r;
+    do { r = Math.floor(Math.random() * vs.length); } while (vs[r] === Store.get().songs[cur]);
+    return gIdx(vs[r]);
   }
   function nextIdx() {
-    const n = Store.get().songs.length;
-    if (!n) return -1;
-    if (playMode === 'shuffle') return randIdx();
-    if (cur + 1 < n) return cur + 1;
-    return playMode === 'loop' ? 0 : -1;
+    const vs = viewSongs;
+    if (!vs.length) return -1;
+    if (playMode === 'shuffle') return randViewIdx();
+    const p = viewPos();
+    if (p === -1) return gIdx(vs[0]);
+    if (p + 1 < vs.length) return gIdx(vs[p + 1]);
+    return playMode === 'loop' ? gIdx(vs[0]) : -1;
   }
   function prevIdx() {
-    const n = Store.get().songs.length;
-    if (!n) return -1;
-    if (playMode === 'shuffle') return randIdx();
-    if (cur > 0) return cur - 1;
-    return playMode === 'loop' ? n - 1 : -1;
+    const vs = viewSongs;
+    if (!vs.length) return -1;
+    if (playMode === 'shuffle') return randViewIdx();
+    const p = viewPos();
+    if (p === -1) return gIdx(vs[vs.length - 1]);
+    if (p > 0) return gIdx(vs[p - 1]);
+    return playMode === 'loop' ? gIdx(vs[vs.length - 1]) : -1;
   }
   audio.addEventListener('ended', () => {
     const ni = nextIdx();
@@ -972,7 +1094,7 @@
       setTimeout(() => toast('上传凭证已存入本机 🍞'), 400);
     }
   })();
-  function renderAll() { renderAlbumChips(); renderMedia(); renderSongs(); renderPlaylist(); }
+  function renderAll() { renderAlbumChips(); renderMedia(); renderSongs(); renderPlaylist(); setSortButtons(); }
   async function init() {
     Store.gateOk() ? hideGate() : showGate();
     await Store.loadManifest();
