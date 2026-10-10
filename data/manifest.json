@@ -194,14 +194,6 @@
       "cat": "其他"
     },
     {
-      "id": "mv1tbxc4cjvvf",
-      "title": "团播",
-      "file": "media/albums/mv1tbxc3b7yzg-85062d80013dc73222213796c63d6c0b.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-a6n8962mmv1tbxc4",
-      "cat": "日常"
-    },
-    {
       "id": "mv1tebudwjo83",
       "title": "团播",
       "file": "media/albums/mv1tebudbttk6-image_1791601670246.jpg",
@@ -1696,5 +1688,5 @@
     "日常",
     "其他"
   ],
-  "rev": 136
+  "rev": 137
 }
