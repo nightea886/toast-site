@@ -288,6 +288,14 @@
       "date": "2026-10-10",
       "uploader": "u-7h0124ezmv12x4fk",
       "cat": "日常"
+    },
+    {
+      "id": "mv2t2mezqno3h",
+      "title": "日常",
+      "file": "media/albums/mv2t2mey89f85-image_1791661437716.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1818,5 +1826,5 @@
     "日常",
     "其他"
   ],
-  "rev": 179
+  "rev": 180
 }
