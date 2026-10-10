@@ -106,6 +106,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv0s4rgj2jg8p",
+      "title": "cp",
+      "file": "media/albums/mv0s4rginmcxo-1784165498220.png",
+      "date": "2026-10-09",
+      "uploader": "u-bgg87afdmv0qx6p5",
+      "cat": "其他"
+    },
+    {
       "id": "mv0pcav5zr43m",
       "title": "cp",
       "file": "media/albums/mv0pcav4rroqk-image_1791534124824.png",
@@ -128,14 +136,6 @@
       "date": "2026-10-09",
       "uploader": "u-vjrky846mv0qc89g",
       "cat": "cosplay"
-    },
-    {
-      "id": "mv0s4rgj2jg8p",
-      "title": "cp",
-      "file": "media/albums/mv0s4rginmcxo-1784165498220.png",
-      "date": "2026-10-09",
-      "uploader": "u-bgg87afdmv0qx6p5",
-      "cat": "其他"
     },
     {
       "id": "mv12y8odcoz4j",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 85
+  "rev": 86
 }
