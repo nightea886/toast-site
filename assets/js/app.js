@@ -293,6 +293,16 @@
     });
   }
   let drag = null;
+  /* 行主序插入索引：指针落在某兄弟卡之前(上一行或同行左半)即插入其位，单调不振荡 */
+  function insertionIndex(grid, el, px, py) {
+    const sibs = [...grid.children].filter(c => c !== el);
+    for (let i = 0; i < sibs.length; i++) {
+      const r = sibs[i].getBoundingClientRect();
+      const inRow = py >= r.top && py <= r.bottom;
+      if (py < r.top || (inRow && px < r.left + r.width / 2)) return i;
+    }
+    return sibs.length;
+  }
   document.addEventListener('pointerdown', e => {
     if (!sortMode) return;
     const grip = e.target.closest('.sort-grip');   // 只有把手起手才拖拽，卡身保留滚动
@@ -301,24 +311,24 @@
     const grid = card && card.closest('.grid');
     if (!card || !grid || !grid.classList.contains('sorting')) return;
     e.preventDefault();
-    drag = { kind: sortMode, el: card, grid, ox: e.clientX, oy: e.clientY, dx: 0, dy: 0, lastOver: null };
+    drag = {
+      kind: sortMode, el: card, grid, ox: e.clientX, oy: e.clientY, dx: 0, dy: 0,
+      lastIdx: [...grid.children].indexOf(card),
+    };
     card.classList.add('dragging');
   }, { passive: false });
   document.addEventListener('pointermove', e => {
     if (!drag) return;
     drag.dx = e.clientX - drag.ox; drag.dy = e.clientY - drag.oy;
     drag.el.style.transform = `translate(${drag.dx}px,${drag.dy}px) scale(1.04)`;
-    const px = e.clientX, py = e.clientY;
-    const sibs = [...drag.grid.children].filter(c => c !== drag.el);
-    const over = sibs.find(s => {
-      const r2 = s.getBoundingClientRect();
-      return px >= r2.left && px <= r2.right && py >= r2.top && py <= r2.bottom;
-    });
-    if (over && over !== drag.lastOver) {
-      drag.lastOver = over;
-      const r2 = over.getBoundingClientRect();
-      const after = px > r2.left + r2.width / 2 || py > r2.top + r2.height / 2;
-      flip(drag.grid, () => { if (after) over.after(drag.el); else over.before(drag.el); });
+    const idx = insertionIndex(drag.grid, drag.el, e.clientX, e.clientY);
+    if (idx !== drag.lastIdx) {
+      drag.lastIdx = idx;
+      const sibs = [...drag.grid.children].filter(c => c !== drag.el);
+      flip(drag.grid, () => {
+        if (idx >= sibs.length) drag.grid.appendChild(drag.el);
+        else sibs[idx].before(drag.el);
+      });
     }
   });
   const sortDrop = commit => {
