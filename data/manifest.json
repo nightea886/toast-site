@@ -430,6 +430,13 @@
       "file": "media/stickers/mv2t1vllyj4rb-image_1791661408326.jpg",
       "date": "2026-10-10",
       "uploader": "u-7h0124ezmv12x4fk"
+    },
+    {
+      "id": "mv2t2223yxwzr",
+      "title": "抽象",
+      "file": "media/stickers/mv2t2222sixw4-image_1791661451068.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-7h0124ezmv12x4fk"
     }
   ],
   "songs": [
@@ -1811,5 +1818,5 @@
     "日常",
     "其他"
   ],
-  "rev": 178
+  "rev": 179
 }
