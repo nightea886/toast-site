@@ -210,6 +210,13 @@
       "uploader": "u-3sty9aemmv0qo9jw"
     },
     {
+      "id": "mv0pg0wrnyjzp",
+      "title": "小丑",
+      "file": "media/stickers/mv0pg0wqnj8za-bili_poster-1791534587696.png",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl"
+    },
+    {
       "id": "mv0pefhz996mh",
       "title": "吐舌",
       "file": "media/stickers/mv0pefhypsyeq-image_1791534193238.png",
@@ -220,13 +227,6 @@
       "id": "mv0pf4e7hvl80",
       "title": "乌龟",
       "file": "media/stickers/mv0pf4e6lvclt-image_1791534241110.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl"
-    },
-    {
-      "id": "mv0pg0wrnyjzp",
-      "title": "小丑",
-      "file": "media/stickers/mv0pg0wqnj8za-bili_poster-1791534587696.png",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 133
+  "rev": 134
 }
