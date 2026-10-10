@@ -168,6 +168,14 @@
       "date": "2026-10-10",
       "uploader": "u-3sty9aemmv0qo9jw",
       "cat": "日常"
+    },
+    {
+      "id": "mv1qbgujaa477",
+      "title": "生日",
+      "file": "media/albums/mv1qbgui44ior-微信图片_20260808151750_10188_20.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1656,5 +1664,5 @@
     "日常",
     "其他"
   ],
-  "rev": 74
+  "rev": 75
 }
