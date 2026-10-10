@@ -154,6 +154,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv251zfrzuqsj",
+      "title": "卡莎",
+      "file": "media/albums/mv251zfrcaqgn-微信图片_20260904183325_21524_3.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-a6n8962mmv1tbxc4",
+      "cat": "cosplay"
+    },
+    {
       "id": "mv1qbo8axnwbb",
       "title": "生日",
       "file": "media/albums/mv1qbo8996rhn-微信图片_20260808151752_10189_20.jpg",
@@ -200,14 +208,6 @@
       "date": "2026-10-10",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
-    },
-    {
-      "id": "mv251zfrzuqsj",
-      "title": "卡莎",
-      "file": "media/albums/mv251zfrcaqgn-微信图片_20260904183325_21524_3.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-a6n8962mmv1tbxc4",
-      "cat": "cosplay"
     },
     {
       "id": "mv2alk66x7vh2",
@@ -1718,5 +1718,5 @@
     "日常",
     "其他"
   ],
-  "rev": 156
+  "rev": 157
 }
