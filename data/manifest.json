@@ -267,6 +267,13 @@
       "uploader": "u-1uewlfhcmv0rbj8r"
     },
     {
+      "id": "mv1tq3r9ue33p",
+      "title": "哭",
+      "file": "media/stickers/mv1tq3r8ut61t-webwxgetmsgimg.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-a6n8962mmv1tbxc4"
+    },
+    {
       "id": "mv0rezo2b94zg",
       "title": "光头",
       "file": "media/stickers/mv0rezo13bwdi-10278.jpeg",
@@ -314,13 +321,6 @@
       "file": "media/stickers/mv0rnqfdciqam-10667.jpeg",
       "date": "2026-10-09",
       "uploader": "u-1uewlfhcmv0rbj8r"
-    },
-    {
-      "id": "mv1tq3r9ue33p",
-      "title": "哭",
-      "file": "media/stickers/mv1tq3r8ut61t-webwxgetmsgimg.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-a6n8962mmv1tbxc4"
     }
   ],
   "songs": [
@@ -1702,5 +1702,5 @@
     "日常",
     "其他"
   ],
-  "rev": 143
+  "rev": 144
 }
