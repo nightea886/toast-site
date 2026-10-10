@@ -2,14 +2,6 @@
   "version": 1,
   "albums": [
     {
-      "id": "muza0kbh3nri0",
-      "title": "校服",
-      "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
-      "date": "2026-10-08",
-      "uploader": "u-iir0580kmuz95yox",
-      "cat": "daily"
-    },
-    {
       "id": "muza028cxsmtt",
       "title": "校服",
       "file": "media/albums/muza028bvke8p-image_1791428947601.jpg",
@@ -48,6 +40,14 @@
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "cosplay"
+    },
+    {
+      "id": "muza0kbh3nri0",
+      "title": "校服",
+      "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
+      "date": "2026-10-08",
+      "uploader": "u-iir0580kmuz95yox",
+      "cat": "daily"
     },
     {
       "id": "mv0pcof71ct57",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 105
+  "rev": 106
 }
