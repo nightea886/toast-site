@@ -18,6 +18,14 @@
       "cat": "cosplay"
     },
     {
+      "id": "mv0rt7o4bgg5f",
+      "title": "露娜",
+      "file": "media/albums/mv0rt7o3qbmrq-IMG_0358.jpeg",
+      "date": "2026-10-09",
+      "uploader": "u-vjrky846mv0qc89g",
+      "cat": "cosplay"
+    },
+    {
       "id": "muza0kbh3nri0",
       "title": "校服",
       "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
@@ -48,14 +56,6 @@
       "date": "2026-10-08",
       "uploader": "u-iir0580kmuz95yox",
       "cat": "日常"
-    },
-    {
-      "id": "mv0rt7o4bgg5f",
-      "title": "露娜",
-      "file": "media/albums/mv0rt7o3qbmrq-IMG_0358.jpeg",
-      "date": "2026-10-09",
-      "uploader": "u-vjrky846mv0qc89g",
-      "cat": "cosplay"
     },
     {
       "id": "mv0s1v3bj97sd",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 116
+  "rev": 117
 }
