@@ -50,6 +50,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv0pdpblf7p5i",
+      "title": "头发飘飘",
+      "file": "media/albums/mv0pdpbk60rhl-image_1791534272697.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "日常"
+    },
+    {
       "id": "muza0kbh3nri0",
       "title": "校服",
       "file": "media/albums/muza0kbgkcm6d-image_1791428943767.jpg",
@@ -95,14 +103,6 @@
       "file": "media/albums/mv12y8ocn0f6q-image_1787569209555.png",
       "date": "2026-10-09",
       "uploader": "u-7h0124ezmv12x4fk",
-      "cat": "日常"
-    },
-    {
-      "id": "mv0pdpblf7p5i",
-      "title": "头发飘飘",
-      "file": "media/albums/mv0pdpbk60rhl-image_1791534272697.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
     },
     {
@@ -1702,5 +1702,5 @@
     "日常",
     "其他"
   ],
-  "rev": 152
+  "rev": 153
 }
