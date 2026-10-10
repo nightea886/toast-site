@@ -90,6 +90,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv1303clptfhc",
+      "title": "校服",
+      "file": "media/albums/mv1303ckv7ysr-image_1791557318272.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-7h0124ezmv12x4fk",
+      "cat": "日常"
+    },
+    {
       "id": "mv0pe0qeo8lga",
       "title": "思考",
       "file": "media/albums/mv0pe0qc5ddy5-image_1791534107398.png",
@@ -133,14 +141,6 @@
       "id": "mv12y8odcoz4j",
       "title": "吐司",
       "file": "media/albums/mv12y8ocn0f6q-image_1787569209555.png",
-      "date": "2026-10-09",
-      "uploader": "u-7h0124ezmv12x4fk",
-      "cat": "日常"
-    },
-    {
-      "id": "mv1303clptfhc",
-      "title": "校服",
-      "file": "media/albums/mv1303ckv7ysr-image_1791557318272.jpg",
       "date": "2026-10-09",
       "uploader": "u-7h0124ezmv12x4fk",
       "cat": "日常"
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 118
+  "rev": 119
 }
