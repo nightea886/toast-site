@@ -162,6 +162,14 @@
       "cat": "日常"
     },
     {
+      "id": "mv1qc6mw18vyj",
+      "title": "欧美风",
+      "file": "media/albums/mv1qc6mw1v77e-微信图片_20260808151754_10192_20.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "日常"
+    },
+    {
       "id": "mv1qba6yldwzy",
       "title": "生日",
       "file": "media/albums/mv1qba6yz1mnu-微信图片_20260808151748_10187_20.jpg",
@@ -181,14 +189,6 @@
       "id": "mv1qbo8axnwbb",
       "title": "生日",
       "file": "media/albums/mv1qbo8996rhn-微信图片_20260808151752_10189_20.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-3sty9aemmv0qo9jw",
-      "cat": "日常"
-    },
-    {
-      "id": "mv1qc6mw18vyj",
-      "title": "欧美风",
-      "file": "media/albums/mv1qc6mw1v77e-微信图片_20260808151754_10192_20.jpg",
       "date": "2026-10-10",
       "uploader": "u-3sty9aemmv0qo9jw",
       "cat": "日常"
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 91
+  "rev": 92
 }
