@@ -50,14 +50,6 @@
       "cat": "cosplay"
     },
     {
-      "id": "mv0pcav5zr43m",
-      "title": "cp",
-      "file": "media/albums/mv0pcav4rroqk-image_1791534124824.png",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl",
-      "cat": "其他"
-    },
-    {
       "id": "mv0pcof71ct57",
       "title": "海边",
       "file": "media/albums/mv0pcof7nzg88-image_1791534262908.jpg",
@@ -96,6 +88,14 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
+    },
+    {
+      "id": "mv0pcav5zr43m",
+      "title": "cp",
+      "file": "media/albums/mv0pcav4rroqk-image_1791534124824.png",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "其他"
     },
     {
       "id": "mv0qmadgryfzu",
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 82
+  "rev": 83
 }
