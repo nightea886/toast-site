@@ -18,14 +18,6 @@
       "cat": "cosplay"
     },
     {
-      "id": "mv0pcof71ct57",
-      "title": "海边",
-      "file": "media/albums/mv0pcof7nzg88-image_1791534262908.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl",
-      "cat": "日常"
-    },
-    {
       "id": "mv0rt7o4bgg5f",
       "title": "露娜",
       "file": "media/albums/mv0rt7o3qbmrq-IMG_0358.jpeg",
@@ -40,6 +32,14 @@
       "date": "2026-10-09",
       "uploader": "u-vjrky846mv0qc89g",
       "cat": "cosplay"
+    },
+    {
+      "id": "mv0pcof71ct57",
+      "title": "海边",
+      "file": "media/albums/mv0pcof7nzg88-image_1791534262908.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "日常"
     },
     {
       "id": "muza0kbh3nri0",
@@ -1702,5 +1702,5 @@
     "日常",
     "其他"
   ],
-  "rev": 147
+  "rev": 148
 }
