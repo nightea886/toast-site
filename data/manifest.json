@@ -217,6 +217,13 @@
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
     {
+      "id": "mv0pg0wrnyjzp",
+      "title": "小丑",
+      "file": "media/stickers/mv0pg0wqnj8za-bili_poster-1791534587696.png",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl"
+    },
+    {
       "id": "mv0pemlpk8wxi",
       "title": "光头",
       "file": "media/stickers/mv0pemlpxyerf-image_1791534066767.jpg",
@@ -227,13 +234,6 @@
       "id": "mv0perqukkgwc",
       "title": "光头",
       "file": "media/stickers/mv0perqtwmmmp-image_1791534202852.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl"
-    },
-    {
-      "id": "mv0pg0wrnyjzp",
-      "title": "小丑",
-      "file": "media/stickers/mv0pg0wqnj8za-bili_poster-1791534587696.png",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 128
+  "rev": 129
 }
