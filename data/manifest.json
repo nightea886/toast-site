@@ -210,6 +210,13 @@
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
     {
+      "id": "mv0pf4e7hvl80",
+      "title": "乌龟",
+      "file": "media/stickers/mv0pf4e6lvclt-image_1791534241110.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl"
+    },
+    {
       "id": "mv0pemlpk8wxi",
       "title": "光头",
       "file": "media/stickers/mv0pemlpxyerf-image_1791534066767.jpg",
@@ -220,13 +227,6 @@
       "id": "mv0perqukkgwc",
       "title": "光头",
       "file": "media/stickers/mv0perqtwmmmp-image_1791534202852.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl"
-    },
-    {
-      "id": "mv0pf4e7hvl80",
-      "title": "乌龟",
-      "file": "media/stickers/mv0pf4e6lvclt-image_1791534241110.jpg",
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
@@ -1680,5 +1680,5 @@
     "日常",
     "其他"
   ],
-  "rev": 127
+  "rev": 128
 }
