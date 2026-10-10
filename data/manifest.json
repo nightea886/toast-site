@@ -18,6 +18,14 @@
       "cat": "cosplay"
     },
     {
+      "id": "mv251zfrzuqsj",
+      "title": "卡莎",
+      "file": "media/albums/mv251zfrcaqgn-微信图片_20260904183325_21524_3.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-a6n8962mmv1tbxc4",
+      "cat": "cosplay"
+    },
+    {
       "id": "mv0rt7o4bgg5f",
       "title": "露娜",
       "file": "media/albums/mv0rt7o3qbmrq-IMG_0358.jpeg",
@@ -40,14 +48,6 @@
       "date": "2026-10-09",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
-    },
-    {
-      "id": "mv251zfrzuqsj",
-      "title": "卡莎",
-      "file": "media/albums/mv251zfrcaqgn-微信图片_20260904183325_21524_3.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-a6n8962mmv1tbxc4",
-      "cat": "cosplay"
     },
     {
       "id": "mv0pd5ytvpzn0",
@@ -1718,5 +1718,5 @@
     "日常",
     "其他"
   ],
-  "rev": 160
+  "rev": 161
 }
