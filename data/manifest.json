@@ -239,18 +239,18 @@
       "uploader": "u-rfy31ng6mv0a4tpl"
     },
     {
-      "id": "mv0pemlpk8wxi",
-      "title": "光头",
-      "file": "media/stickers/mv0pemlpxyerf-image_1791534066767.jpg",
-      "date": "2026-10-09",
-      "uploader": "u-rfy31ng6mv0a4tpl"
-    },
-    {
       "id": "mv1vwfgw17n35",
       "title": "好吃",
       "file": "media/stickers/mv1vwfguyv6rp-image_1787071607068.png",
       "date": "2026-10-10",
       "uploader": "u-7h0124ezmv12x4fk"
+    },
+    {
+      "id": "mv0pemlpk8wxi",
+      "title": "光头",
+      "file": "media/stickers/mv0pemlpxyerf-image_1791534066767.jpg",
+      "date": "2026-10-09",
+      "uploader": "u-rfy31ng6mv0a4tpl"
     },
     {
       "id": "mv0perqukkgwc",
@@ -1702,5 +1702,5 @@
     "日常",
     "其他"
   ],
-  "rev": 142
+  "rev": 143
 }
