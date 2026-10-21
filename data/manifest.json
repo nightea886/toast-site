@@ -304,6 +304,14 @@
       "date": "2026-10-17",
       "uploader": "u-rfy31ng6mv0a4tpl",
       "cat": "日常"
+    },
+    {
+      "id": "mvhw8w3eak9yu",
+      "title": "合照",
+      "file": "media/albums/mvhw8w3d4edy9-image_1792573895613.jpg",
+      "date": "2026-10-21",
+      "uploader": "u-rfy31ng6mv0a4tpl",
+      "cat": "其他"
     }
   ],
   "stickers": [
@@ -1841,5 +1849,5 @@
     "日常",
     "其他"
   ],
-  "rev": 182
+  "rev": 183
 }
