@@ -3,7 +3,7 @@
    ========================================================== */
 window.Store = (function () {
   const LS = {
-    gate: 'tk_gate_ok',   // 保存进入时验证通过的密码哈希
+    gate: 'tk_gate_v2',   // 保存进入时验证通过的密码哈希（v2：2026-11 凭证轮换时强制全员重输一次密码）
     uid: 'tk_uid',        // 本机匿名 ID，用于"删除自己上传的内容"
     token: 'tk_token'     // 上传凭证：由群公告种子链接（#tk=）写入，仅存本机
   };
@@ -22,7 +22,7 @@ window.Store = (function () {
     return s === cfg().gateSha256 || s === cfg().adminSha256;
   }
   function setGateOk(hash) { localStorage.setItem(LS.gate, hash); }
-  function clearGate() { localStorage.removeItem(LS.gate); }
+  function clearGate() { localStorage.removeItem(LS.gate); localStorage.removeItem('tk_gate_ok'); }
   function clearToken() { localStorage.removeItem(LS.token); }
   function setTokenLocal(v) { localStorage.setItem(LS.token, v); }
 
