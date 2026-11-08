@@ -24,8 +24,8 @@ window.SITE_CONFIG = {
      门禁输对密码即在浏览器内解密出凭证，任何设备零配置可上传/删除；
      密文不是 token 明文，不会触发 GitHub 吊销。
      换密码时站内「更换密码」会用新密码重加密并同步更新对应行。 */
-  tokenCipherMember: '7Pruf6OxG9NADhB95aPg6E45IXzcCMfXxDmm+jU4XRusPzFgETw5EHlQJHZte0+vvTZffn4/2BXJrC249tyTHwd3/BM=',
-  tokenCipherAdmin: 'YoP/cuRQd8g8h9yr6mJhMgjDUS/Kh6uXTxUmJjOb0kRmXrvwjWZ3FvjlaFbYehVPR+KRFXeO+i5u8nY11JUhC483neY=',
+  tokenCipherMember: 'XvupVLEU8/brWcP4nbmhEo47PUrvrG2VqeZdA71gOqJyR5UNWc2qfIhRkSYnHjZ6VlAlD8top9BI31UedGb/jyurbrU=',
+  tokenCipherAdmin: 'qiip9ygGm8E8HcEGUVK2STcQ30iqdzIv8H0F5Ci1V3W8Vya3TpR0eiBNK7Od7Gxsny4pIuN3VaesPD3e9Z6ghynrw94=',
 };
 
 /* 兜底数据：data/manifest.json 拉取失败时使用（例如刚克隆还没提交数据）。
