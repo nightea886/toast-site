@@ -1149,7 +1149,9 @@
         const r = await fetch('https://api.github.com/user', { headers: { Authorization: 'Bearer ' + t } });
         if (r.status === 401) {
           Store.clearToken();
-          toast('上传凭证已失效：请设置→重置缓存后重新输入密码领取', true);
+          Store.clearGate();
+          showGate();
+          toast('上传凭证已失效：请重新输入门禁码领取新凭证 🍞', true);
         }
       } catch (e) { /* 网络问题忽略 */ }
     })();
