@@ -386,6 +386,14 @@
       "cat": "写真"
     },
     {
+      "id": "mv1qbo8axnwbb",
+      "title": "生日",
+      "file": "media/albums/mv1qbo8996rhn-微信图片_20260808151752_10189_20.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "写真"
+    },
+    {
       "id": "mwvu6zl8arz06",
       "title": "黑丝",
       "file": "media/albums/mwvu6zl7m5a8j-image_1795593592788.jpg",
@@ -397,14 +405,6 @@
       "id": "mv1qbgujaa477",
       "title": "生日",
       "file": "media/albums/mv1qbgui44ior-微信图片_20260808151750_10188_20.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-3sty9aemmv0qo9jw",
-      "cat": "写真"
-    },
-    {
-      "id": "mv1qbo8axnwbb",
-      "title": "生日",
-      "file": "media/albums/mv1qbo8996rhn-微信图片_20260808151752_10189_20.jpg",
       "date": "2026-10-10",
       "uploader": "u-3sty9aemmv0qo9jw",
       "cat": "写真"
@@ -2303,5 +2303,5 @@
     "写真",
     "水友"
   ],
-  "rev": 253
+  "rev": 254
 }
