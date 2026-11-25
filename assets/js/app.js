@@ -261,14 +261,66 @@
       b.textContent = sortMode === kind ? '✥ 完成排序' : '✥ 排序';
     });
   }
+  /* 排序批量提交：拖动过程只本地重排（orderDirty 记账），退出排序模式才统一提交一次。
+     旧行为每次松手都提交：连续拖动=提交风暴（每次都触发 Pages 重新部署），
+     部署窗口里轮询/初始加载读到新旧混杂的快照，界面顺序反复跳变 */
+  const orderDirty = { album: false, sticker: false };
   function toggleSort(kind) {
-    sortMode = sortMode === kind ? null : kind;
+    if (sortMode && sortMode !== kind) flushOrder(sortMode); // 相册↔表情包切换排序前先保存前一个
+    const exiting = sortMode === kind;
+    sortMode = exiting ? null : kind;
     $$('.grid').forEach(g => g.classList.remove('sorting'));
     if (sortMode) (sortMode === 'album' ? $('#albumGrid') : $('#stickerGrid')).classList.add('sorting');
     setSortButtons();
     renderMedia(); // 重建卡片以加/去拖拽把手
-    if (sortMode) toast('按住卡片右上 ⠿ 把手拖动排序，其余区域仍可正常滑动页面', false, 'mode');
+    if (exiting) flushOrder(kind);
+    else toast('按住卡片右上 ⠿ 把手拖动排序，点「完成排序」统一保存；其余区域仍可正常滑动页面', false, 'mode');
   }
+  /* 重放语义合并：本地拖动只贡献「相对顺序」，条目内容一律以服务器基线为准。
+     并发新增的条目按其在基线中的位置插到相邻本地条目之前，并发删除的自然出局，
+     并发改名/改分类不被本地旧快照覆盖（旧实现 mm.albums = next 整体替换会抹掉它们） */
+  function mergeOrder(freshArr, localFiles) {
+    const localPos = new Map();
+    localFiles.forEach((f, i) => { if (!localPos.has(f)) localPos.set(f, i); });
+    const common = freshArr.filter(e => localPos.has(e.file))
+      .sort((a, b) => localPos.get(a.file) - localPos.get(b.file));
+    const commonSet = new Set(common.map(e => e.file));
+    const insertsBefore = new Map(); // 本地条目 file → 需插在它前面的基线新条目
+    let pending = [];
+    for (const e of freshArr) {
+      if (commonSet.has(e.file)) {
+        if (pending.length) { insertsBefore.set(e.file, pending); pending = []; }
+      } else pending.push(e);
+    }
+    const out = [];
+    for (const e of common) {
+      const ins = insertsBefore.get(e.file);
+      if (ins) out.push(...ins);
+      out.push(e);
+    }
+    out.push(...pending); // 基线尾部的新条目排最后
+    return out;
+  }
+  function flushOrder(kind) {
+    if (!orderDirty[kind]) return;
+    orderDirty[kind] = false;
+    const localFiles = (kind === 'album' ? Store.get().albums : Store.get().stickers).map(e => e.file);
+    toast('保存顺序中…', false, 'mode');
+    Store.saveManifestApply(mm => {
+      const merged = mergeOrder(kind === 'album' ? mm.albums : mm.stickers, localFiles);
+      if (kind === 'album') mm.albums = merged; else mm.stickers = merged;
+    }, `reorder: ${kind} 管理员拖拽排序`).then(() => {
+      toast('顺序已保存 🍞', false, 'mode');
+      renderMedia(); // 与合并后的服务器基线对齐（可能含其他设备的并发新增）
+    }).catch(async e => {
+      toast('保存失败：' + (e.message === 'NO_CONFIG' ? '缺少上传凭证' : e.message), true);
+      await Store.loadManifest(); renderAll();
+    });
+  }
+  /* 手机锁屏/切后台会丢页面：带着未保存的排序离开前兜底提交一次 */
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && sortMode && orderDirty[sortMode]) flushOrder(sortMode);
+  });
   $('#btnSortAlbum').addEventListener('click', () => toggleSort('album'));
   $('#btnSortSticker').addEventListener('click', () => toggleSort('sticker'));
   /* FLIP：记录旧位置→改 DOM→从旧位置动画滑到新位置 */
@@ -293,16 +345,17 @@
     });
   }
   let drag = null;
-  /* 指针→网格槽位（行主序）：均匀网格直接用几何算，比逐卡矩形稳定 */
+  /* 指针→网格槽位（行主序）：均匀网格直接用几何算，比逐卡矩形稳定。
+     尺寸必须用 offsetWidth/Height（布局值）：children[0] 可能正是拖拽中的卡，
+     getBoundingClientRect 含 scale(1.04) 变换会虚增 4%，把 colF/rowF 压进死区导致不换槽 */
   function cellAt(grid, px, py) {
     const gr = grid.getBoundingClientRect();
     const st = getComputedStyle(grid);
     const cols = st.gridTemplateColumns.split(' ').length || 1;
     const first = grid.children[0];
     if (!first) return { c: 0, colF: .5, rowF: .5, inside: false };
-    const fr = first.getBoundingClientRect();
-    const colW = fr.width + (parseFloat(st.columnGap) || 0);
-    const rowH = fr.height + (parseFloat(st.rowGap) || 0);
+    const colW = first.offsetWidth + (parseFloat(st.columnGap) || 0);
+    const rowH = first.offsetHeight + (parseFloat(st.rowGap) || 0);
     const inside = px >= gr.left && px <= gr.right && py >= gr.top && py <= gr.bottom;
     const col = Math.max(0, Math.min(cols - 1, Math.floor((px - gr.left) / colW)));
     const maxRow = Math.ceil(grid.children.length / cols) - 1;
@@ -321,22 +374,26 @@
     const r0 = card.getBoundingClientRect();
     drag = {
       kind: sortMode, el: card, grid, ox: e.clientX, oy: e.clientY, dx: 0, dy: 0,
+      px: e.clientX, py: e.clientY,                        // 最近一次指针位置（自动滚屏帧循环用）
       gx: e.clientX - r0.left, gy: e.clientY - r0.top,   // 抓取点在卡内的偏移
       lastC: [...grid.children].indexOf(card), lastSwap: 0,
     };
     card.classList.add('dragging');
+    if (!edgeRaf) edgeRaf = requestAnimationFrame(edgeStep);
   }, { passive: false });
-  document.addEventListener('pointermove', e => {
+  /* 拖动统一推进：跟手位移 + 换槽判定。pointermove 与边缘自动滚屏帧循环共用 */
+  function updateDrag(px, py) {
     if (!drag) return;
     /* 每帧重归零：布局位置(去掉当前 transform)→ 指针想要的视觉位置，FLIP 换槽后仍贴手 */
     const rect = drag.el.getBoundingClientRect();
     const layoutL = rect.left - drag.dx, layoutT = rect.top - drag.dy;
-    drag.dx = (e.clientX - drag.gx) - layoutL;
-    drag.dy = (e.clientY - drag.gy) - layoutT;
+    drag.dx = (px - drag.gx) - layoutL;
+    drag.dy = (py - drag.gy) - layoutT;
     drag.el.style.transform = `translate(${drag.dx}px,${drag.dy}px) scale(1.04)`;
-    const { c, colF, rowF, inside } = cellAt(drag.grid, e.clientX, e.clientY);
-    /* 边界迟滞：格子边缘 18% 区域内视作未离开原槽，吃掉手指微抖 */
-    const target = (inside && (colF < .18 || colF > .82 || rowF < .18 || rowF > .82)) ? drag.lastC : c;
+    const { c, colF, rowF, inside } = cellAt(drag.grid, px, py);
+    /* 边界迟滞：格子边缘 8% 区域内视作未离开原槽，吃掉手指微抖。
+       旧值 18% 在手机小卡片上要求手指深入目标格中央 ~64% 区域才换位，体感"判定太小" */
+    const target = (inside && (colF < .08 || colF > .92 || rowF < .08 || rowF > .92)) ? drag.lastC : c;
     drag.lastC = target;
     const p = [...drag.grid.children].indexOf(drag.el);
     const now = Date.now();
@@ -350,13 +407,40 @@
       });
       /* 换槽后布局原点已变：立即重归零位移，否则卡片视觉跳一个槽 */
       const r2 = drag.el.getBoundingClientRect();
-      drag.dx = (e.clientX - drag.gx) - (r2.left - drag.dx);
-      drag.dy = (e.clientY - drag.gy) - (r2.top - drag.dy);
+      drag.dx = (px - drag.gx) - (r2.left - drag.dx);
+      drag.dy = (py - drag.gy) - (r2.top - drag.dy);
       drag.el.style.transform = `translate(${drag.dx}px,${drag.dy}px) scale(1.04)`;
     }
+  }
+  /* 拖近屏幕上下缘自动滚屏：没有它，长列表一次拖拽只能到达首屏内的槽位，
+     手机只能"拖一段→松手→滚屏→再拖"，每段还各触发一次提交。速度随深入边缘线性加快 */
+  const EDGE_ZONE = 64, EDGE_MAX_V = 16;
+  let edgeRaf = 0;
+  function edgeStep() {
+    edgeRaf = 0;
+    if (!drag) return;
+    const vh = window.innerHeight, y = drag.py;
+    let v = 0;
+    if (y < EDGE_ZONE) v = -Math.ceil((EDGE_ZONE - y) / EDGE_ZONE * EDGE_MAX_V);
+    else if (y > vh - EDGE_ZONE) v = Math.ceil((y - (vh - EDGE_ZONE)) / EDGE_ZONE * EDGE_MAX_V);
+    if (v) {
+      const maxScroll = document.documentElement.scrollHeight - vh;
+      const sy = window.scrollY;
+      if ((v < 0 && sy > 0) || (v > 0 && sy < maxScroll)) {
+        window.scrollBy(0, v);
+        updateDrag(drag.px, drag.py); // 页面在指下滚动：按原指针位置重算槽位与位移
+      }
+    }
+    edgeRaf = requestAnimationFrame(edgeStep);
+  }
+  document.addEventListener('pointermove', e => {
+    if (!drag) return;
+    drag.px = e.clientX; drag.py = e.clientY;
+    updateDrag(e.clientX, e.clientY);
   });
   const sortDrop = commit => {
     if (!drag) return;
+    if (edgeRaf) { cancelAnimationFrame(edgeRaf); edgeRaf = 0; }
     const d0 = drag; drag = null;
     d0.el.classList.remove('dragging');
     d0.el.style.transform = '';
@@ -365,7 +449,8 @@
   };
   document.addEventListener('pointerup', () => sortDrop(true));
   document.addEventListener('pointercancel', () => sortDrop(false));
-  /* 视图内重排语义：未参与筛选的条目全局位置不动，筛选出的子集按新相对序回填原槽位 */
+  /* 视图内重排语义：未参与筛选的条目全局位置不动，筛选出的子集按新相对序回填原槽位。
+     只改本地清单并记账 orderDirty，退出排序模式时由 flushOrder 在服务器新基线上重放提交 */
   function commitOrder(kind) {
     const grid = kind === 'album' ? $('#albumGrid') : $('#stickerGrid');
     const files = [...grid.querySelectorAll('.card')].map(c => c.dataset.file);
@@ -377,19 +462,12 @@
     const slots = [];
     arr.forEach((e, i) => { if (viewSet.has(e.file)) slots.push(i); });
     const next = arr.slice();
-    slots.forEach((gi, k) => { next[gi] = newView[k]; });
+    const n = Math.min(slots.length, newView.length); // 防御：DOM 与清单瞬时不一致时不写 undefined 洞
+    for (let k = 0; k < n; k++) next[slots[k]] = newView[k];
     if (!next.some((e, i) => e !== arr[i])) return;
-    const old = arr.slice();
     if (kind === 'album') m.albums = next; else m.stickers = next;
+    orderDirty[kind] = true;
     renderMedia();
-    toast('顺序已保存 🍞', false, 'mode');
-    Store.saveManifestApply(mm => {
-      if (kind === 'album') mm.albums = next.slice(); else mm.stickers = next.slice();
-    }, `reorder: ${kind} 管理员拖拽排序`).catch(async e => {
-      if (kind === 'album') m.albums = old; else m.stickers = old;
-      toast('保存失败已还原：' + e.message, true);
-      await Store.loadManifest(); renderMedia();
-    });
   }
 
   /* ================= 大图 Lightbox ================= */
@@ -512,10 +590,21 @@
     wheelLast = now;
     lbStep(d > 0 ? 1 : -1);
   }, { passive: false });
-  /* 重命名 / 改分类：与删除同权限（本人或管理员），乐观更新+服务器叠加提交+失败回滚 */
+  /* 重命名 / 改分类：与删除同权限（本人或管理员），乐观更新+服务器叠加提交+失败回滚。
+     提交/轮询会整体替换清单对象，灯箱列表可能持有孤儿引用（改它界面不动、数据却已提交）：
+     编辑前按 file 重定位到当前清单的活对象，提交成功后再同步一次 lbList 并重渲染 */
+  function relinkLbList() {
+    const m = Store.get();
+    const arr = lbKind === 'album' ? m.albums : m.stickers;
+    lbList = lbList.map(e => arr.find(y => y.file === e.file) || e);
+  }
   async function saveMediaEdit(msg, finder, change, rollbackChange) {
     const it = lbList[lbIdx]; if (!it) return;
-    change(it);
+    const m0 = Store.get();
+    const arr0 = lbKind === 'album' ? m0.albums : m0.stickers;
+    const live = arr0.find(y => y.file === it.file) || it; // 防孤儿：优先取当前清单里的活对象
+    lbList[lbIdx] = live;
+    change(live);
     renderMedia(); paintLightbox();
     toast('已保存 🍞'); // 乐观提示：提交在后台排队进行，失败会回滚并报错
     try {
@@ -523,10 +612,12 @@
         const x = finder(mm);
         if (x) change(x);
       }, msg);
+      // 提交成功后清单已被新对象整体替换：重挂 lbList 引用并刷新网格，连续编辑下一张不再改到孤儿
+      relinkLbList(); renderMedia(); paintLightbox();
     } catch (e) {
-      rollbackChange(it);
+      rollbackChange(live);
       toast('保存失败已还原：' + (e.message === 'NO_CONFIG' ? '缺少上传凭证' : e.message), true);
-      await Store.loadManifest(); renderAll(); paintLightbox();
+      await Store.loadManifest(); renderAll(); relinkLbList(); paintLightbox();
     }
   }
   $('#lbRename').addEventListener('click', async () => {
@@ -1114,12 +1205,16 @@
     if (!$('#gate').hidden) return;              // 未进门不轮询
     if (!$('#plManage').hidden) return;          // 歌单编辑中有未保存修改时不覆盖
     if (Store.isPending()) return;               // 本机提交进行中不轮询覆盖
+    if (sortMode) return;                        // 拖拽排序中不轮询覆盖（批量提交见 flushOrder）
     try {
       const txt = await fetchManifestText();
       if (!txt || txt === manifestSig) return;
       const parsed = JSON.parse(txt);
       manifestSig = txt;
       if (JSON.stringify(parsed) === JSON.stringify(Store.get())) return; // 本机刚提交的内容，无需提示
+      /* rev 护栏：contents API 读后写延迟 / CDN 部署延迟可能返回旧快照，
+         直接 Store.set 会把本机状态静默回退（再被拖拽排序固化上服务器），必须丢弃 */
+      if ((parsed.rev || 0) < (Store.get().rev || 0)) return;
       Store.set(parsed);
       renderAll();
     } catch (e) { /* ignore */ }
