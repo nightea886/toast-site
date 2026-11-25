@@ -146,14 +146,6 @@
       "cat": "日常"
     },
     {
-      "id": "mv1qc6mw18vyj",
-      "title": "欧美风",
-      "file": "media/albums/mv1qc6mw1v77e-微信图片_20260808151754_10192_20.jpg",
-      "date": "2026-10-10",
-      "uploader": "u-3sty9aemmv0qo9jw",
-      "cat": "写真"
-    },
-    {
       "id": "mwvu7vmvnx26h",
       "title": "写真",
       "file": "media/albums/mwvu7vmvw3lm3-image_1795593602159.jpg",
@@ -175,6 +167,14 @@
       "file": "media/albums/mv0r1ns1bsi0h-微信图片_20260808151741_10186_20.jpg",
       "date": "2026-10-09",
       "uploader": "u-3sty9aemmv0qo9jw",
+      "cat": "写真"
+    },
+    {
+      "id": "mwvu9voucbn03",
+      "title": "写真",
+      "file": "media/albums/mwvu9votfde8g-image_1795593622711.jpg",
+      "date": "2026-11-25",
+      "uploader": "u-3dde5fsxmwqj0g2f",
       "cat": "写真"
     },
     {
@@ -346,9 +346,9 @@
       "cat": "其他"
     },
     {
-      "id": "mwvu9voucbn03",
+      "id": "mwvu9pou48gj9",
       "title": "写真",
-      "file": "media/albums/mwvu9votfde8g-image_1795593622711.jpg",
+      "file": "media/albums/mwvu9potp5dv0-image_1795593619563.jpg",
       "date": "2026-11-25",
       "uploader": "u-3dde5fsxmwqj0g2f",
       "cat": "写真"
@@ -370,11 +370,11 @@
       "cat": "日常"
     },
     {
-      "id": "mwvu9pou48gj9",
-      "title": "写真",
-      "file": "media/albums/mwvu9potp5dv0-image_1795593619563.jpg",
-      "date": "2026-11-25",
-      "uploader": "u-3dde5fsxmwqj0g2f",
+      "id": "mv1qc6mw18vyj",
+      "title": "欧美风",
+      "file": "media/albums/mv1qc6mw1v77e-微信图片_20260808151754_10192_20.jpg",
+      "date": "2026-10-10",
+      "uploader": "u-3sty9aemmv0qo9jw",
       "cat": "写真"
     },
     {
@@ -2303,5 +2303,5 @@
     "写真",
     "水友"
   ],
-  "rev": 251
+  "rev": 252
 }
