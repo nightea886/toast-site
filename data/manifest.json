@@ -408,6 +408,14 @@
       "date": "2026-11-25",
       "uploader": "u-3dde5fsxmwqj0g2f",
       "cat": "日常"
+    },
+    {
+      "id": "mwvu7vmvnx26h",
+      "title": "写真",
+      "file": "media/albums/mwvu7vmvw3lm3-image_1795593602159.jpg",
+      "date": "2026-11-25",
+      "uploader": "u-3dde5fsxmwqj0g2f",
+      "cat": "日常"
     }
   ],
   "stickers": [
@@ -1974,5 +1982,5 @@
     "其他",
     "水友"
   ],
-  "rev": 200
+  "rev": 201
 }
