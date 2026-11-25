@@ -666,14 +666,6 @@
       "cat": "cosplay"
     },
     {
-      "id": "mwvv933qoyque",
-      "title": "cosplay",
-      "file": "media/albums/mwvv933ql10xu-微信图片_20261125162053_50_1.jpg",
-      "date": "2026-11-25",
-      "uploader": "u-t3ilqxvgmwvv933p",
-      "cat": "cosplay"
-    },
-    {
       "id": "mwvv933qdhwhe",
       "title": "cosplay",
       "file": "media/albums/mwvv933qchxhz-微信图片_20261125162054_51_1.jpg",
@@ -2319,5 +2311,5 @@
     "写真",
     "水友"
   ],
-  "rev": 230
+  "rev": 231
 }
