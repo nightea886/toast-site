@@ -258,14 +258,6 @@
       "cat": "cosplay"
     },
     {
-      "id": "mv2s3td7oi6h6",
-      "title": "直播片段",
-      "file": "media/albums/mv2s3td4imhs1-IMG_9190.png",
-      "date": "2026-10-10",
-      "uploader": "u-p3tq6f6emv2oqbit",
-      "cat": "日常"
-    },
-    {
       "id": "mv2t0gjm95i9j",
       "title": "校服",
       "file": "media/albums/mv2t0gjlqccqd-image_1791661423824.jpg",
@@ -2039,5 +2031,5 @@
     "写真",
     "水友"
   ],
-  "rev": 218
+  "rev": 219
 }
