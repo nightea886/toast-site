@@ -848,6 +848,14 @@
       "date": "2026-11-26",
       "uploader": "u-3dde5fsxmwqj0g2f",
       "cat": "写真"
+    },
+    {
+      "id": "mwx5b83vjr6ad",
+      "title": "和服",
+      "file": "media/albums/mwx5b83uoulwm-image_1795672726931.jpg",
+      "date": "2026-11-26",
+      "uploader": "u-3dde5fsxmwqj0g2f",
+      "cat": "写真"
     }
   ],
   "stickers": [
@@ -2415,5 +2423,5 @@
     "写真",
     "水友"
   ],
-  "rev": 260
+  "rev": 261
 }
